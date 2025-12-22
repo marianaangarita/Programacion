@@ -33,22 +33,38 @@ class Coche():
         self.siguiente_revision=si
 
     def mostrar(self):
-        return (f"Marca:{self.marca}, Modelo:{self.modelo}, Potencia:{self.potencia}CV, Color:{self.color}, Matriculación: {self.matriculacion}, Siguiente revisión: {self.siguiente_revision} año")
+        return (f"Marca: {self.marca}, Modelo: {self.modelo}, Potencia: {self.potencia} CV, Color: {self.color}, Matriculación: {self.matriculacion}, Siguiente revisión: {self.siguiente_revision} ")
     
     def acelerar(self):
-        return self.potencia = self.potencia +10
+        self.potencia = self.potencia + 10
+        return(f"Potencia aumentada a {self.potencia} CV")
     
     def frenar(self):
-        return self.potencia = potencia-10
+        self.potencia = self.potencia-10
+        return(f"Potencia descelerada a {self.potencia} CV")
     
     def itv(self):
-        if 2025==self.matriculacion:
-            self.siguiente_revision=4
-        if 2029<self.matriculacion<=2033:
-            self.siguiente_revision=2
-        if self.matriculacion>2033:
-            self.siguiente_revision=1
+        año_actual=2025
+        año_desde_matricualcion=año_actual-self.matriculacion
+
+        if año_desde_matricualcion<=4:
+            self.siguiente_revision= self.matriculacion + 4
+
+        elif 4<año_desde_matricualcion<=8:
+            self.siguiente_revision= año_actual + 2 
+
+        elif año_desde_matricualcion>8:
+            self.siguiente_revision= año_actual + 1
+
         return self.siguiente_revision
 
 
-coche1=Coche("Renault","Clio", 2025,"Azul",3)
+coche1=Coche("Renault","Clio", 150,"Azul", 2024, 2026)
+
+print(coche1.mostrar())
+
+print(coche1.acelerar())
+
+print(coche1.itv())
+
+print(coche1.mostrar())
