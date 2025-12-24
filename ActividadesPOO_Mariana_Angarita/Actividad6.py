@@ -16,15 +16,10 @@ itv(): devuelve la fecha de la siguiente revisión teniendo en cuenta que se pas
 
 El programa debe pedir los datos de cada coche al usuario y luego mostrarlos.
 '''
+from datetime import datetime
 
 class Coche():
-    marca=""
-    modelo=""
-    potencia=""
-    color=""
-    matriculacion=""
-    siguiente_revision=""
-
+ 
     def __init__(self,m,mo,po,co,ma,s):
         self.marca=m
         self.modelo=mo
@@ -38,38 +33,87 @@ class Coche():
     
     def acelerar(self):
         self.potencia = self.potencia + 10
-        return(f"Potencia aumentada a {self.potencia} CV")
+       
     
     def frenar(self):
         self.potencia = self.potencia-10
-        return(f"Potencia descelerada a {self.potencia} CV")
+
     
     def itv(self):
-        año_actual=2025
-        año_desde_matricualcion=año_actual-self.matriculacion
+        año_actual=datetime.now().year
 
-        if año_desde_matricualcion<=4:
+        antiguedad=año_actual-self.matriculacion
+
+        if antiguedad<4:
             self.siguiente_revision= self.matriculacion + 4
 
-        elif 4<año_desde_matricualcion<=8:
-            self.siguiente_revision= año_actual + 2 
-
-        elif año_desde_matricualcion>8:
+        elif 4<=antiguedad<6:
+            self.siguiente_revision= self.matriculacion + 6
+        elif 6<=antiguedad<8:
+            self.siguiente_revision= self.matriculacion + 8
+        elif antiguedad>=8:
             self.siguiente_revision= año_actual + 1
 
         return self.siguiente_revision
     
+def mostrarCoches(lista):
+    for i in lista:
+        print(i.mostrar())
 
-m=input("¿Qué marca es el coche?: ").lower()
-mo=input("¿Qué modelo es el coche?: ").lower()
-po=int(input("¿Cuánta potencia tiene el coche?: "))
-co=input("¿De qué color es el coche?: ").lower()
-ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
-s=int(input("¿Cuál es la fecha de la siguiente revisión?: "))
+lista_coches=[]
+salir=False
+opciones=["CREAR OBJETO", "DESCELERAR", "ACELERAR", "MOSTRAR", "SALIR"]
+def menu_principal():
+    print("***************")
+    print("Menú Principal")
+    for indice,valor in enumerate (opciones,1):
+        print(f"Pulsa {indice}: {valor}")
+    print("***************")
 
 
-coche1=Coche(m,mo,po,co,ma,s)
+while not salir:
 
-coche2=Coche(m,mo,po,co,ma,s)
+    
 
-coche3=Coche(m,mo,po,co,ma,s)
+    menu_principal()
+    programa=int(input("Elige una de las siguientes opciones: "))
+
+    match programa:
+
+        case 1:
+
+            m=input("¿Qué marca es el coche?: ").lower()
+            mo=input("¿Qué modelo es el coche?: ").lower()
+            po=int(input("¿Cuánta potencia tiene el coche?: "))
+            co=input("¿De qué color es el coche?: ").lower()
+            ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
+            s=0
+        
+            cochecito=Coche(m,mo,po,co,ma,s)
+            cochecito.itv()
+            lista_coches.append(cochecito)
+    
+        case 2:
+            cochecito.frenar()
+            print("Has reducido los caballos del coche")
+
+        case 3:
+            cochecito.acelerar()
+            print("Has aumentado los caballos del coche")
+
+        case 4:
+            mostrarCoches(lista_coches)  
+
+        case 5:
+            salir=True
+            print("Has salido del programa")
+        
+        case other:
+            print("Opción incorrecta")
+        
+
+    
+        
+
+
+    
