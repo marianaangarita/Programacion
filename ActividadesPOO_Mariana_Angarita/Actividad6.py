@@ -41,16 +41,17 @@ class Coche():
     
     def itv(self):
         año_actual=datetime.now().year
-        
+
         antiguedad=año_actual-self.matriculacion
 
-        if antiguedad<=4:
+        if antiguedad<4:
             self.siguiente_revision= self.matriculacion + 4
 
-        elif 4<antiguedad<=8:
-            self.siguiente_revision= año_actual + 2 
-
-        elif antiguedad>8:
+        elif 4<=antiguedad<6:
+            self.siguiente_revision= self.matriculacion + 6
+        elif 6<=antiguedad<8:
+            self.siguiente_revision= self.matriculacion + 8
+        elif antiguedad>=8:
             self.siguiente_revision= año_actual + 1
 
         return self.siguiente_revision
@@ -61,25 +62,58 @@ def mostrarCoches(lista):
 
 lista_coches=[]
 salir=False
+opciones=["CREAR OBJETO", "DESCELERAR", "ACELERAR", "MOSTRAR", "SALIR"]
+def menu_principal():
+    print("***************")
+    print("Menú Principal")
+    for indice,valor in enumerate (opciones,1):
+        print(f"Pulsa {indice}: {valor}")
+    print("***************")
+
 
 while not salir:
 
-    programa=input("¿Quieres seguir con el programa? S/N: ").upper()
-    if programa=='N':
-        salir=True
-        print("Has salido del programa")
+    
 
-    if programa=='S':
-        m=input("¿Qué marca es el coche?: ").lower()
-        mo=input("¿Qué modelo es el coche?: ").lower()
-        po=int(input("¿Cuánta potencia tiene el coche?: "))
-        co=input("¿De qué color es el coche?: ").lower()
-        ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
-        s=0
+    menu_principal()
+    programa=int(input("Elige una de las siguientes opciones: "))
+
+    match programa:
+
+        case 1:
+
+            m=input("¿Qué marca es el coche?: ").lower()
+            mo=input("¿Qué modelo es el coche?: ").lower()
+            po=int(input("¿Cuánta potencia tiene el coche?: "))
+            co=input("¿De qué color es el coche?: ").lower()
+            ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
+            s=0
         
-        cochecito=Coche(m,mo,po,co,ma,s)
-        cochecito.itv()
-        lista_coches.append(cochecito)
+            cochecito=Coche(m,mo,po,co,ma,s)
+            cochecito.itv()
+            lista_coches.append(cochecito)
+    
+        case 2:
+            cochecito.frenar()
+            print("Has reducido los caballos del coche")
 
-mostrarCoches(lista_coches)
+        case 3:
+            cochecito.acelerar()
+            print("Has aumentado los caballos del coche")
+
+        case 4:
+            mostrarCoches(lista_coches)  
+
+        case 5:
+            salir=True
+            print("Has salido del programa")
+        
+        case other:
+            print("Opción incorrecta")
+        
+
+    
+        
+
+
     
