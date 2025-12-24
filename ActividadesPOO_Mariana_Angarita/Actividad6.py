@@ -16,15 +16,10 @@ itv(): devuelve la fecha de la siguiente revisión teniendo en cuenta que se pas
 
 El programa debe pedir los datos de cada coche al usuario y luego mostrarlos.
 '''
+from datetime import datetime
 
 class Coche():
-    marca=""
-    modelo=""
-    potencia=""
-    color=""
-    matriculacion=""
-    siguiente_revision=""
-
+ 
     def __init__(self,m,mo,po,co,ma,s):
         self.marca=m
         self.modelo=mo
@@ -38,38 +33,53 @@ class Coche():
     
     def acelerar(self):
         self.potencia = self.potencia + 10
-        return(f"Potencia aumentada a {self.potencia} CV")
+       
     
     def frenar(self):
         self.potencia = self.potencia-10
-        return(f"Potencia descelerada a {self.potencia} CV")
+
     
     def itv(self):
-        año_actual=2025
-        año_desde_matricualcion=año_actual-self.matriculacion
+        año_actual=datetime.now().year
+        
+        antiguedad=año_actual-self.matriculacion
 
-        if año_desde_matricualcion<=4:
+        if antiguedad<=4:
             self.siguiente_revision= self.matriculacion + 4
 
-        elif 4<año_desde_matricualcion<=8:
+        elif 4<antiguedad<=8:
             self.siguiente_revision= año_actual + 2 
 
-        elif año_desde_matricualcion>8:
+        elif antiguedad>8:
             self.siguiente_revision= año_actual + 1
 
         return self.siguiente_revision
     
+def mostrarCoches(lista):
+    for i in lista:
+        print(i.mostrar())
 
-m=input("¿Qué marca es el coche?: ").lower()
-mo=input("¿Qué modelo es el coche?: ").lower()
-po=int(input("¿Cuánta potencia tiene el coche?: "))
-co=input("¿De qué color es el coche?: ").lower()
-ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
-s=int(input("¿Cuál es la fecha de la siguiente revisión?: "))
+lista_coches=[]
+salir=False
 
+while not salir:
 
-coche1=Coche(m,mo,po,co,ma,s)
+    programa=input("¿Quieres seguir con el programa? S/N: ").upper()
+    if programa=='N':
+        salir=True
+        print("Has salido del programa")
 
-coche2=Coche(m,mo,po,co,ma,s)
+    if programa=='S':
+        m=input("¿Qué marca es el coche?: ").lower()
+        mo=input("¿Qué modelo es el coche?: ").lower()
+        po=int(input("¿Cuánta potencia tiene el coche?: "))
+        co=input("¿De qué color es el coche?: ").lower()
+        ma=int(input("¿Cuándo fue el año de matriculación del coche?: "))
+        s=0
+        
+        cochecito=Coche(m,mo,po,co,ma,s)
+        cochecito.itv()
+        lista_coches.append(cochecito)
 
-coche3=Coche(m,mo,po,co,ma,s)
+mostrarCoches(lista_coches)
+    
