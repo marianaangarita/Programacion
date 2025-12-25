@@ -28,8 +28,17 @@ class Personaje():
         self.ataque=ataque
         self.defensa=defensa
     
+    def get_nombre(self):
+        return self.nombre
+    
+    def get_ataque(self):
+        return self.ataque
+    
     def get_salud(self):
         return self.salud
+    
+    def get_defensa(self):
+        return self.defensa
     
     def set_salud(self, s):
         self.salud=s
@@ -38,54 +47,75 @@ class Personaje():
         self.ataque=random.randint(1,10)
         
     def atacar(self,personaje):
-        personaje.salud = personaje.salud-self.ataque
+
+        daño=self.ataque - personaje.defensa
+
+        if daño<0:
+            daño=0
+        
+        personaje.salud = personaje.salud - daño
+
+        if personaje.salud<0:
+            personaje.set_salud(0)
+    
 
     def info(self):
         return(f"Nombre: {self.nombre}, Salud: {self.salud}, Ataque: {self.ataque}, Defensa: {self.defensa}")
 
-personaje1=Personaje("Mariana", 20, 2, 10)
+personaje1=Personaje("Gamora", 25, 2, 3)
 
-enemigo1=Personaje("Carlos", 25, 3, 10)
+enemigo1=Personaje("Thanos", 25, 3, 4)
 
 
 while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
+    print("  ")
 
     print(enemigo1.info())
 
+    print("  ")
+
     print(personaje1.info())
 
-    lucha=input("Deseas atacar al enemigo (S/N): ").upper()
+    print("  ")
+    lucha=input("¿Deseas atacar al enemigo? (S/N): ").upper()
 
     match lucha:
 
         case 'S':
             personaje1.set_ataque()
             personaje1.atacar(enemigo1)
-            print(enemigo1.get_salud())
+            print(f"{personaje1.get_nombre()} ha atacado con {personaje1.get_ataque()} de daño a {enemigo1.get_nombre()}, bloquea con {enemigo1.get_defensa()} de defensa, ahora tiene: {enemigo1.get_salud()} de salud")
 
             if enemigo1.get_salud()>0:
-                print("El enemigo ataca")
+                print("  ")
+                
+                print("El enemigo ataca: ")
+
                 enemigo1.set_ataque()
                 enemigo1.atacar(personaje1)
-                print(personaje1.get_salud())
+
+                print(f"{enemigo1.get_nombre()} ha atacado con {enemigo1.get_ataque()} de daño a {personaje1.get_nombre()}, bloquea con {personaje1.get_defensa()} de defensa, ahora tiene: {personaje1.get_salud()} de salud")
 
                 if personaje1.get_salud()>0:
+                    print("  ")
                     print("Que siga el combate")
                 
                 else:
+                    print("  ")
                     print("Lo siento...has perdido")
 
             else:
-                enemigo1.set_salud(0)
-
+                print("  ")
                 print("¡Has ganado!")
 
             
         case 'N':
             personaje1.set_salud(0)
+            print("  ")
             print("Has salido del programa")
 
         case other:
+            print("  ")
             print("Opción incorrecta")
 
     
