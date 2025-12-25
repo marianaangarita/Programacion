@@ -10,7 +10,7 @@ set_precio(x): Modifica el precio del producto.
 set_descripcion(x): Modifica la descripción del producto.
 '''
 
-class Productos():
+class Producto():
     
     def __init__(self,n,p,d):
         self.nombre=n
@@ -36,12 +36,18 @@ class Productos():
         self.descripcion=d
 
 
-producto1=Productos("pendiente",20,"Pediente de plata con circonitas")
+producto1=Producto("pendiente",20,"Pediente de plata con circonitas")
 
-producto2=Productos("anillo",15,"anillo de plata con circonitas")
+producto2=Producto("anillo",15,"anillo de plata con circonitas")
 
 print(producto1.get_nombre())
 
 producto1.set_nombre("collar")
 
 print(producto1.get_nombre())
+
+print(producto1.get_precio())
+
+producto1.set_precio(5)
+
+print(producto1.get_precio())
