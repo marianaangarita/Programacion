@@ -85,4 +85,7 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
             personaje1.set_salud(0)
             print("Has salido del programa")
 
+        case other:
+            print("Opción incorrecta")
+
     
