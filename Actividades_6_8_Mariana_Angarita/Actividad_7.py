@@ -39,7 +39,7 @@ class Libro():
         return self.paginas
     
     def info(self):
-        return (f"Titulo: {self.get_titulo()}, Autor: {self.get_autor()}, Género: {self.get_genero()}, Número de Páginas: {self.get_genero()}")
+        return (f"Titulo: {self.get_titulo()}, Autor: {self.get_autor()}, Género: {self.get_genero()}, Número de Páginas: {self.get_paginas()}")
     
     def set_titulo(self,titulo):
         self.titulo=titulo
@@ -53,22 +53,77 @@ class Libro():
     def set_paginas(self, paginas):
         self.paginas=paginas
     
-menu=["ATRIBUTOS LIBRO", "INFO", "SALIR"]
+menu=["ATRIBUTOS LIBRO", "INFO", "MODIFICAR", "SALIR"]
 
 lista_libros=[]
 
+mod_libro=["TÍTULO", "AUTOR", "GÉNERO", "NÚMERO DE PÁGINAS"]
+
+def modificar_libro():
+    for indice, valor in enumerate(mod_libro):
+        print(f"Pulsa {indice}: {valor}")
+    
+    opcion_elegida=int(input("Elige una opción: "))
+
+    match opcion_elegida:
+
+        case 1:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            titulo=input("Escoge un nuevo titulo: ").lower()
+
+            lista_libros[opcion_libro].set_titulo(titulo)
+
+            print("Título cambiado")
+
+        case 2:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            autor=input("Escoge un nuevo titulo: ").lower()
+
+            lista_libros[opcion_libro].set_autor(autor)
+
+            print("Autor cambiado")
+
+        case 3:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            genero=input("Escoge un nuevo titulo: ").lower()
+
+            lista_libros[opcion_libro].set_genero(genero)
+
+            print("Género cambiado")
+
+        case 4:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            paginas=int(input("Escoge un nuevo titulo: "))
+
+            lista_libros[opcion_libro].set_paginas(paginas)
+
+            print("Número de páginas cambiado")
+
+        case other:
+            print("Opción incorrecta")
+
 def catalogo_libros():
     for indice in lista_libros:
-        return indice.info()
+        print(indice.info()) 
 
 def menu_principal():
-
+    print("MENÚ PRINCIPAL")
     print("***************************")
 
-    print("MENÚ PRINCIPAL")
-
     for indice,valor in enumerate(menu,1):
-        return(f"Pulsa {indice}: {valor}")
+        print(f"Pulsa {indice}: {valor}")
     
     print("***************************")
 
@@ -86,7 +141,7 @@ while not salir:
             print(f"Has elegido {menu[opcion-1]}")
 
             titulo=input("Indica el título del libro: ").lower()
-            autor=input("Indica el autor del libro").lower()
+            autor=input("Indica el autor del libro: ").lower()
             genero=input("Indica el género del libro: ").lower()
             paginas=int(input("Indica el número de páginas del libro: "))
 
@@ -104,13 +159,24 @@ while not salir:
             else:
                 print("Lista vacía, ve primero a la opción 1")
 
+        
         case 3:
+            print(f"Has elegido {menu[opcion-1]}")
+
+            if len(lista_libros)>0:
+
+                modificar_libro()
+
+            else:
+                print("Lista vacía, ve primero a la opción 1")
+
+        case 4:
             print(f"Has elegido {menu[opcion-1]}")
 
             salir=True
 
             print("Has salido del programa")
-            
+
         case other:
             print("Opción no válida, pulsa 1, 2 o 3")
 
