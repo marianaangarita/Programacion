@@ -28,8 +28,17 @@ class Personaje():
         self.ataque=ataque
         self.defensa=defensa
     
+    def get_nombre(self):
+        return self.nombre
+    
+    def get_ataque(self):
+        return self.ataque
+    
     def get_salud(self):
         return self.salud
+    
+    def get_defensa(self):
+        return self.defensa
     
     def set_salud(self, s):
         self.salud=s
@@ -38,14 +47,22 @@ class Personaje():
         self.ataque=random.randint(1,10)
         
     def atacar(self,personaje):
-        personaje.salud = personaje.salud-self.ataque
+
+        daño=self.ataque - personaje.defensa
+
+        if daño<0:
+            daño=0
+        
+        personaje.salud = personaje.salud - daño
+
+        
 
     def info(self):
         return(f"Nombre: {self.nombre}, Salud: {self.salud}, Ataque: {self.ataque}, Defensa: {self.defensa}")
 
-personaje1=Personaje("Mariana", 20, 2, 10)
+personaje1=Personaje("Gamora", 20, 2, 10)
 
-enemigo1=Personaje("Carlos", 25, 3, 10)
+enemigo1=Personaje("Thanos", 25, 3, 10)
 
 
 while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
@@ -61,13 +78,13 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
         case 'S':
             personaje1.set_ataque()
             personaje1.atacar(enemigo1)
-            print(enemigo1.get_salud())
+            print(f"{personaje1.get_nombre()} ha atacado con {personaje1.get_ataque()} de daño a {enemigo1.get_nombre()}, ahora tiene: {enemigo1.get_salud()} de salud")
 
             if enemigo1.get_salud()>0:
                 print("El enemigo ataca")
                 enemigo1.set_ataque()
                 enemigo1.atacar(personaje1)
-                print(personaje1.get_salud())
+                print(f"{enemigo1.get_nombre()} ha atacado con {enemigo1.get_ataque()} de daño a {enemigo1.get_nombre()}, ahora tiene: {personaje1.get_salud()}")
 
                 if personaje1.get_salud()>0:
                     print("Que siga el combate")
@@ -76,8 +93,6 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
                     print("Lo siento...has perdido")
 
             else:
-                enemigo1.set_salud(0)
-
                 print("¡Has ganado!")
 
             
