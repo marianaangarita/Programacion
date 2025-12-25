@@ -58,8 +58,8 @@ menu=["ATRIBUTOS LIBRO", "INFO", "SALIR"]
 lista_libros=[]
 
 def catalogo_libros():
-    for indice, valor in enumerate(lista_libros):
-        return(f"Pulsa {indice}: {valor}")
+    for indice in lista_libros:
+        return indice.info()
 
 def menu_principal():
 
@@ -98,12 +98,19 @@ while not salir:
             print(f"Has elegido {menu[opcion-1]}")
 
             if len(lista_libros)>0:
-                libro_elegido=int(input("Elige una opción: "))
+
+                catalogo_libros()
+    
             else:
                 print("Lista vacía, ve primero a la opción 1")
 
         case 3:
             print(f"Has elegido {menu[opcion-1]}")
+
+            salir=True
+
+            print("Has salido del programa")
+            
         case other:
             print("Opción no válida, pulsa 1, 2 o 3")
 
