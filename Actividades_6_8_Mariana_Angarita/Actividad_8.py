@@ -84,7 +84,7 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
         case 'S':
             personaje1.set_ataque()
             personaje1.atacar(enemigo1)
-            print(f"{personaje1.get_nombre()} ha atacado con {personaje1.get_ataque()} de daño a {enemigo1.get_nombre()}, contraataca con {enemigo1.get_defensa()} de defensa, ahora tiene: {enemigo1.get_salud()} de salud")
+            print(f"{personaje1.get_nombre()} ha atacado con {personaje1.get_ataque()} de daño a {enemigo1.get_nombre()}, bloquea con {enemigo1.get_defensa()} de defensa, ahora tiene: {enemigo1.get_salud()} de salud")
 
             if enemigo1.get_salud()>0:
                 print("  ")
@@ -94,7 +94,7 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
                 enemigo1.set_ataque()
                 enemigo1.atacar(personaje1)
 
-                print(f"{enemigo1.get_nombre()} ha atacado con {enemigo1.get_ataque()} de daño a {personaje1.get_nombre()}, contraaca con {personaje1.get_defensa()} de defensa, ahora tiene: {personaje1.get_salud()} de salud")
+                print(f"{enemigo1.get_nombre()} ha atacado con {enemigo1.get_ataque()} de daño a {personaje1.get_nombre()}, bloquea con {personaje1.get_defensa()} de defensa, ahora tiene: {personaje1.get_salud()} de salud")
 
                 if personaje1.get_salud()>0:
                     print("  ")
