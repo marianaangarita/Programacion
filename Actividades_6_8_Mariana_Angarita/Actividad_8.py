@@ -55,7 +55,9 @@ class Personaje():
         
         personaje.salud = personaje.salud - daño
 
-        
+        if personaje.salud<0:
+            personaje.set_salud(0)
+    
 
     def info(self):
         return(f"Nombre: {self.nombre}, Salud: {self.salud}, Ataque: {self.ataque}, Defensa: {self.defensa}")
@@ -66,11 +68,15 @@ enemigo1=Personaje("Thanos", 25, 3, 4)
 
 
 while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
+    print("  ")
 
     print(enemigo1.info())
 
+    print("  ")
+
     print(personaje1.info())
 
+    print("  ")
     lucha=input("¿Deseas atacar al enemigo? (S/N): ").upper()
 
     match lucha:
@@ -78,11 +84,12 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
         case 'S':
             personaje1.set_ataque()
             personaje1.atacar(enemigo1)
-
             print(f"{personaje1.get_nombre()} ha atacado con {personaje1.get_ataque()} de daño a {enemigo1.get_nombre()}, contraataca con {enemigo1.get_defensa()} de defensa, ahora tiene: {enemigo1.get_salud()} de salud")
 
             if enemigo1.get_salud()>0:
-                print("El enemigo ataca")
+                print("  ")
+                
+                print("El enemigo ataca: ")
 
                 enemigo1.set_ataque()
                 enemigo1.atacar(personaje1)
@@ -90,21 +97,25 @@ while personaje1.get_salud()>0 and enemigo1.get_salud()>0:
                 print(f"{enemigo1.get_nombre()} ha atacado con {enemigo1.get_ataque()} de daño a {personaje1.get_nombre()}, contraaca con {personaje1.get_defensa()} de defensa, ahora tiene: {personaje1.get_salud()} de salud")
 
                 if personaje1.get_salud()>0:
-
+                    print("  ")
                     print("Que siga el combate")
                 
                 else:
+                    print("  ")
                     print("Lo siento...has perdido")
 
             else:
+                print("  ")
                 print("¡Has ganado!")
 
             
         case 'N':
             personaje1.set_salud(0)
+            print("  ")
             print("Has salido del programa")
 
         case other:
+            print("  ")
             print("Opción incorrecta")
 
     
