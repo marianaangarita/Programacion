@@ -65,7 +65,7 @@ def mostrar_libros():
 
 def catalogo_libros():
     for indice, valor in enumerate(lista_libros):
-        print(f"Pulsa {indice}: {valor.info()}") 
+        print(f"Pulsa {indice}: {valor.get_titulo()}") 
 
 
 def modificar_libro():
