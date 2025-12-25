@@ -61,8 +61,11 @@ def mostrarCoches(lista):
         print(i.mostrar())
 
 lista_coches=[]
+
 salir=False
-opciones=["CREAR OBJETO", "DESCELERAR", "ACELERAR", "MOSTRAR", "SALIR"]
+
+opciones=["CREAR OBJETO", "FRENAR", "ACELERAR", "MOSTRAR", "SALIR"]
+
 def menu_principal():
     print("***************")
     print("Menú Principal")
@@ -70,10 +73,15 @@ def menu_principal():
         print(f"Pulsa {indice}: {valor}")
     print("***************")
 
+def modificar_coche():
+    for indice, valor in enumerate (lista_coches):
+        print(f"Pulsa {indice}: {valor.mostrar()}")
+    
+    
+
 
 while not salir:
 
-    
 
     menu_principal()
     programa=int(input("Elige una de las siguientes opciones: "))
@@ -94,15 +102,28 @@ while not salir:
             lista_coches.append(cochecito)
     
         case 2:
-            cochecito.frenar()
-            print("Has reducido los caballos del coche")
+            if len(lista_coches)>0:
+                modificar_coche()
+                coche_elegido=int(input("¿Qué coche quieres modificar?: "))
+                lista_coches[coche_elegido].frenar()
+                print("Has reducido los caballos del coche")
+            else:
+                print("Lista vacía, primero selecciona la opción 1")
 
         case 3:
-            cochecito.acelerar()
-            print("Has aumentado los caballos del coche")
+            if len(lista_coches)>0:
+                modificar_coche()
+                coche_elegido=int(input("¿Qué coche quieres modificar?"))
+                lista_coches[coche_elegido].acelerar()
+                print("Has aumentado los caballos del coche")
+            else:
+               print("Lista vacía, primero selecciona la opción 1") 
 
         case 4:
-            mostrarCoches(lista_coches)  
+            if len(lista_coches)>0:
+                mostrarCoches(lista_coches)  
+            else:
+              print("Lista vacía, primero selecciona la opción 1")   
 
         case 5:
             salir=True
