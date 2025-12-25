@@ -1,0 +1,189 @@
+'''
+Actividad 07. Clase Libros
+En esta actividad, vamos a crear una clase en Python que represente un libro. La clase debe tener los siguientes atributos:
+titulo: El título del libro.
+autor: El autor del libro.
+genero: El género del libro.
+paginas: El número de páginas del libro.
+
+
+Además, la clase debe tener los siguientes métodos:
+init(self, titulo, autor, genero, paginas): El método constructor de la clase.
+get_titulo(self): El método que devuelve el título del libro.
+get_autor(self): El método que devuelve el autor del libro.
+get_genero(self): El método que devuelve el género del libro.
+get_paginas(self): El método que devuelve el número de páginas del libro.
+set_titulo(self, titulo): El método que establece el título del libro.
+set_autor(self, autor): El método que establece el autor del libro.
+set_genero(self, genero): El método que establece el género del libro.
+set_paginas(self, paginas): El método que establece el número de páginas del libro.
+'''
+
+class Libro():
+    def __init__(self,titulo,autor,genero,paginas):
+        self.titulo=titulo
+        self.autor=autor
+        self.genero=genero
+        self.paginas=paginas
+    
+    def get_titulo(self):
+        return self.titulo
+    
+    def get_autor(self):
+        return self.autor
+    
+    def get_genero(self):
+        return self.genero
+    
+    def get_paginas(self):
+        return self.paginas
+    
+    def info(self):
+        return (f"Titulo: {self.get_titulo()}, Autor: {self.get_autor()}, Género: {self.get_genero()}, Número de Páginas: {self.get_paginas()}")
+    
+    def set_titulo(self,titulo):
+        self.titulo=titulo
+    
+    def set_autor(self, autor):
+        self.autor=autor
+    
+    def set_genero(self, genero):
+        self.genero=genero
+    
+    def set_paginas(self, paginas):
+        self.paginas=paginas
+    
+menu=["ATRIBUTOS LIBRO", "INFO", "MODIFICAR", "SALIR"]
+
+lista_libros=[]
+
+mod_libro=["TÍTULO", "AUTOR", "GÉNERO", "NÚMERO DE PÁGINAS"]
+
+def mostrar_libros():
+    for libro in lista_libros:
+        print(libro.info())
+
+def catalogo_libros():
+    for indice, valor in enumerate(lista_libros):
+        print(f"Pulsa {indice}: {valor.info()}") 
+
+
+def modificar_libro():
+    for indice, valor in enumerate(mod_libro,1):
+        print(f"Pulsa {indice}: {valor}")
+    
+    opcion_elegida=int(input("Elige una opción: "))
+
+    match opcion_elegida:
+
+        case 1:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            titulo=input("Escoge un nuevo titulo: ").lower()
+
+            lista_libros[opcion_libro].set_titulo(titulo)
+
+            print("Título cambiado")
+
+        case 2:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            autor=input("Escoge un nuevo autor: ").lower()
+
+            lista_libros[opcion_libro].set_autor(autor)
+
+            print("Autor cambiado")
+
+        case 3:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            genero=input("Escoge un nuevo género: ").lower()
+
+            lista_libros[opcion_libro].set_genero(genero)
+
+            print("Género cambiado")
+
+        case 4:
+            catalogo_libros()
+
+            opcion_libro=int(input("Elige un libro: "))
+
+            paginas=int(input("Escoge un nuevo número de páginas: "))
+
+            lista_libros[opcion_libro].set_paginas(paginas)
+
+            print("Número de páginas cambiado")
+
+        case other:
+            print("Opción incorrecta")
+
+
+def menu_principal():
+    print("MENÚ PRINCIPAL")
+    print("***************************")
+
+    for indice,valor in enumerate(menu,1):
+        print(f"Pulsa {indice}: {valor}")
+    
+    print("***************************")
+
+salir=False
+
+while not salir:
+    menu_principal()
+
+    opcion=int(input("Elige una opción: "))
+
+    match opcion:
+
+        case 1:
+
+            print(f"Has elegido {menu[opcion-1]}")
+
+            titulo=input("Indica el título del libro: ").lower()
+            autor=input("Indica el autor del libro: ").lower()
+            genero=input("Indica el género del libro: ").lower()
+            paginas=int(input("Indica el número de páginas del libro: "))
+
+            libro=Libro(titulo,autor,genero,paginas)
+
+            lista_libros.append(libro)
+
+        case 2:
+            print(f"Has elegido {menu[opcion-1]}")
+
+            if len(lista_libros)>0:
+
+                mostrar_libros()
+    
+            else:
+                print("Lista vacía, ve primero a la opción 1")
+
+        
+        case 3:
+            print(f"Has elegido {menu[opcion-1]}")
+
+            if len(lista_libros)>0:
+
+                modificar_libro()
+
+            else:
+                print("Lista vacía, ve primero a la opción 1")
+
+        case 4:
+            print(f"Has elegido {menu[opcion-1]}")
+
+            salir=True
+
+            print("Has salido del programa")
+
+        case other:
+            print("Opción no válida, pulsa 1, 2 o 3")
+
+
