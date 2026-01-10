@@ -17,26 +17,32 @@ class Vehiculo():
         self.ruedas=ruedas
         self.velocidad=0
     def acelerar(self,a):
-        Velocidad_final=self.velocidad+(a*1)
-        return(f"La velocidad final del vehículo es {Velocidad_final} m/s")
+        self.velocidad=self.velocidad+(a*1)
+        print(f"La velocidad final del vehículo es {self.velocidad} m/s")
     
 class Coche(Vehiculo):
     def __init__(self, ruedas, puertas):
         super().__init__(ruedas)
         self.puertas=puertas
     def acelerar(self,a):
-        Velocidad_final=self.velocidad+(a*1)
-        return(f"La velocidad final del coche es {Velocidad_final} m/s")
+        self.velocidad=self.velocidad+(a*1)
+        print(f"La velocidad final del coche es {self.velocidad} m/s")
+    def info(self):
+        return (f" El coche tiene {self.ruedas} ruedas, y tiene una velocidad de {self.velocidad} m/s.")
     
 class Bicicleta(Vehiculo):
     def __init__(self, ruedas, tipo):
         super().__init__(ruedas)
         self.tipo=tipo
     def acelerar(self,a):
-        Velocidad_final=self.velocidad+(a*1)
-        return(f"La velocidad final de la bicicleta es {Velocidad_final} m/s")
+        self.velocidad=self.velocidad+(a*1)
+        print(f"La velocidad final de la bicicleta es {self.velocidad} m/s")
+    def info(self):
+        return (f" La bicicleta tiene {self.ruedas} ruedas, es de tipo {self.tipo}, y tiene una velocidad de {self.velocidad} m/s.")
     
 coche = Coche(ruedas=4, puertas=4)
 bicicleta = Bicicleta(ruedas=2, tipo="Montaña")
-print(coche.acelerar(30))
-print(bicicleta.acelerar(15))
+coche.acelerar(30)
+bicicleta.acelerar(15)
+print(bicicleta.info())
+print(coche.info())

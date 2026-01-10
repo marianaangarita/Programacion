@@ -14,20 +14,19 @@ pez.nadar()     # Salida: El pez nada en el agua
 '''
 
 class Animal():
-    @staticmethod
-    def mover():
+    def mover(self):
         print ("el animal se mueve saltando")
+
 class Pajaro(Animal):
-    @staticmethod
-    def volar():
+    def volar(self):
         print ("El pájaro vuela por el cielo")
 
 class Pez(Animal):
-    @staticmethod
-    def mover():
+
+    def mover(self):
         print ("el animal se mueve arrastrandose")
-    @staticmethod
-    def nadar():
+  
+    def nadar(self):
         print ("El pez nada en el agua")
 
 pajaro = Pajaro()
