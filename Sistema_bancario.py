@@ -28,18 +28,18 @@ class CuentaBancaria():
     def obtener_saldo(self):
         return(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
     
-    def depositar_dinero(self,dinero):
+    def depositar(self,dinero):
         self.saldo=self.saldo + dinero
         print("Depósito completado.")
 
-    def retirar_dinero(self, dinero):
+    def retirar(self, dinero):
         if dinero>self.saldo:
             print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
         else:
             self.saldo=self.saldo-dinero
             print(f"Retiro de {dinero}€ completado.")
 
-    def transferir_dinero(self, dinero, cuenta):
+    def transferir(self, dinero, cuenta):
         if dinero>self.saldo:
             print("Iniciando Transferencia...")
             print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
@@ -57,7 +57,7 @@ class CuentaRecompensas(CuentaBancaria):
     def __init__(self, nombre, saldo):
         super().__init__(nombre, saldo)
 
-    def depositar_dinero(self,dinero):
+    def depositar(self,dinero):
         interes=dinero*0.05
         self.saldo=self.saldo + dinero + interes
         print("Depósito completado con recompensas de interés.")
@@ -66,19 +66,19 @@ class CuentaAhorros(CuentaBancaria):
     def __init__(self, nombre, saldo):
         super().__init__(nombre, saldo)
 
-    def depositar_dinero(self,dinero):
+    def depositar(self,dinero):
         interes=dinero*0.05
         self.saldo=self.saldo + dinero + interes
         print("Depósito completado con recompensas de interés.")
     
-    def retirar_dinero(self, dinero):
+    def retirar(self, dinero):
         if dinero+5>self.saldo:
             print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
         else:
             self.saldo=self.saldo-5-dinero
             print(f"Retiro de {dinero}€ completado con tarifa de retiro.")
 
-    def transferir_dinero(self, dinero, cuenta):
+    def transferir(self, dinero, cuenta):
         if dinero>self.saldo:
             print("Iniciando Transferencia...")
             print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
@@ -91,3 +91,38 @@ class CuentaAhorros(CuentaBancaria):
             print("Depósito Completado.")
             print(f"Saldo de la cuenta {cuenta.nombre}= {cuenta.saldo}€")
             print("Transferencia Completada!")
+
+Cuenta1 = CuentaBancaria(1000, "Cliente1")
+
+Cuenta1.obtener_saldo()
+
+Cuenta1.retirar(10000)
+
+Cuenta1.retirar(10)
+
+Cuenta2 = CuentaBancaria(2000, "Cliente2")
+
+Cuenta2.obtener_saldo()
+
+Cuenta2.depositar(500)
+
+Cuenta1.transferir(10000, Cuenta2) # Fallida
+
+Cuenta2.transferir(100, Cuenta1) # Correcta
+
+CuentaInteres = CuentaRecompensas(1000, "CuentaInteres")
+
+CuentaInteres.obtener_saldo()
+
+CuentaInteres.depositar(100)
+
+CuentaAhorros1 = CuentaAhorros(1000, "CuentaAhorros")
+
+CuentaAhorros1.obtener_saldo()
+
+CuentaAhorros1.depositar(100)
+
+CuentaAhorros1.transferir(10000, Cuenta2)
+
+CuentaAhorros1.transferir(1000, Cuenta2)
+
