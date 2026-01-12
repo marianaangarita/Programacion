@@ -21,6 +21,9 @@ class Persona():
                 self.posY=self.posY+1
                 self.resistencia=self.resistencia-1
                 self.mostrarPos()
+        else:
+            salir=True
+            print("Has perdido...te has quedado sin resistencia")
 
     def abajo(self):
         if self.resistencia>0:
@@ -30,6 +33,9 @@ class Persona():
                 self.posY=self.posY-1
                 self.resistencia=self.resistencia-1
                 self.mostrarPos()
+        else:
+            salir=True
+            print("Has perdido...te has quedado sin resistencia")
 
     def izquierda(self):
         if self.resistencia>0:
@@ -39,6 +45,9 @@ class Persona():
                 self.posX=self.posX-1
                 self.resistencia=self.resistencia-1
                 self.mostrarPos()
+        else:
+            salir=True
+            print("Has perdido...te has quedado sin resistencia")
 
     def derecha(self):
         if self.resistencia>0:
@@ -48,6 +57,9 @@ class Persona():
                 self.posX=self.posX+1
                 self.resistencia=self.resistencia-1
                 self.mostrarPos()
+        else:
+            salir=True
+            print("Has perdido...te has quedado sin resistencia")
 
     def teletransporte(self,x,y):
         if self.resistencia>5:
@@ -66,6 +78,8 @@ p=Persona(1.80,"Mariana", 10,0,0)
 p.mostrarPos()
 
 enemigo=Persona(1.5,"Drácula",10,random.randint(0,5), random.randint(0,5))
+
+enemigo.mostrarPos()
 
 opciones=["ARRIBA","ABAJO","IZQUIERDA","DERECHA","TELETRANSPORTE", "SALIR"]
 
