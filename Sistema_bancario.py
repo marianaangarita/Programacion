@@ -21,12 +21,10 @@ class CuentaBancaria():
     def __init__(self,nombre,saldo):
         self.nombre=nombre
         self.saldo=saldo
-
-    def inicializar_cuenta(self):
-        return(f"Cuenta {self.nombre} creada. Saldo {self.saldo}€.")
+        print(f"Cuenta {self.nombre} creada. Saldo {self.saldo}€.")
 
     def obtener_saldo(self):
-        return(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
+        print(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
     
     def depositar(self,dinero):
         self.saldo=self.saldo + dinero
@@ -42,15 +40,15 @@ class CuentaBancaria():
     def transferir(self, dinero, cuenta):
         if dinero>self.saldo:
             print("Iniciando Transferencia...")
-            print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
+            print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}€.")
         else:
             print("Iniciando Transferencia...")
-            self.retirar_dinero(dinero)
-            cuenta.depositar_dinero(dinero)
+            self.retirar(dinero)
+            cuenta.depositar(dinero)
             print(f"Retiro de {dinero}€ completado.")
-            print(f"Saldo de la cuenta {self.nombre}= {self.saldo}€")
+            print(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
             print("Depósito Completado.")
-            print(f"Saldo de la cuenta {cuenta.nombre}= {cuenta.saldo}€")
+            print(f"Saldo de la cuenta {cuenta.nombre} = {cuenta.saldo}€")
             print("Transferencia Completada!")
 
 class CuentaRecompensas(CuentaBancaria):
@@ -73,26 +71,26 @@ class CuentaAhorros(CuentaBancaria):
     
     def retirar(self, dinero):
         if dinero+5>self.saldo:
-            print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
+            print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}€.")
         else:
             self.saldo=self.saldo-5-dinero
             print(f"Retiro de {dinero}€ completado con tarifa de retiro.")
 
     def transferir(self, dinero, cuenta):
-        if dinero>self.saldo:
+        if dinero+5>self.saldo:
             print("Iniciando Transferencia...")
-            print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
+            print(f"Transferencia fallida: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}€.")
         else:
             print("Iniciando Transferencia...")
-            self.retirar_dinero(dinero)
-            cuenta.depositar_dinero(dinero)
+            self.retirar(dinero)
+            cuenta.depositar(dinero)
             print(f"Retiro de {dinero}€ completado con tarifa de retiro.")
-            print(f"Saldo de la cuenta {self.nombre}= {self.saldo}€")
+            print(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
             print("Depósito Completado.")
-            print(f"Saldo de la cuenta {cuenta.nombre}= {cuenta.saldo}€")
+            print(f"Saldo de la cuenta {cuenta.nombre} = {cuenta.saldo}€")
             print("Transferencia Completada!")
 
-Cuenta1 = CuentaBancaria(1000, "Cliente1")
+Cuenta1 = CuentaBancaria("Cliente1", 1000)
 
 Cuenta1.obtener_saldo()
 
@@ -100,7 +98,7 @@ Cuenta1.retirar(10000)
 
 Cuenta1.retirar(10)
 
-Cuenta2 = CuentaBancaria(2000, "Cliente2")
+Cuenta2 = CuentaBancaria("Cliente2", 2000)
 
 Cuenta2.obtener_saldo()
 
@@ -110,17 +108,19 @@ Cuenta1.transferir(10000, Cuenta2) # Fallida
 
 Cuenta2.transferir(100, Cuenta1) # Correcta
 
-CuentaInteres = CuentaRecompensas(1000, "CuentaInteres")
+CuentaInteres = CuentaRecompensas("CuentaInteres", 1000)
 
 CuentaInteres.obtener_saldo()
 
 CuentaInteres.depositar(100)
 
-CuentaAhorros1 = CuentaAhorros(1000, "CuentaAhorros")
+CuentaAhorros1 = CuentaAhorros("CuentaAhorros1", 1000)
 
 CuentaAhorros1.obtener_saldo()
 
 CuentaAhorros1.depositar(100)
+
+CuentaAhorros1.obtener_saldo()
 
 CuentaAhorros1.transferir(10000, Cuenta2)
 
