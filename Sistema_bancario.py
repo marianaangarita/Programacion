@@ -21,6 +21,8 @@ class CuentaBancaria():
     def __init__(self,nombre,saldo):
         self.nombre=nombre
         self.saldo=saldo
+    
+    def inicializar_cuenta(self):
         print(f"Cuenta {self.nombre} creada. Saldo {self.saldo}€.")
 
     def obtener_saldo(self):
@@ -32,7 +34,7 @@ class CuentaBancaria():
 
     def retirar(self, dinero):
         if dinero>self.saldo:
-            print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}.")
+            print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}€.")
         else:
             self.saldo=self.saldo-dinero
             print(f"Retiro de {dinero}€ completado.")
@@ -45,9 +47,7 @@ class CuentaBancaria():
             print("Iniciando Transferencia...")
             self.retirar(dinero)
             cuenta.depositar(dinero)
-            print(f"Retiro de {dinero}€ completado.")
             print(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
-            print("Depósito Completado.")
             print(f"Saldo de la cuenta {cuenta.nombre} = {cuenta.saldo}€")
             print("Transferencia Completada!")
 
@@ -84,45 +84,60 @@ class CuentaAhorros(CuentaBancaria):
             print("Iniciando Transferencia...")
             self.retirar(dinero)
             cuenta.depositar(dinero)
-            print(f"Retiro de {dinero}€ completado con tarifa de retiro.")
             print(f"Saldo de la cuenta {self.nombre} = {self.saldo}€")
-            print("Depósito Completado.")
             print(f"Saldo de la cuenta {cuenta.nombre} = {cuenta.saldo}€")
             print("Transferencia Completada!")
 
 Cuenta1 = CuentaBancaria("Cliente1", 1000)
+print("  ")
 
 Cuenta1.obtener_saldo()
+print("  ")
 
 Cuenta1.retirar(10000)
+print("  ")
 
 Cuenta1.retirar(10)
+print("  ")
 
 Cuenta2 = CuentaBancaria("Cliente2", 2000)
+print("  ")
 
 Cuenta2.obtener_saldo()
+print("  ")
 
 Cuenta2.depositar(500)
+print("  ")
 
 Cuenta1.transferir(10000, Cuenta2) # Fallida
+print("  ")
 
 Cuenta2.transferir(100, Cuenta1) # Correcta
+print("  ")
 
 CuentaInteres = CuentaRecompensas("CuentaInteres", 1000)
+print("  ")
 
 CuentaInteres.obtener_saldo()
+print("  ")
 
 CuentaInteres.depositar(100)
+print("  ")
 
 CuentaAhorros1 = CuentaAhorros("CuentaAhorros1", 1000)
+print("  ")
 
 CuentaAhorros1.obtener_saldo()
+print("  ")
 
 CuentaAhorros1.depositar(100)
+print("  ")
 
 CuentaAhorros1.obtener_saldo()
+print("  ")
 
 CuentaAhorros1.transferir(10000, Cuenta2)
+print("  ")
 
 CuentaAhorros1.transferir(1000, Cuenta2)
 
