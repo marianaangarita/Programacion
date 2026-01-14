@@ -1,5 +1,7 @@
 import random
 
+salir=False
+
 class Persona():
     def __init__(self,altura,nombre,resistencia,posX,posY):
         self.altura=altura
@@ -70,9 +72,13 @@ class Persona():
                 self.posY=y
                 self.resistencia=self.resistencia-5
                 self.mostrarPos()
-        
+        if self.resistencia<5:
+            print("No tienes resistencia suficiente para usar teletransporte.")
+        if self.resistencia<=0:
+            salir=True
+            print("Has perdido...te has quedado sin resistencia")
 
-salir=False
+
 
 p=Persona(1.80,"Mariana", 10,0,0)
 p.mostrarPos()
@@ -98,18 +104,43 @@ while not salir:
     match eleccion:
         case 1:
             p.arriba()
+            if p.mostrarPos()==enemigo.mostrarPos():
+                salir=True
+                print("¡Enhorabuena, has ganado!")
+            else:
+                print(f"Sigue intentndolo!, el enemigo está {enemigo.mostrarPos()}")
         case 2:
             p.abajo()
+            if p.mostrarPos()==enemigo.mostrarPos():
+                salir=True
+                print("¡Enhorabuena, has ganado!")
+            else:
+                print(f"Sigue intentndolo!, el enemigo está {enemigo.mostrarPos()}")
         case 3:
             p.izquierda()
+            if p.mostrarPos()==enemigo.mostrarPos():
+                salir=True
+                print("¡Enhorabuena, has ganado!")
+            else:
+                print(f"Sigue intentndolo!, el enemigo está {enemigo.mostrarPos()}")
         case 4:
             p.derecha()
+            if p.mostrarPos()==enemigo.mostrarPos():
+                salir=True
+                print("¡Enhorabuena, has ganado!")
+            else:
+                print(f"Sigue intentndolo!, el enemigo está {enemigo.mostrarPos()}")
         case 5:
             x=int(input("Escoge la nueva posición X"))
             y=int(input("Escoge la nueva posición Y"))
             p.teletransporte(x,y)
+            if p.mostrarPos()==enemigo.mostrarPos():
+                salir=True
+                print("¡Enhorabuena, has ganado!")
+            else:
+                print(f"Sigue intentndolo!, el enemigo está {enemigo.mostrarPos()}")
         case 6:
             salir=True
             print("Has salido del programa.")
         case other:
-            print("Opción incorrecta, pulsa del 1 al 5.")
+            print("Opción incorrecta, pulsa del 1 al 6.")
