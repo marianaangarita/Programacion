@@ -21,8 +21,6 @@ class CuentaBancaria():
     def __init__(self,nombre,saldo):
         self.nombre=nombre
         self.saldo=saldo
-    
-    def inicializar_cuenta(self):
         print(f"Cuenta {self.nombre} creada. Saldo {self.saldo}€.")
 
     def obtener_saldo(self):
@@ -64,11 +62,6 @@ class CuentaAhorros(CuentaBancaria):
     def __init__(self, nombre, saldo):
         super().__init__(nombre, saldo)
 
-    def depositar(self,dinero):
-        interes=dinero*0.05
-        self.saldo=self.saldo + dinero + interes
-        print("Depósito completado con recompensas de interés.")
-    
     def retirar(self, dinero):
         if dinero+5>self.saldo:
             print(f"Retiro interrumpido: Lo siento, la cuenta {self.nombre} solo tiene un saldo de {self.saldo}€.")
@@ -100,6 +93,9 @@ print("  ")
 Cuenta1.retirar(10)
 print("  ")
 
+Cuenta1.obtener_saldo()
+print("  ")
+
 Cuenta2 = CuentaBancaria("Cliente2", 2000)
 print("  ")
 
@@ -107,6 +103,9 @@ Cuenta2.obtener_saldo()
 print("  ")
 
 Cuenta2.depositar(500)
+print("  ")
+
+Cuenta2.obtener_saldo()
 print("  ")
 
 Cuenta1.transferir(10000, Cuenta2) # Fallida
@@ -122,6 +121,9 @@ CuentaInteres.obtener_saldo()
 print("  ")
 
 CuentaInteres.depositar(100)
+print("  ")
+
+CuentaInteres.obtener_saldo()
 print("  ")
 
 CuentaAhorros1 = CuentaAhorros("CuentaAhorros1", 1000)
