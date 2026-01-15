@@ -1,6 +1,6 @@
 import random
 
-salir=False
+
 
 class Persona():
     def __init__(self,altura,nombre,resistencia,posX,posY):
@@ -81,7 +81,7 @@ class Persona():
 
 
 p=Persona(1.80,"Mariana", 10,0,0)
-p.mostrarPos()
+
 
 enemigo=Persona(1.5,"Drácula",10,random.randint(0,5), random.randint(0,5))
 
