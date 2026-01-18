@@ -1,6 +1,16 @@
 import random
 
+class Pocion():
+    def __init__(self, nombre):
+        self.nombre=nombre
+        self.posX=random.randint(0,5)
+        self.posY=random.randint(0,5)
+        print(f"Poción {self.nombre} está en las coordenadas {self.posX} X:{self.posY} Y")
 
+    def mismaPosicion(self, personaje):
+        if self.posX==personaje.posX and self.posY==personaje.posY:
+            print(f"Has obtenido la poción {self.nombre}")
+            return True
 
 class Persona():
     def __init__(self,altura,nombre,resistencia,posX,posY):
@@ -81,17 +91,7 @@ class Persona():
             salir=True
             print("Has perdido...te has quedado sin resistencia")
 
-class Pocion():
-    def __init__(self, nombre):
-        self.nombre=nombre
-        self.posX=random.randint(0,5)
-        self.posY=random.randint(0,5)
-        print(f"Poción {self.nombre} está en las coordenadas {self.posX} X:{self.posY} Y")
 
-    def mismaPosicion(self, personaje):
-        if self.posX==personaje.posX and self.posY==personaje.posY:
-            print(f"Has obtenido la poción {self.nombre}")
-            return True
 
   
 
