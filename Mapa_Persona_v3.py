@@ -8,7 +8,7 @@ class Pocion():
         self.nombre=nombre
         self.posX=random.randint(0,5)
         self.posY=random.randint(0,5)
-        print(f"Poción {self.nombre} está en las coordenadas {self.posX} X:{self.posY} Y")
+        print(f"Poción {self.nombre} está en las coordenadas X: {self.posX}, Y: {self.posY}")
 
     def mismaPosicion(self, personaje):
         if self.posX==personaje.posX and self.posY==personaje.posY:
@@ -29,7 +29,7 @@ class Persona():
         self.posX=posX
         self.posY=posY
         self.salir=False
-        print(f"(Personaje creado, nombre: {self.nombre} Posición: X: {self.posX}, Y:{self.posY}). Resistencia= {self.resistencia}")
+        print(f"(Personaje creado, nombre: {self.nombre}. Posición: X: {self.posX}, Y: {self.posY}). Resistencia= {self.resistencia}")
 
     def mostrarPosicion(self):
         if self.resistencia>0:
@@ -41,19 +41,18 @@ class Persona():
             
             if self.posX==0 and self.posY==0:
                 self.resistencia=self.resistencia+10
+
             if Pociones:
                 for p in Pociones:
                     if p.mismaPosicion(self):
                         Pociones.remove(p)
                         self.resistencia=self.resistencia+10
-                        break
-                    
-            
+                        break   
         else:
             self.salir=True
             print("GAME OVER, te has quedado sin resistencia.")
             return self.salir
-        print(f"(X: {self.posX}, Y:{self.posY}). Resistencia= {self.resistencia}")
+        print(f"({self.nombre}. Posición X: {self.posX}, Y: {self.posY}). Resistencia= {self.resistencia}")
 
     def arriba(self):
         if self.resistencia>0:
@@ -118,7 +117,7 @@ class Persona():
                 self.mostrarPosicion()
         elif self.resistencia<=5:
             print("No tienes resistencia suficiente para usar el teletransporte.")
-        if self.resistencia<=0:
+        elif self.resistencia<=0:
             self.salir=True
             print("GAME OVER...te has quedado sin resistencia")
             return self.salir
@@ -127,10 +126,18 @@ class Persona():
         if self.resistencia>0:
             if self.posX==enemigo.posX and self.posY==enemigo.posY:
                 self.resistencia=self.resistencia-5
-                print(f"Has encontrado a {enemigo.nombre}, has ganado.")
-                self.salir=True
-                return self.salir
-
+                if self.resistencia<=0:
+                    self.salir=True
+                    print("GAME OVER...te has quedado sin resistencia")
+                    return self.salir
+                else:    
+                    print(f"Has encontrado a {enemigo.nombre}, ¡HAS GANADO!.")
+                    self.salir=True
+                    return self.salir
+        else:
+            self.salir=True
+            print("GAME OVER...te has quedado sin resistencia")
+            return self.salir
       
             
 p=Persona(1.80,"Carlos", 10,0,0)
@@ -140,10 +147,11 @@ enemigo=Persona(1.5,"Drácula",10,random.randint(0,5), random.randint(0,5))
 menu_opciones={"w": "Mover arriba", "s": "Mover abajo", "a": "Mover izquierda", "d": "Mover derecha", "t":"Teletransporte"}
 
 def menu():
+    print("*********************************")
     print("MENÚ PRIMCIPAL")
     print("*********************************")
     for clave, valor in menu_opciones.items():
-        print(f"Pulsa {clave}:{valor}")
+        print(f"Pulsa {clave}: {valor}")
     print("*********************************")
 
 while not p.salir:
