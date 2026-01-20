@@ -53,6 +53,7 @@ import random
 salir=False
 min_tablero=0
 max_tablero=4
+
 class Robot():
     def __init__(self, nombre):
         self.nombre=nombre
@@ -60,81 +61,78 @@ class Robot():
         self.bolsa_basura=0
         self.posX=0
         self.posY=0
-        (f"La roomba {self.nombre}, se encuentra en la posicion: {self.posX}: X, {self.posY}: Y, batería: {self.bateria}, bolsa de basura: {self.bolsa_basura}")
+        print(f"La roomba {self.nombre}, se encuentra en la posicion: {self.posX}: X, {self.posY}: Y, batería: {self.bateria}, bolsa de basura: {self.bolsa_basura}")
 
     def mostrar_estado(self):
-        if lista_mancha:
-            for m in lista_mancha:
-                if m.limpiar_mancha(self):
-                    self.limpiar()
-                    lista_mancha.remove(m)
-                    break
         return(f"La roomba {self.nombre}, se encuentra en la posicion: {self.posX}: X, {self.posY}: Y, batería: {self.bateria}, bolsa de basura: {self.bolsa_basura}")
     
     def mover_norte(self):
         if self.posY>=max_tablero:
             return("No puedes subir más al norte.")
+        if self.bolsa_basura>=10:
+            return(f"La rumba {self.nombre}, no puede moverse, tiene la bolsa de basura llena.")
         else:
             self.posY=self.posY+1
             self.bateria=self.bateria-5
-            self.mostrar_estado()
+            return self.mostrar_estado()
 
     def mover_sur(self):
         if self.posY<=min_tablero:
-            return("No puedes bajar más al sur.") 
+            return("No puedes bajar más al sur.")
+        if self.bolsa_basura>=10:
+            return(f"La rumba {self.nombre}, no puede moverse, tiene la bolsa de basura llena.") 
         else: 
             self.posY=self.posY-1
             self.bateria=self.bateria-5
-            self.mostrar_estado()
+            return self.mostrar_estado()
 
     def mover_este(self):
         if self.posX>=max_tablero:
-            return("No puedes ir más al este.") 
+            return("No puedes ir más al este.")
+        if self.bolsa_basura>=10:
+            return(f"La rumba {self.nombre}, no puede moverse, tiene la bolsa de basura llena.") 
         else:
             self.posX=self.posX+1
             self.bateria=self.bateria-5
-            self.mostrar_estado()
+            return self.mostrar_estado()
 
     def mover_oeste(self):
         if self.posX<=min_tablero:
-            return("No puedes ir más al oeste.") 
+            return("No puedes ir más al oeste.")
+        if self.bolsa_basura>=10:
+            return(f"La rumba {self.nombre}, no puede moverse, tiene la bolsa de basura llena.") 
         else:
             self.posX=self.posX-1
             self.bateria=self.bateria-5
-            self.mostrar_estado()
+            return self.mostrar_estado()
 
     def limpiar(self):
-        if self.bateria>10:
+        if self.bolsa_basura>=10:
+            return("Depósito lleno, vuelva a la base.")
+        else:
             self.bateria=self.bateria-10
             self.bolsa_basura=self.bolsa_basura+2
-            self.mostrar_estado()
-            if self.bolsa_basura>=10:
-                print("Depósito lleno, vuelva a la base.")
-
-        elif self.bateria<=10:
-            print("No tienes suficiente batería para limpiar.")
+            return self.mostrar_estado()
 
     def vaciar_deposito(self):
-        if self.posX==0 and self.posY==0:
-            self.bolsa_basura=0
-            self.bateria=100
-            self.mostrar_estado()
-        else:
-            print("No puedes vaciar el depósito.")
+        self.bolsa_basura=0
+        self.bateria=100
+        return("Has vaciado el depósito")
 
 class Manchas():
     def __init__(self, nombre):
         self.nombre=nombre
         self.posX=random.randint(0,4)
         self.posY=random.randint(0,4)
-        (f"La mancha {self.nombre}, se encuentra en la posicion: {self.posX}: X, {self.posY}: Y")
+        print(f"La mancha {self.nombre}, se encuentra en la posicion: {self.posX}: X, {self.posY}: Y")
     
     def limpiar_mancha(self, rumba):
         if self.posX==rumba.posX and self.posY==rumba.posY:
             print(f"¡Has encontrado la mancha {self.nombre}!")
             return True            
             
-        
+rumba=Robot("Carlos")    
+
 mancha_1=Manchas("mancha_1")
 
 mancha_2=Manchas("mancha_2")
@@ -142,3 +140,73 @@ mancha_2=Manchas("mancha_2")
 mancha_3=Manchas("mancha_3")
 
 lista_mancha=[mancha_1, mancha_2, mancha_3]
+
+salir=False
+opciones={"n": "NORTE", "s":"SUR", "e":"ESTE", "o":"OESTE", "l":"LIMPIAR", "v": "VACIAR DEPÓSITO" }
+
+def menu():
+    print("*****************************")
+    print("MENÚ PRINCIPAL")
+    for clave, valor in opciones.items():
+        print(f"Pulsa {clave}: {valor}")
+    print("*****************************")
+
+while not salir:
+    menu()
+
+    lista=input("Escoge una opción: ").lower()
+
+    match lista:
+        case "n":
+            if  rumba.bateria>=5:
+                print(rumba.mover_norte())
+            else:
+                salir=True
+                print("Game Over, te has quedado sin batería")
+            
+        case "s":
+            if rumba.bateria>=5:
+                print(rumba.mover_sur())
+            else:
+                salir=True
+                print("Game Over, te has quedado sin batería")
+
+        case "e":
+            if rumba.bateria>=5:
+                print(rumba.mover_este())
+            else:
+                salir=True
+                print("Game Over, te has quedado sin batería")
+
+        case "o":
+            if rumba.bateria>=5:
+                print(rumba.mover_oeste())
+                 
+            else:
+                salir=True
+                print("Game Over, te has quedado sin batería")
+
+        case "l":
+            if lista_mancha:
+                if rumba.bateria>=10:
+                    for m in lista_mancha:
+                        if m.limpiar_mancha(rumba):
+                            print(rumba.limpiar())
+                            lista_mancha.remove(m)
+                            break
+                elif rumba.bateria<10 and rumba.bateria>0:
+                    print("No tienes suficiente batería para limpiar")
+                else:
+                    salir=True
+                    print("Game Over, te has quedado sin batería") 
+            else:
+                print("Lista vacia, no hay manchas.")
+            
+        case "v":
+            if rumba.posX==0 and rumba.posY==0:
+                print(rumba.vaciar_deposito())
+            else:
+                print("No puedes vaciar el depósito")
+        case other:
+            salir=True
+            print("Tecla equivocada, has salido del juego.")
