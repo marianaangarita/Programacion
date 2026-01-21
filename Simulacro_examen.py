@@ -81,9 +81,6 @@ class Clinica():
         else:
             return (f"Lista vacía, ingrese animal antes de mostrar pacientes.")
         
-perro=Animal("Rex", "perro", 3, 5.2, "guau")
-
-gato=Animal("Luna", "gato", 2, 3.3, "miau")
 
 clinica=Clinica()
 
@@ -104,7 +101,8 @@ while not salir:
 
     match opcion:
         case 1:
-            
+            print(f"Has elegido: {lista[opcion-1]}")
+
             nombre=input("Escoge un nombre: ").lower()
             especie=input("Indica la especie: ").lower()
             edad=int(input("Indica la edad: "))
@@ -114,8 +112,16 @@ while not salir:
             animal=Animal(nombre, especie, edad, peso, sonido)
 
         case 2:
+            print(f"Has elegido: {lista[opcion-1]}")
+
+            print(clinica.ingresar_animal(animal))
         case 3:
+            print(f"Has elegido: {lista[opcion-1]}")
+            ani=input("Indica el nombre del animal: ").lower()
+
+            print(clinica.buscar_nombre(ani))
         case 4:
+            print(f"Has elegido: {lista[opcion-1]}")
         case 5:
             salir=True
             print("Has salido del programa.")
