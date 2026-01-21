@@ -36,3 +36,99 @@ Claves para aprobar (Basado en tus fuentes)
 4. Uso de super(): Si te piden herencia y constructores avanzados (como inicializar atributos extra en la subclase), usa super().__init__(...) para asegurar que la clase padre se inicializa bien.
 ¿Quieres que desarrolle el código solución de alguno de estos dos para que veas la implementación exacta?
 """
+import random
+
+class Gladiador():
+    def __init__(self, nombre):
+        self.nombre=nombre
+        self.vida=100
+        self.energia=50
+
+    def atacar(self, objetivo):
+        if self.energia>=10:
+            self.energia=self.energia-10
+            objetivo.vida=objetivo.vida-15
+            return (f" Ahora tienes de energia: {self.energia}. Tu objetivo tiene de vida: {objetivo.vida}.")
+        else:
+            return(f"No tienes suficiente vida para atacar.")
+        
+    def descansar(self):
+        self.energia=self.energia+20
+        return (f"Ahora tienes de energia: {self.energia}")
+    
+    def esta_vivo(self):
+        if self.vida>0:
+            return True
+        else:
+            return False
+        
+class Mago(Gladiador):
+    def __init__(self, nombre):
+        super().__init__(nombre)
+        self.mana=100
+
+    def curar(self):
+        if self.mana>=30:
+            self.mana=self.mana-30
+            self.vida=self.vida+20
+            return (f"Te has curado. Vida: {self.vida}, Mana: {self.mana} ")
+        
+    def atacar(self, objetivo):
+        if self.mana>=10:
+            self.mana=self.mana-10
+            objetivo.vida=objetivo.vida-25
+            return (f" Lanzas BOLA de FUEGO!!. Ahora tienes de mana: {self.mana}. Tu objetivo tiene de vida: {objetivo.vida}.")
+        else:
+            return(f"No tienes suficiente mana para atacar.")
+        
+class Guerrero(Gladiador):
+    def __init__(self, nombre):
+        super().__init__(nombre)
+        self.furia=0
+    
+    def atacar(self, objetivo):
+        if self.furia>50:
+            if self.energia>=10:
+                self.energia=self.energia-10
+                self.furia=0
+                objetivo.vida=objetivo.vida-30
+                return (f" FURIA DESATADA!!. Ahora tienes de energia: {self.energia}. Tu furia es de: {self.furia}. Tu objetivo tiene de vida: {objetivo.vida}.")
+            else:
+                return(f"No tienes suficiente vida para atacar.")
+        else:
+            if self.energia>=10:
+                self.energia=self.energia-10
+                objetivo.vida=objetivo.vida-15
+                return (f" Ahora tienes de energia: {self.energia}. Tu objetivo tiene de vida: {objetivo.vida}.")
+            else:
+                return(f"No tienes suficiente vida para atacar.")
+            
+jugador=Guerrero("Guerrero")
+
+enemigo=random(Mago("Enemigo_mago"), Guerrero("Enemigo_guerrero"))
+
+dic_menu={"a":"ATACAR", "c": "CURAR/HABILIDAD", "d": "DESCANSAR" }
+
+def menu():
+    print("*************************")
+    print("MENÚ PRINCIPAL")
+    for clave, valor in dic_menu:
+        print(f"Pulsa {clave}: {valor}")
+    print("*************************")
+
+while jugador.esta_vivo() and enemigo.esta_vivo():
+    menu()
+
+    opcion=input("Escoge una opción: ").lower()
+
+    match opcion:
+        case "a":
+            
+        case "c":
+        
+        case "d":
+        
+        case other:
+            print("Te has equivocado de letra.")
+
+
