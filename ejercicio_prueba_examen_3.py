@@ -64,8 +64,8 @@ class Vehiculo(metaclass=abc.ABCMeta):
         self.precio_base=precio
         self.alquilado=False
 
-    def info(self):
-        return(f"El vehículo con matrícula: {self.matricula}, modelo: {self.modelo}, y precio base: {self.precio_base}")
+    def mostrar_info(self):
+        print(f"El vehículo con matrícula: {self.matricula}, modelo: {self.modelo}, y precio base: {self.precio_base}")
     
     @abc.abstractmethod
     def calcular_alquiler(self, dias):
@@ -107,22 +107,60 @@ class Flota():
         self.lista_vehiculos=[]
     
     def agregar_vehiculo(self, vehiculo):
-        if vehiculo in self.lista_vehiculos:
-            return(f"El vehículo {vehiculo}, ya está en la lista.")
-        else:
-            self.lista_vehiculos.append(vehiculo)
-            return (f"Se ha agregado a la lista el vehiculo {vehiculo}")
+        for i in self.lista_vehiculos:
+            if i==vehiculo:
+                return("Ya está este vehiculo en la lista.")
+        self.lista_vehiculos.append(vehiculo)
+        return(f"Se ha agregado a la lista el vehiculo: {vehiculo}")
+            
 
     def alquilar_vehiculo(self, matricula):
-        if not matricula in self.lista_vehiculos:
-            return(f"El vehículo con matrícula {matricula}, no se encuentra en la base de datos.")
+        for i in self.lista_vehiculos:
+            if i.matricula==matricula:
+                if i.alquilado==True:
+                    return(f"El vehículo con matrícula {matricula}, ya está ocupado.")
+                if i.alquilado==False:
+                    i.alquilado=True
+                    return(f"Has alquilado el vehículo con matrícula {matricula}.")
+        return(f"La matricula: {matricula}, no está en la BBDD.")
+    
         
-        if matricula.alquilado==True:
-            return(f"El vehículo con matrícula {matricula}, ya está ocupado.")
-        
-        if matricula.alquilado==False:
-            matricula.alquilado=True
-            return(f"Has alquilado el vehículo con matrícula {matricula}.")
+    def calcular_ingresos_potenciales(self, dias):
+        sum=0
+        if self.lista_vehiculos:
+            for i in self.lista_vehiculos:
+                sum=sum+i.calcular_alquiler(dias)
+            return sum
+        else:
+            return("Lista vacía, primero agrega un vehículo.")
 
+
+lujo=CocheLujo(1234, "Ferrari", 250, 400 )
+
+print(lujo.calcular_alquiler(10))
+
+lujo_2=CocheLujo(1111, "BMW", 100, 250)
+
+print(lujo_2.calcular_alquiler(5))
+
+furgoneta=FurgonetaCarga(2222, "Furgoneta", 90, 50)
+
+print(furgoneta.calcular_alquiler(6))
+
+electrico=CocheElectrico(3333, "Tesla", 150)
+
+print(electrico.calcular_alquiler(20))
+
+gestor=Flota()
+
+print(gestor.agregar_vehiculo(lujo))
+
+print(gestor.agregar_vehiculo(lujo_2))
+
+print(gestor.agregar_vehiculo(furgoneta))
+
+print(gestor.agregar_vehiculo(electrico))
+
+print(gestor.calcular_ingresos_potenciales(5))
 
 
