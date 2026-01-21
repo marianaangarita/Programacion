@@ -77,7 +77,7 @@ class Clinica():
         if self.lista_pacientes:
             for i in self.lista_pacientes:
                 if i.nombre==nombre:
-                    print(f"{i.mostrar_info()}")
+                    print(f"{i.mostrar_info()} y hace: {i.get_sonido()}")
         else:
             return (f"Lista vacía, ingrese animal antes de mostrar pacientes.")
         
@@ -86,3 +86,38 @@ perro=Animal("Rex", "perro", 3, 5.2, "guau")
 gato=Animal("Luna", "gato", 2, 3.3, "miau")
 
 clinica=Clinica()
+
+salir=False
+
+lista=["CREAR ANIMAL", "INGRESAR ANIMAL CLÍNICA", "BUSCAR ANIMAL CLÍNICA", "MOSTRAR ESPECIES CLÍNICA", "SALIR" ]
+def menu():
+    print("***********************")
+    print("MENÚ PRINCIPAL")
+    for clave, valor in enumerate(1, lista):
+        print(f"Pulsa {clave}: {valor}")
+    print("***********************")
+
+while not salir:
+    menu()
+
+    opcion=int(input("Escoge una opción: "))
+
+    match opcion:
+        case 1:
+            
+            nombre=input("Escoge un nombre: ").lower()
+            especie=input("Indica la especie: ").lower()
+            edad=int(input("Indica la edad: "))
+            peso=float(input("Indica el peso: "))
+            sonido=input("Que sonido hace el animal: ").lower()
+
+            animal=Animal(nombre, especie, edad, peso, sonido)
+
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            salir=True
+            print("Has salido del programa.")
+        case other:
+            print("Opción incorrecta, escoge del 1 al 5.")
