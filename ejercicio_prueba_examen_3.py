@@ -130,7 +130,7 @@ class Flota():
         if self.lista_vehiculos:
             for i in self.lista_vehiculos:
                 sum=sum+i.calcular_alquiler(dias)
-            return sum
+            return (f"Los ingresos potenciales totales son: {sum}")
         else:
             return("Lista vacía, primero agrega un vehículo.")
 
