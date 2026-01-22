@@ -71,23 +71,28 @@ class Clinica():
 
     
     def buscar_nombre(self,nombre):
+        encontrado=False
         if self.lista_pacientes:
             for i in self.lista_pacientes:
                 if i.nombre==nombre:
-                    print(f"{i.mostrar_info()} y hace: {i.get_sonido()}")
-            
-            print(f"El animal {nombre} no existe en la lista.")
+                    encontrado=True
+                    return(f"{i.mostrar_info()} y hace: {i.get_sonido()}")
+            if encontrado==False:
+                return(f"El animal {nombre} no existe en la lista.")
         else:
-             print(f"Lista vacía, ingrese animal antes de mostrar pacientes.")
+            return(f"Lista vacía, ingrese animal antes de mostrar pacientes.")
     
     def mostrar_especie(self):
+        lista_especie=[]
         if self.lista_pacientes:
             for i in self.lista_pacientes:
-                print (f"{i.especie}")
+                if i.especie not in lista_especie:
+                    lista_especie.append(i.especie)
+            return(f"Las especies que hay en la clínica son: {lista_especie}")
         else:
-            print("Lista vacía, rellene la lista antes de usar esta opción")
+            return("Lista vacía, rellene la lista antes de usar esta opción")
         
-
+animal=None
 clinica=Clinica()
 
 salir=False
@@ -108,8 +113,6 @@ while not salir:
     match opcion:
         case 1:
             print(f"Has elegido: {lista[opcion-1]}")
-
-            
             nombre=input("Escoge un nombre: ").lower()
             especie=input("Indica la especie: ").lower()
             edad=int(input("Indica la edad: "))
@@ -120,7 +123,6 @@ while not salir:
 
         case 2:
             print(f"Has elegido: {lista[opcion-1]}")
-
             if animal:
                 print(clinica.ingresar_animal(animal))
             else:
@@ -130,12 +132,12 @@ while not salir:
             print(f"Has elegido: {lista[opcion-1]}")
             ani=input("Indica el nombre del animal: ").lower()
 
-            clinica.buscar_nombre(ani)
+            print(clinica.buscar_nombre(ani))
             
         case 4:
             print(f"Has elegido: {lista[opcion-1]}")
 
-            clinica.mostrar_especie()
+            print(clinica.mostrar_especie())
         case 5:
             salir=True
             print("Has salido del programa.")
