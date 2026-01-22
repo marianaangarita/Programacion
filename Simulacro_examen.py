@@ -59,7 +59,7 @@ class Clinica():
 
     def ingresar_animal(self,animal):
         self.lista_pacientes.append(animal)
-        return (f"{animal} se ha agregado a la lista.")
+        return (f"{animal.nombre} se ha agregado a la lista.")
     
     
     def mostrar_pacientes(self):
