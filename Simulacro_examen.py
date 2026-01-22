@@ -47,10 +47,10 @@ class Animal():
         return self.sonido
     
     def hacer_sonido(self):
-        return (f" El {self.especie} con hace: {self.sonido}.")
+        return (f" El animal emite: {self.sonido}.")
     
     def mostrar_info(self):
-        return (f" {self.get_nombre()} de la especie: {self.get_especie()}- Edad: {self.get_edad()} años- Peso: {self.get_peso} Kg")
+        return (f" {self.get_nombre()} de la especie: {self.get_especie()}- Edad: {self.get_edad()} años- Peso: {self.get_peso()} Kg")
     
 
 class Clinica():
@@ -58,9 +58,6 @@ class Clinica():
         self.lista_pacientes=[]
 
     def ingresar_animal(self,animal):
-        for i in self.lista_pacientes:
-            if i==animal:
-                return(f"{animal} ya está en la lista.")
         self.lista_pacientes.append(animal)
         return (f"{animal} se ha agregado a la lista.")
     
@@ -70,7 +67,7 @@ class Clinica():
             for i in self.lista_pacientes:
                 print(f"{i.mostrar_info()} y hace: {i.get_sonido()}.")
         else:
-            return (f"Lista vacía, ingrese animal antes de mostrar pacientes.")
+            print(f"Lista vacía, ingrese animal antes de mostrar pacientes.")
 
     
     def buscar_nombre(self,nombre):
@@ -78,8 +75,17 @@ class Clinica():
             for i in self.lista_pacientes:
                 if i.nombre==nombre:
                     print(f"{i.mostrar_info()} y hace: {i.get_sonido()}")
+            
+            print(f"El animal {nombre} no existe en la lista.")
         else:
-            return (f"Lista vacía, ingrese animal antes de mostrar pacientes.")
+             print(f"Lista vacía, ingrese animal antes de mostrar pacientes.")
+    
+    def mostrar_especie(self):
+        if self.lista_pacientes:
+            for i in self.lista_pacientes:
+                print (f"{i.especie}")
+        else:
+            print("Lista vacía, rellene la lista antes de usar esta opción")
         
 
 clinica=Clinica()
@@ -90,7 +96,7 @@ lista=["CREAR ANIMAL", "INGRESAR ANIMAL CLÍNICA", "BUSCAR ANIMAL CLÍNICA", "MO
 def menu():
     print("***********************")
     print("MENÚ PRINCIPAL")
-    for clave, valor in enumerate(1, lista):
+    for clave, valor in enumerate(lista, 1):
         print(f"Pulsa {clave}: {valor}")
     print("***********************")
 
@@ -103,6 +109,7 @@ while not salir:
         case 1:
             print(f"Has elegido: {lista[opcion-1]}")
 
+            
             nombre=input("Escoge un nombre: ").lower()
             especie=input("Indica la especie: ").lower()
             edad=int(input("Indica la edad: "))
@@ -114,14 +121,21 @@ while not salir:
         case 2:
             print(f"Has elegido: {lista[opcion-1]}")
 
-            print(clinica.ingresar_animal(animal))
+            if animal:
+                print(clinica.ingresar_animal(animal))
+            else:
+                print("Debes crear un animal para ingresarlo en la lista")
+
         case 3:
             print(f"Has elegido: {lista[opcion-1]}")
             ani=input("Indica el nombre del animal: ").lower()
 
-            print(clinica.buscar_nombre(ani))
+            clinica.buscar_nombre(ani)
+            
         case 4:
             print(f"Has elegido: {lista[opcion-1]}")
+
+            clinica.mostrar_especie()
         case 5:
             salir=True
             print("Has salido del programa.")
