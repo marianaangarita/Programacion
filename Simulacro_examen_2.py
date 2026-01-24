@@ -12,7 +12,10 @@ class Material():
     def get_anio_publicacion(self):
         return self.anio_publicacion
     def get_prestado(self):
-        return self.prestado
+        if self.prestado==True:
+            return ("Prestado")
+        if self.prestado==False:
+            return ("Disponible")
     def set_titulo(self, titulo):
         self.titulo=titulo
     def set_autor(self, autor):
@@ -27,16 +30,16 @@ class Material():
         self.prestado=p   
 
     def prestar(self):
-        if self.get_prestado==False:
+        if self.get_prestado()==False:
             self.set_prestado(True)
             return(f"Se ha prestado el libro: {self.get_titulo()}, prestado: {self.get_prestado()}")
         else:
             return("El libro ya está prestado.")
         
     def devolver(self):
-        if self.get_prestado==True:
+        if self.get_prestado()==True:
             self.set_prestado(False)
-            return(f"Se ha prestado el libro: {self.get_titulo()}, prestado: {self.get_prestado()}")
+            return(f"Se ha devuelto el libro: {self.get_titulo()}, prestado: {self.get_prestado()}")
 
 
     def mostrar_info(self):
@@ -74,7 +77,7 @@ class Biblioteca():
     def agregar_material(self,material):
         existe=False
         for i in self.materiales:
-            if i.titulo==material.titulo and i.autor==material.autor and i.anio_publicacion==material.anio_publicacion:
+            if i.get_titulo()==material.get_titulo() and i.get_autor()==material.get_autor() and i.get_anio_publicacion()==material.get_anio_publicacion():
                 existe=True
                 return(f"El material: {material.get_titulo()}, ya está en la lista.")
         if existe==False:
