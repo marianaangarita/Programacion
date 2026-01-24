@@ -99,7 +99,7 @@ class Biblioteca():
         existe=False
         if self.materiales:
             for i in self.materiales:
-                if i.titulo==titulo:
+                if i.get_titulo()==titulo:
                     existe=True
                     return(f"{i.mostrar_info()}")
             if existe==False:
