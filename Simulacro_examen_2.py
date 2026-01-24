@@ -72,8 +72,14 @@ class Biblioteca():
         self.materiales=[]
 
     def agregar_material(self,material):
-        self.materiales.append(material)
-        return(f"Se ha agregado el material: {material.get_titulo()}")
+        existe=False
+        for i in self.materiales:
+            if i.titulo==material.titulo and i.autor==material.autor and i.anio_publicacion==material.anio_publicacion:
+                existe=True
+                return(f"El material: {material.get_titulo()}, ya está en la lista.")
+        if existe==False:
+            self.materiales.append(material)
+            return(f"Se ha agregado el material: {material.get_titulo()}")
     
     def mostrar_materiales(self):
         lista=[]
