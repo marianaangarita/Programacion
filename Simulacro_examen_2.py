@@ -12,10 +12,7 @@ class Material():
     def get_anio_publicacion(self):
         return self.anio_publicacion
     def get_prestado(self):
-        if self.prestado==True:
-            return ("Prestado")
-        if self.prestado==False:
-            return ("Disponible")
+        return self.prestado
     def set_titulo(self, titulo):
         self.titulo=titulo
     def set_autor(self, autor):
@@ -43,7 +40,12 @@ class Material():
 
 
     def mostrar_info(self):
-        return(f"Libro: {self.get_titulo()}, autor:{self.get_autor()}, año de publicación: {self.get_anio_publicacion()}, prestado: {self.get_prestado()}")
+        prestado=""
+        if self.get_prestado()==True:
+            prestado="Prestado"
+        if self.get_prestado()==False:
+            prestado="Disponible"
+        return(f"Libro: {self.get_titulo()}, autor:{self.get_autor()}, año de publicación: {self.get_anio_publicacion()}, prestado: {prestado}")
     
 class Libro(Material):
     def __init__(self, titulo, autor, anio, paginas):
