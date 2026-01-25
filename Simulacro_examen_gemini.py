@@ -205,9 +205,12 @@ while not salir:
             marca=input("Indica la marca del coche: ").lower()
             modelo=input("Indica el modelo: ").lower()
             matricula=input("Indica la matrícula: ").lower()
-
-            vehiculo=Vehiculo(marca, modelo, matricula)
-            print(flota.agregar_vehiculo(vehiculo))
+            puertas=int(input("Indica el número de puertas: "))
+            if puertas>0:
+                vehiculo=Coche(marca, modelo, matricula, puertas)
+                print(flota.agregar_vehiculo(vehiculo))
+            else:
+                print("Datos incorrectos, no puedes poner puertas 0 o negativas.")
 
         case 2:
             print(f"Has elegido: {lista_menu[opcion-1]}")
@@ -215,9 +218,13 @@ while not salir:
             marca=input("Indica la marca de la moto: ").lower()
             modelo=input("Indica el modelo: ").lower()
             matricula=input("Indica la matrícula: ").lower()
+            cilindrada=int(input("Indica la cilindrada: "))
 
-            vehiculo=Vehiculo(marca, modelo, matricula)
-            print(flota.agregar_vehiculo(vehiculo))
+            if cilindrada>0:
+                vehiculo=Moto(marca, modelo, matricula, cilindrada)
+                print(flota.agregar_vehiculo(vehiculo))
+            else:
+                print("Datos incorrectos, no puedes poner cilindradas 0 o negativas.")
 
         case 3:
             print(f"Has elegido: {lista_menu[opcion-1]}")
