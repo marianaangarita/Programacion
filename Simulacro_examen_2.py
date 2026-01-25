@@ -29,14 +29,14 @@ class Material():
     def prestar(self):
         if self.get_prestado()==False:
             self.set_prestado(True)
-            return(f"Se ha prestado el libro: {self.get_titulo()}, prestado: {self.get_prestado()}")
+            return(f"Se ha prestado el material: {self.get_titulo()}, prestado: {self.get_prestado()}")
         else:
             return("El libro ya está prestado.")
         
     def devolver(self):
         if self.get_prestado()==True:
             self.set_prestado(False)
-            return(f"Se ha devuelto el libro: {self.get_titulo()}, prestado: {self.get_prestado()}")
+            return(f"Se ha devuelto el material: {self.get_titulo()}, prestado: {self.get_prestado()}")
 
 
     def mostrar_info(self):
@@ -45,7 +45,7 @@ class Material():
             prestado="Prestado"
         if self.get_prestado()==False:
             prestado="Disponible"
-        return(f"Libro: {self.get_titulo()}, autor:{self.get_autor()}, año de publicación: {self.get_anio_publicacion()}, prestado: {prestado}")
+        return(f"Título: {self.get_titulo()} | Autor: {self.get_autor()} | Año: {self.get_anio_publicacion()} | Estado: {prestado}")
     
 class Libro(Material):
     def __init__(self, titulo, autor, anio, paginas):
@@ -56,7 +56,7 @@ class Libro(Material):
     def set_num_paginas(self,num):
         self.num_paginas=num
     def mostrar_info(self):
-        return(f"{super().mostrar_info()}, número de páginas: {self.get_num_paginas()}")
+        return(f"{super().mostrar_info()} | Número de páginas: {self.get_num_paginas()}")
     
 class Revista(Material):
     def __init__(self, titulo, autor, anio, num_edicion):
@@ -70,7 +70,7 @@ class Revista(Material):
         self.num_edicion=edicion
 
     def mostrar_info(self):
-        return(f"{super().mostrar_info()}, número de edición: {self.get_num_edicion()}")
+        return(f"{super().mostrar_info()} | Número de edición: {self.get_num_edicion()}")
     
 class Biblioteca():
     def __init__(self):
@@ -87,13 +87,12 @@ class Biblioteca():
             return(f"Se ha agregado el material: {material.get_titulo()}")
     
     def mostrar_materiales(self):
-        lista=[]
+
         if self.materiales:
             for i in self.materiales:
-                lista.append(i.mostrar_info())
-            return lista     
+                print(i.mostrar_info())    
         else:
-            return("Lista vacía, llena la lista antes de mostrar materiales.")
+            print("Lista vacía, llena la lista antes de mostrar materiales.")
 
     def buscar_por_titulo(self,titulo):
         existe=False
@@ -111,8 +110,7 @@ biblioteca=Biblioteca()
 
 salir=False
 
-libro=None
-revista=None
+material=None
 
 lista_menu=["CREAR LIBRO", "CREAR UNA REVISTA", "AGREGAR MATERIAL", "MOSTRAR MATERIAL", "BUSCAR POR TÍTULO", "PRESTAR MATERIAL", "DEVOLVER MATERIAL", "CAMBIAR TÍTULO", "CAMBIAR AUTOR", "CAMBIAR AÑO DE PUBLICACIÓN", "SALIR"]
 
@@ -134,7 +132,7 @@ while not salir:
             anio=int(input("Indica el año de publicación: "))
             paginas=int(input("Indica el número de páginas: "))
             if anio>=0 and paginas>0:
-                libro=Libro(titulo, autor, anio, paginas)
+                material=Libro(titulo, autor, anio, paginas)
             else:
                 print("Los datos introducidos no son correctos, el año y las páginas no pueden ser negativos.")
         case 2:
@@ -144,68 +142,56 @@ while not salir:
             anio=int(input("Indica el año de publicación: "))
             edicion=int(input("Indica el número de edición: "))
             if anio>=0 and edicion>0:
-                revista=Revista(titulo, autor, anio, edicion)
+                material=Revista(titulo, autor, anio, edicion)
             else:
                 print("Los datos introducidos no son correctos, el año y la edición no pueden ser negativos.")
         case 3:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
-                print(biblioteca.agregar_material(libro))
-            if revista:
-                print(biblioteca.agregar_material(revista))
+            if material:
+                print(biblioteca.agregar_material(material))
             else:
                 print("Debes crear una revista o libro antes de agregarlo a la biblioteca.")
         case 4:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            print(biblioteca.mostrar_materiales())
+            biblioteca.mostrar_materiales()
         case 5:
             print(f"Has escogido {lista_menu[opcion-1]}")
             t=input("Que título buscas: ").lower()
             print(biblioteca.buscar_por_titulo(t))
         case 6:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
-                print(libro.prestar())
-            if revista:
-                print(revista.prestar())
+            if material:
+                print(material.prestar())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 7:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
-                print(libro.devolver())
-            if revista:
-                print(revista.devolver())
+            if material:
+                print(material.devolver())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 8:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
+            if material:
                 t=input("Indica el nuevo título: ").lower()
-                print(libro.set_titulo(t))
-            if revista:
-                t=input("Indica el nuevo título: ").lower()
-                print(revista.set_titulo(t))
+                material.set_titulo(t)
+                print(material.get_titulo())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 9:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
+            if material:
                 a=input("Indica el nuevo autor: ").lower()
-                print(libro.set_autor(a))
-            if revista:
-                a=input("Indica el nuevo autor: ").lower()
-                print(revista.set_autor(a))
+                material.set_autor(a)
+                print(material.get_autor())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 10:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            if libro:
+            if material:
                 p=int(input("Indica el nuevo año de publicación: "))
-                print(libro.set_anio_publicacion(p))
-            if revista:
-                p=int(input("Indica el nuevo año de publicación: "))
-                print(revista.set_anio_publicacion(p))
+                material.set_anio_publicacion(p)
+                print(material.get_anio_publicacion())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 11:
