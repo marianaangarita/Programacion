@@ -239,12 +239,12 @@ while not salir:
             existe=False
             if flota.lista_vehiculos:
                 for i in flota.lista_vehiculos:
-                    if i.get_matricula==matricula:
+                    if i.get_matricula()==matricula:
                         existe=True
                         print(i.alquilar())
                         break
                 if existe==False:
-                    print(f"El coche con matricula: {matricula}, no está en la lista.")
+                    print(f"El vehículo con matricula: {matricula}, no está en la lista.")
             else:
                 print("Lista vacía, agrega un vehículo para poder usar esta opción.")
 
@@ -254,12 +254,12 @@ while not salir:
             existe=False
             if flota.lista_vehiculos:
                 for i in flota.lista_vehiculos:
-                    if i.get_matricula==matricula:
+                    if i.get_matricula()==matricula:
                         existe=True
                         print(i.devolver())
                         break
                 if existe==False:
-                    print(f"El coche con matricula: {matricula}, no está en la lista.")
+                    print(f"El vehículo con matrícula: {matricula}, no está en la lista.")
             else:
                 print("Lista vacía, agrega un vehículo para poder usar esta opción.")
 
