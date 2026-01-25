@@ -18,25 +18,27 @@ class Material():
     def set_autor(self, autor):
         self.autor=autor
     def set_anio_publicacion(self,anio):
-        if anio>=0:
-            self.anio_publicacion=anio
-        else:
-            return("No puedes poner un año negativo")
+        self.anio_publicacion=anio
+    
         
     def set_prestado(self,p):
         self.prestado=p   
 
     def prestar(self):
+        prestado=""
         if self.get_prestado()==False:
             self.set_prestado(True)
-            return(f"Se ha prestado el material: {self.get_titulo()}, prestado: {self.get_prestado()}")
+            prestado="Prestado"
+            return(f"Se ha prestado el material: {self.get_titulo()}, estado: {prestado}")
         else:
-            return("El libro ya está prestado.")
+            return("El material ya está prestado.")
         
     def devolver(self):
+        prestado=""
         if self.get_prestado()==True:
             self.set_prestado(False)
-            return(f"Se ha devuelto el material: {self.get_titulo()}, prestado: {self.get_prestado()}")
+            prestado="Disponible"
+            return(f"Se ha devuelto el material: {self.get_titulo()}, estado: {prestado}")
 
 
     def mostrar_info(self):
@@ -100,7 +102,7 @@ class Biblioteca():
             for i in self.materiales:
                 if i.get_titulo()==titulo:
                     existe=True
-                    return(f"{i.mostrar_info()}")
+                    return(i.mostrar_info())
             if existe==False:
                 return(f"El título: {titulo} no existe en la lista.")
         else:
@@ -127,8 +129,8 @@ while not salir:
     match opcion:
         case 1:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            titulo=input("Indica el título del libro: ").lower()
-            autor=input("Indica el autor del libro: ").lower()
+            titulo=input("Indica el título: ").lower()
+            autor=input("Indica el autor: ").lower()
             anio=int(input("Indica el año de publicación: "))
             paginas=int(input("Indica el número de páginas: "))
             if anio>=0 and paginas>0:
@@ -137,8 +139,8 @@ while not salir:
                 print("Los datos introducidos no son correctos, el año y las páginas no pueden ser negativos.")
         case 2:
             print(f"Has escogido {lista_menu[opcion-1]}")
-            titulo=input("Indica el título del libro: ").lower()
-            autor=input("Indica el autor del libro: ").lower()
+            titulo=input("Indica el título: ").lower()
+            autor=input("Indica el autor: ").lower()
             anio=int(input("Indica el año de publicación: "))
             edicion=int(input("Indica el número de edición: "))
             if anio>=0 and edicion>0:
@@ -190,8 +192,11 @@ while not salir:
             print(f"Has escogido {lista_menu[opcion-1]}")
             if material:
                 p=int(input("Indica el nuevo año de publicación: "))
-                material.set_anio_publicacion(p)
-                print(material.get_anio_publicacion())
+                if p>=0:
+                    material.set_anio_publicacion(p)
+                    print(material.get_anio_publicacion())
+                else:
+                    print("No puedes poner un año negativo")
             else:
                 print("Debes crear una revista o un libro primero.")
         case 11:
