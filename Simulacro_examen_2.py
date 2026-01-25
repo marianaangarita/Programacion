@@ -130,7 +130,7 @@ while not salir:
     opcion=int(input("Escoge una opción: "))
     match opcion:
         case 1:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             titulo=input("Indica el título: ").lower()
             autor=input("Indica el autor: ").lower()
             anio=int(input("Indica el año de publicación: "))
@@ -140,7 +140,7 @@ while not salir:
             else:
                 print("Los datos introducidos no son correctos, el año y las páginas no pueden ser negativos.")
         case 2:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             titulo=input("Indica el título: ").lower()
             autor=input("Indica el autor: ").lower()
             anio=int(input("Indica el año de publicación: "))
@@ -150,59 +150,56 @@ while not salir:
             else:
                 print("Los datos introducidos no son correctos, el año y la edición no pueden ser negativos.")
         case 3:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 print(biblioteca.agregar_material(material))
             else:
                 print("Debes crear una revista o libro antes de agregarlo a la biblioteca.")
         case 4:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             biblioteca.mostrar_materiales()
         case 5:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             t=input("Que título buscas: ").lower()
             print(biblioteca.buscar_por_titulo(t))
         case 6:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 print(material.prestar())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 7:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 print(material.devolver())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 8:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 t=input("Indica el nuevo título: ").lower()
                 material.set_titulo(t)
-                print(material.get_titulo())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 9:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 a=input("Indica el nuevo autor: ").lower()
                 material.set_autor(a)
-                print(material.get_autor())
             else:
                 print("Debes crear una revista o un libro primero.")
         case 10:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             if material:
                 p=int(input("Indica el nuevo año de publicación: "))
                 if p>=0:
                     material.set_anio_publicacion(p)
-                    print(material.get_anio_publicacion())
                 else:
                     print("No puedes poner un año negativo")
             else:
                 print("Debes crear una revista o un libro primero.")
         case 11:
-            print(f"Has escogido {lista_menu[opcion-1]}")
+            print(f"Has escogido: {lista_menu[opcion-1]}")
             salir=True
             print("Has salido del programa.")
         case other:
