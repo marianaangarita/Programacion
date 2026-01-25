@@ -170,7 +170,7 @@ class Flota():
             for i in self.lista_vehiculos:
                 print(i.mostrar_info())
         else:
-                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+                print("Lista vacía, debes agregar primero un vehículo a la lista.")
         
     
     def buscar_por_matricula(self, matricula):
@@ -181,10 +181,7 @@ class Flota():
                 return(i)
         if existe==False:
                 return None
-       
-
-            
-        
+                   
 salir=False
 vehiculo=None
 flota=Flota()
@@ -245,7 +242,7 @@ while not salir:
                 else:
                     print("El vehiculo no existe en la lista.")
             else:
-                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+                print("Lista vacía, debes agregar primero un vehículo a la lista.")
 
 
 
@@ -259,7 +256,7 @@ while not salir:
                 else:
                     print("El vehiculo no existe en la lista.")
             else:
-                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+                print("Lista vacía, debes agregar primero un vehículo a la lista.")
 
         case 6:
             print(f"Has elegido: {lista_menu[opcion-1]}")
