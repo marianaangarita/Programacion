@@ -166,8 +166,11 @@ class Flota():
             return (f"Se ha agregado a la lista el vehículo con matrícula: {vehiculo.get_matricula()}.")
     
     def mostrar_flota(self):
-        for i in self.lista_vehiculos:
-            print(i.mostrar_info())
+        if self.lista_vehiculos:
+            for i in self.lista_vehiculos:
+                print(i.mostrar_info())
+        else:
+                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
         
     
     def buscar_por_matricula(self, matricula):
@@ -175,9 +178,10 @@ class Flota():
         for i in self.lista_vehiculos:
             if i.get_matricula()==matricula:
                 existe=True
-                return(i.mostrar_info())
+                return(i)
         if existe==False:
-            return(f"El vehículo con matrícula: {matricula}, no está en la lista.")
+                return None
+       
 
             
         
@@ -228,52 +232,51 @@ while not salir:
 
         case 3:
             print(f"Has elegido: {lista_menu[opcion-1]}")
-            if flota.lista_vehiculos:
-                flota.mostrar_flota()
-            else:
-                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+            flota.mostrar_flota()
+            
 
         case 4:
             print(f"Has elegido: {lista_menu[opcion-1]}")
             matricula=input("Indica la matrícula: ").lower()
-            existe=False
             if flota.lista_vehiculos:
-                for i in flota.lista_vehiculos:
-                    if i.get_matricula()==matricula:
-                        existe=True
-                        print(i.alquilar())
-                        break
-                if existe==False:
-                    print(f"El vehículo con matricula: {matricula}, no está en la lista.")
+                vehiculo_encontrado=flota.buscar_por_matricula(matricula)
+                if vehiculo_encontrado:
+                    print(vehiculo_encontrado.alquilar())
+                else:
+                    print("El vehiculo no existe en la lista.")
             else:
-                print("Lista vacía, agrega un vehículo para poder usar esta opción.")
+                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+
+
 
         case 5:
             print(f"Has elegido: {lista_menu[opcion-1]}")
             matricula=input("Indica la matrícula: ").lower()
-            existe=False
             if flota.lista_vehiculos:
-                for i in flota.lista_vehiculos:
-                    if i.get_matricula()==matricula:
-                        existe=True
-                        print(i.devolver())
-                        break
-                if existe==False:
-                    print(f"El vehículo con matrícula: {matricula}, no está en la lista.")
+                vehiculo_encontrado=flota.buscar_por_matricula(matricula)
+                if vehiculo_encontrado:
+                    print(vehiculo_encontrado.devolver())
+                else:
+                    print("El vehiculo no existe en la lista.")
             else:
-                print("Lista vacía, agrega un vehículo para poder usar esta opción.")
+                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
 
         case 6:
             print(f"Has elegido: {lista_menu[opcion-1]}")
-
             matricula=input("Indica la matrícula: ").lower()
             if flota.lista_vehiculos:
-                print(flota.buscar_por_matricula(matricula))
+                vehiculo_encontrado=flota.buscar_por_matricula(matricula)
+                if vehiculo_encontrado:
+                    print(vehiculo_encontrado.mostrar_info())
+                else:
+                    print("El vehiculo no existe en la lista.")
             else:
-                print("Lista vacía, debes agregar primero un vehículo a la lista.")
+                print("Lista vacía, debes agregar primero un vehículo  a la lista.")
+      
         case 7:
             print(f"Has elegido: {lista_menu[opcion-1]}")
             salir=True
             print("Has salido del programa.")
+
         case other:
             print("Opción incorrecta. Pulsa del 1 al 6.")
