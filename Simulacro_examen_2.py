@@ -39,6 +39,8 @@ class Material():
             self.set_prestado(False)
             prestado="Disponible"
             return(f"Se ha devuelto el material: {self.get_titulo()}, estado: {prestado}")
+        else:
+            return("El material no está prestado")
 
 
     def mostrar_info(self):
