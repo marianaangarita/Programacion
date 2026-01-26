@@ -23,12 +23,14 @@ class Persona():
     def dar_baja(self):
         if self.get_activo()==True:
             self.set_activo(False)
+            return(f"La persona: {self.get_nombre()} se ha dado de baja")
         else:
             return(f"La persona con nombre {self.get_nombre()} ya estaba dada de baja")
     
     def dar_alta(self):
         if self.get_activo()==False:
             self.set_activo(True)
+            return(f"La persona: {self.get_nombre()} se ha dado de alta")
         else:
             return(f"La persona con nombre: {self.get_nombre()} ya estaba dada de alta.")
     
