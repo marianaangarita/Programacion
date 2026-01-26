@@ -245,7 +245,6 @@ while not salir:
                 print("Lista vacía, debes agregar primero un vehículo a la lista.")
 
 
-
         case 5:
             print(f"Has elegido: {lista_menu[opcion-1]}")
             matricula=input("Indica la matrícula: ").lower()
