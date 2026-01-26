@@ -109,6 +109,7 @@ lista_menu=["CREAR SOCIO", "CREAR ENTRENADOR", "MOSTRAR PERSONAS", "DAR DE BAJA"
 def menu():
     print("*************************")
     print("MENÚ PRINCIPAL")
+    print("*************************")
     for clave, valor in enumerate(lista_menu, 1):
         print(f"Pulsa {clave}: {valor}")
     print("*************************")
@@ -128,7 +129,7 @@ while not salir:
 
             if edad>=0:
                 persona=Socio(nombre, edad, cuota)
-                gimnasio.agregar_persona(persona)
+                print(gimnasio.agregar_persona(persona))
             else:
                 print("Datos incorrectos, no puedes poner la edad negativa.")
 
@@ -140,7 +141,7 @@ while not salir:
 
             if edad>=0:
                 persona=Entrenador(nombre, edad, especialidad)
-                gimnasio.agregar_persona(persona)
+                print(gimnasio.agregar_persona(persona))
             else:
                 print("Datos incorrectos, no puedes poner la edad negativa.")
 
