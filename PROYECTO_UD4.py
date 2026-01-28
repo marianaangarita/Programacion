@@ -47,3 +47,41 @@ class PokemonVolador(Pokemon):
 
     def ataque_especial(self):
         return("Mi ataque especial es de Aire.")
+
+
+almacen_pokemon=[]
+def importarDatos(fichero):
+    with open(fichero) as archivo:
+        for linea in archivo:
+            datos_pokemon=linea.split(",")
+            nombre=datos_pokemon[0]
+            tipo=datos_pokemon[1]
+            ataque=datos_pokemon[2]
+            defensa=datos_pokemon[3]
+
+            cantidadPokemonAgua=0
+            cantidadPokemonFuego=0
+            cantidadPokemonPlanta=0
+            cantidadPokemonVolador=0
+            match tipo:
+                case "Agua":
+                    p=PokemonAgua(nombre, tipo, ataque, defensa)
+                    cantidadPokemonAgua=cantidadPokemonAgua+1
+                case "Fuego":
+                    p=PokemonFuego(nombre, tipo, ataque, defensa)
+                    cantidadPokemonFuego=cantidadPokemonFuego+1
+                case "Volador":
+                    p=PokemonVolador(nombre, tipo, ataque, defensa)
+                    cantidadPokemonVolador=cantidadPokemonVolador+1
+                case "Planta":
+                    p=PokemonPlanta(nombre, tipo, ataque, defensa)
+                    cantidadPokemonPlanta=cantidadPokemonPlanta+1
+            
+            almacen_pokemon.append(p)
+
+importarDatos("listado_pokemons.txt")
+
+for i in almacen_pokemon:
+    print(i.mostrar_info())
+
+print(almacen_pokemon.count(cantidadPokemonPlanta))
