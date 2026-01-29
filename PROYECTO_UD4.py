@@ -119,12 +119,30 @@ class Mapa():
     def __init__(self, lado):
         self.lado=lado
         self.tablero=[]
-        self.tablero.append(random.choice(almacen_pokemons))
-
-    
-    def coordenada(self, x, y):
+        for i in range(0, self.lado):
+            for j in range(0, self.lado):
+                self.tablero.append([(i,j), None])
         
-    
-    def mostrarMapa(self):
-    
-    def mostrarMapaDetallado(self):
+        
+    def colocar_pokemon(self,pokemon,x,y):
+        for i in self.tablero:
+           if i[0][0]==x and i[0][1]==y:
+               if i[1]==None:
+                i[1]=pokemon
+               
+    def imprimir_mapa(self):
+        linea=""
+        for i in self.tablero:
+            linea+= str(i[1])
+            if i[1][1]==self.lado:
+                print(linea)
+                linea=""
+  
+mapa=Mapa(3)
+
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
+mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
