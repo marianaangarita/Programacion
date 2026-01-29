@@ -89,7 +89,7 @@ def importarDatos(fichero):
             if p:
                 almacen_pokemons.append(p)
                 cantidadTotal+=1
-        return(f"Se ha registrado en el sistema: {cantidadTotal} Pokemons. \n Cantidad Pokemon Agua: {cantidadPokemonAgua} \n Cantidad Pokemon Fuego: {cantidadPokemonFuego} \n Cantidad Pokemon Volador: {cantidadPokemonVolador} \n Cantidad Pokemon Planta: {cantidadPokemonPlanta}")
+        return(f"Se ha registrado en el sistema: {cantidadTotal} Pokemons. \n * Cantidad Pokemon Agua: {cantidadPokemonAgua} \n * Cantidad Pokemon Fuego: {cantidadPokemonFuego} \n * Cantidad Pokemon Volador: {cantidadPokemonVolador} \n * Cantidad Pokemon Planta: {cantidadPokemonPlanta}")
     
 
 print(importarDatos("listado_pokemons.txt"))
