@@ -26,6 +26,9 @@ class PokemonPlanta(Pokemon):
 
     def ataque_especial(self):
         return ("Mi ataque especial es de Planta.")
+    
+    def mensaje_tipo(self):
+        return("¡ideal contra Pokémon de Agua!")
 
 class PokemonAgua(Pokemon):
     def __init__(self, nombre, tipo, ataque, defensa):
@@ -33,6 +36,9 @@ class PokemonAgua(Pokemon):
 
     def ataque_especial(self):
         return("Mi ataque especial es de Agua.")
+    
+    def mensaje_tipo(self):
+        return("ten cuidado con los de tipo Fuego.")
 
 class PokemonFuego(Pokemon):
     def __init__(self, nombre, tipo, ataque, defensa):
@@ -40,6 +46,9 @@ class PokemonFuego(Pokemon):
 
     def ataque_especial(self):
         return("Mi ataque especial es de Fuego.")
+    
+    def mensaje_tipo(self):
+        return("ten cuidado con los de tipo Agua.")
 
 class PokemonVolador(Pokemon):
     def __init__(self, nombre, tipo, ataque, defensa):
@@ -47,6 +56,10 @@ class PokemonVolador(Pokemon):
 
     def ataque_especial(self):
         return("Mi ataque especial es de Aire.")
+    
+    def mensaje_tipo(self):
+        return("¡ideal contra pokemon Planta!")
+
 
 
 
@@ -94,6 +107,8 @@ def importarDatos(fichero):
 
 print(importarDatos("listado_pokemons.txt"))
 
+def comprobacion_datos():
+    for i in almacen_pokemons:
+        print(f"{i.get_nombre()} es un Pokémon de tipo {i.get_tipo()}, {i.mensaje_tipo()}")
 
-for i in almacen_pokemons:
-    print(i.mostrar_info())
+comprobacion_datos()
