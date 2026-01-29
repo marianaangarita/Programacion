@@ -49,39 +49,51 @@ class PokemonVolador(Pokemon):
         return("Mi ataque especial es de Aire.")
 
 
-almacen_pokemon=[]
+
+almacen_pokemons=[]
+
 def importarDatos(fichero):
+    cantidadPokemonAgua=0
+    cantidadPokemonFuego=0
+    cantidadPokemonPlanta=0
+    cantidadPokemonVolador=0
+    cantidadTotal=0
+
     with open(fichero) as archivo:
         for linea in archivo:
             datos_pokemon=linea.split(",")
             nombre=datos_pokemon[0]
-            tipo=datos_pokemon[1]
-            ataque=datos_pokemon[2]
-            defensa=datos_pokemon[3]
+            tipo=datos_pokemon[1].rstrip().capitalize()
+            ataque=int(datos_pokemon[2])
+            defensa=int(datos_pokemon[3])
 
-            cantidadPokemonAgua=0
-            cantidadPokemonFuego=0
-            cantidadPokemonPlanta=0
-            cantidadPokemonVolador=0
             match tipo:
                 case "Agua":
                     p=PokemonAgua(nombre, tipo, ataque, defensa)
                     cantidadPokemonAgua=cantidadPokemonAgua+1
+                    
                 case "Fuego":
                     p=PokemonFuego(nombre, tipo, ataque, defensa)
                     cantidadPokemonFuego=cantidadPokemonFuego+1
+                    
                 case "Volador":
                     p=PokemonVolador(nombre, tipo, ataque, defensa)
                     cantidadPokemonVolador=cantidadPokemonVolador+1
+                    
                 case "Planta":
                     p=PokemonPlanta(nombre, tipo, ataque, defensa)
                     cantidadPokemonPlanta=cantidadPokemonPlanta+1
-            
-            almacen_pokemon.append(p)
+                case _:
+                    print("Tipo desconocido, saltando Pokémon")
+                    p = None
+            if p:
+                almacen_pokemons.append(p)
+                cantidadTotal+=1
+        return(f"Se ha registrado en el sistema: {cantidadTotal} Pokemons. \n Cantidad Pokemon Agua: {cantidadPokemonAgua} \n Cantidad Pokemon Fuego: {cantidadPokemonFuego} \n Cantidad Pokemon Volador: {cantidadPokemonVolador} \n Cantidad Pokemon Planta: {cantidadPokemonPlanta}")
+    
 
-importarDatos("listado_pokemons.txt")
+print(importarDatos("listado_pokemons.txt"))
 
-for i in almacen_pokemon:
+
+for i in almacen_pokemons:
     print(i.mostrar_info())
-
-print(almacen_pokemon.count(cantidadPokemonPlanta))
