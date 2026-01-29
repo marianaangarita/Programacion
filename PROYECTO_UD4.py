@@ -1,3 +1,5 @@
+import random
+
 class Pokemon():
     def __init__(self, nombre, tipo, ataque, defensa):
         self.nombre=nombre
@@ -112,3 +114,17 @@ def comprobacion_datos():
         print(f"{i.get_nombre()} es un Pokémon de tipo {i.get_tipo()}, {i.mensaje_tipo()}")
 
 comprobacion_datos()
+
+class Mapa():
+    def __init__(self, lado):
+        self.lado=lado
+        self.tablero=[]
+        self.tablero.append(random.choice(almacen_pokemons))
+
+    
+    def coordenada(self, x, y):
+        
+    
+    def mostrarMapa(self):
+    
+    def mostrarMapaDetallado(self):
