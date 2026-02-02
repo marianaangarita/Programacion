@@ -124,9 +124,9 @@ class Mapa():
         self.tablero=[[random.choice(almacen_pokemons) for x in range(0, self.lado)] for y in range(0, self.lado)]
         
         
-    def coordenada(self,x, y):
+    def coordenada(self,y, x):
         # y=fila x=columna
-        return (f"({x},{y}):{self.tablero[y][x].get_nombre()}")
+        return (f"({y},{x}):{self.tablero[y][x].get_nombre()}")
 
                
     def mostrarMapa(self):
