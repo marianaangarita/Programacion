@@ -109,26 +109,28 @@ def importarDatos(fichero):
 
 print(importarDatos("listado_pokemons.txt"))
 
+
 def comprobacion_datos():
     for i in almacen_pokemons:
         print(f"{i.get_nombre()} es un Pokémon de tipo {i.get_tipo()}, {i.mensaje_tipo()}")
 
 comprobacion_datos()
+def colocar_pokemon():
+    for i in almacen_pokemons:
+        print(i)
 
 class Mapa():
     def __init__(self, lado):
         self.lado=lado
-        self.tablero=[]
-        for i in range(0, self.lado):
-            for j in range(0, self.lado):
-                self.tablero.append([(i,j), None])
+        self.tablero=[[colocar_pokemon() for x in range(0, self.lado)] for y in range(0, self.lado)]
         
         
-    def colocar_pokemon(self,pokemon,x,y):
+    '''def colocar_pokemon(self,pokemon,x,y):
         for i in self.tablero:
            if i[0][0]==x and i[0][1]==y:
                if i[1]==None:
                 i[1]=pokemon
+    '''
                
     def imprimir_mapa(self):
         linea=""
@@ -140,9 +142,3 @@ class Mapa():
   
 mapa=Mapa(3)
 
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
-mapa.colocar_pokemon(almacen_pokemons[1],random.randint(0,mapa.lado), random.randint(0,mapa.lado))
