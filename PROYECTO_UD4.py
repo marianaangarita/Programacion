@@ -115,30 +115,60 @@ def comprobacion_datos():
         print(f"{i.get_nombre()} es un Pokémon de tipo {i.get_tipo()}, {i.mensaje_tipo()}")
 
 comprobacion_datos()
-def colocar_pokemon():
-    for i in almacen_pokemons:
-        print(i)
+
+
 
 class Mapa():
     def __init__(self, lado):
         self.lado=lado
-        self.tablero=[[colocar_pokemon() for x in range(0, self.lado)] for y in range(0, self.lado)]
+        self.tablero=[[random.choice(almacen_pokemons) for x in range(0, self.lado)] for y in range(0, self.lado)]
         
         
-    '''def colocar_pokemon(self,pokemon,x,y):
-        for i in self.tablero:
-           if i[0][0]==x and i[0][1]==y:
-               if i[1]==None:
-                i[1]=pokemon
-    '''
+    def coordenada(self,y, x):
+        # y=fila x=columna
+        return (f"({y},{x}):{self.tablero[y][x].get_nombre()}")
+
                
-    def imprimir_mapa(self):
-        linea=""
-        for i in self.tablero:
-            linea+= str(i[1])
-            if i[1][1]==self.lado:
-                print(linea)
-                linea=""
-  
+    def mostrarMapa(self):
+        for y in range(0, self.lado):
+            for x in range(0, self.lado):
+                print(f"({y},{x})", end=" ") 
+            print(" ")
+
+    def mostrarMapaDetallado(self):
+         for y in range(0, self.lado):
+            for x in range(0, self.lado):
+                print(f"{self.coordenada(y,x)}", end=" ") 
+            print(" ")
+        
 mapa=Mapa(3)
 
+print(mapa.coordenada(0,1))
+
+mapa.mostrarMapa()
+
+mapa.mostrarMapaDetallado()
+
+class Personaje():
+    def __init__(self, x, y):
+        self.posX=x
+        self.posY=y
+    def moverIzquierda(self):
+        posX=posX-1
+        return posX
+    def moverDerecha(self):
+        posX=posX+1
+        return posX
+    def moverArriba(self):
+        posY=posY+1
+        return posY
+    def moverAbajo(self):
+        posY=posY-1
+        return posY
+
+class Jugador(Personaje):
+    def __init__(self, x, y, nombre):
+        super().__init__(x, y)
+        self.nombre=nombre
+    
+   # def capturar_pokemon(self, pokemon):
