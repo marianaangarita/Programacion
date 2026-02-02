@@ -1,5 +1,10 @@
 import random
 
+min_cas=0
+max_cas=5
+almacen_pokemons=[]
+salir=False
+
 class Pokemon():
     def __init__(self, nombre, tipo, ataque, defensa):
         self.nombre=nombre
@@ -63,10 +68,6 @@ class PokemonVolador(Pokemon):
         return("¡ideal contra pokemon Planta!")
 
 
-
-
-almacen_pokemons=[]
-
 def importarDatos(fichero):
     cantidadPokemonAgua=0
     cantidadPokemonFuego=0
@@ -106,22 +107,15 @@ def importarDatos(fichero):
                 cantidadTotal+=1
         return(f"Se ha registrado en el sistema: {cantidadTotal} Pokemons. \n * Cantidad Pokemon Agua: {cantidadPokemonAgua} \n * Cantidad Pokemon Fuego: {cantidadPokemonFuego} \n * Cantidad Pokemon Volador: {cantidadPokemonVolador} \n * Cantidad Pokemon Planta: {cantidadPokemonPlanta}")
     
-
-print(importarDatos("listado_pokemons.txt"))
-
-
 def comprobacion_datos():
     for i in almacen_pokemons:
         print(f"{i.get_nombre()} es un Pokémon de tipo {i.get_tipo()}, {i.mensaje_tipo()}")
-
-comprobacion_datos()
-
 
 
 class Mapa():
     def __init__(self, lado):
         self.lado=lado
-        self.tablero=[[random.choice(almacen_pokemons) for x in range(0, self.lado)] for y in range(0, self.lado)]
+        self.tablero=[[random.choice(almacen_pokemons) for x in range(min_cas, self.lado)] for y in range(min_cas, self.lado)]
         
         
     def coordenada(self,y, x):
@@ -141,34 +135,94 @@ class Mapa():
                 print(f"{self.coordenada(y,x)}", end=" ") 
             print(" ")
         
-mapa=Mapa(3)
-
-print(mapa.coordenada(0,1))
-
-mapa.mostrarMapa()
-
-mapa.mostrarMapaDetallado()
 
 class Personaje():
     def __init__(self, x, y):
         self.posX=x
         self.posY=y
+
     def moverIzquierda(self):
-        posX=posX-1
-        return posX
+        if self.posX>=min_cas and self.posX<=max_cas:
+            posX=posX-1
+            return posX
+        else:
+            return(f"No pudes salirte del tablero")
+        
     def moverDerecha(self):
-        posX=posX+1
-        return posX
+        if self.posX>=min_cas and self.posX<=max_cas:
+            posX=posX+1
+            return posX
+        else:
+            return("No puedes salirte del tablero")
+
     def moverArriba(self):
-        posY=posY+1
-        return posY
+        if self.posY>=min_cas and self.posY<=max_cas:
+            posY=posY+1
+            return posY
+        else:
+            return("No puedes salirte del tablero")
+        
     def moverAbajo(self):
-        posY=posY-1
-        return posY
+        if self.posY>=min_cas and self.posY<=max_cas:
+            posY=posY-1
+            return posY
+        else:
+            return("No puedes salirte del tablero")
 
 class Jugador(Personaje):
     def __init__(self, x, y, nombre):
         super().__init__(x, y)
         self.nombre=nombre
     
-   # def capturar_pokemon(self, pokemon):
+    def capturar_pokemon(self, pokemon):
+        pokemon_capturado=[]
+        mapa.tablero.remove(pokemon)
+        pokemon_capturado.append(pokemon)
+        #los pokemons en el mapa, los saco de la lista y los meto en la nueva lista pokemon_capturado
+
+        return(f"Has capturado al pokemon: {pokemon.get_nombre()}")
+    
+
+opciones_menu={"M":"CREAR MAPA", "J":"CREAR JUGADOR", "W":"IZQUIERDA", "D": "DERECHA", "S":"ABAJO", "A":"ARRIBA", "C":"CAPTURAR POKEMON", "S":"SALIR"}
+
+def menu():
+    print("********************************")
+    print("MENÚ PRINCIPAL")
+    for clave, valor in opciones_menu.items():
+        print(f"Pulsa {clave}:{valor}")
+    print("********************************")
+
+personaje=None
+mapa=None
+
+while not salir:
+    menu()
+    opcion=input("Escoge una opción: ").upper()
+
+    match opcion:
+        case "M":
+            if mapa:
+                print("Solo puedes crear un mapa.")
+            else:
+                lado=int(input("¿Cuántos lados tiene el mapa?: "))
+                mapa=Mapa(lado)
+        case "J":
+            if personaje:
+                print("Solo puedes crear un personaje.")
+            else:
+                x=int(input("Indica la posición x: "))
+                y=int(input("Indica la posición y: "))
+                nombre=input("Indica el nombre del jugador: ").lower()
+                personaje=Jugador(x, y, nombre)
+        case "W":
+            personaje.moverIzquierda()
+        case "D":
+        case "S":
+        case "A":
+        case "C":
+        case "S":
+            salir=True
+            print("Has salido del programa")
+        case __:
+            print("Opción incorrecta")
+        
