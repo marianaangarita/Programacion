@@ -217,6 +217,7 @@ while not salir:
         case "W":
             personaje.moverIzquierda()
         case "D":
+            personaje.moverDerecha()
         case "S":
         case "A":
         case "C":
