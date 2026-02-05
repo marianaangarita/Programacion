@@ -206,6 +206,7 @@ while not salir:
             else:
                 lado=int(input("¿Cuántos lados tiene el mapa?: "))
                 mapa=Mapa(lado)
+                print(mapa.mostrarMapaDetallado())
         case "J":
             if personaje:
                 print("Solo puedes crear un personaje.")
@@ -219,8 +220,12 @@ while not salir:
         case "D":
             personaje.moverDerecha()
         case "S":
+            personaje.moverAbajo()
         case "A":
+            personaje.moverArriba()
         case "C":
+            pokemon=input("¿Cuál es el pokemon que vas a capturar?: ").capitalize()
+            personaje.capturar_pokemon(pokemon)
         case "S":
             salir=True
             print("Has salido del programa")
