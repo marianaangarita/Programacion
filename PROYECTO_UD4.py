@@ -223,7 +223,7 @@ while not salir:
                 mapa=Mapa(lado)
                 print("Se ha generado un mapa con pokemons aleatorios.")
                 print("¡Prepárate para explorarlo!")
-                print(mapa.mostrarMapaDetallado())
+                mapa.mostrarMapaDetallado()
         case "J":
             if personaje:
                 print("Solo puedes crear un personaje.")
