@@ -303,9 +303,9 @@ while not salir:
                         case 2:
                             exito = personaje.capturar_pokemon(mapa)
                             if exito:
-                                print("¡CAPTURADO CON ÉXITO!")
+                                print("¡Enhorabuena!")
                             else:
-                                print("¡Se ha escapado de la bola!")
+                                print("¡Sigue intentándolo!")
                         case __:
                             print("Opción incorrecta.")
             else:
