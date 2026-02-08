@@ -178,7 +178,7 @@ class Jugador(Personaje):
         self.nombre=nombre
         self.inventario = []
 
-    def capturar_pokemon(self, pokemon):
+    def capturar_pokemon(self, pokemon, mapa):
         probabilidad = (100 - pokemon.ps) + 10 
         dado = random.randint(0, 100)
         print(f"Probabilidad de éxito: {probabilidad}% (Dado: {dado})")
@@ -227,11 +227,17 @@ while not salir:
         case "J":
             if personaje:
                 print("Solo puedes crear un personaje.")
+            elif not mapa:
+                print("¡Primero crea el mapa (M)!")
             else:
-                x=int(input(f"Indica la posición x: "))
-                y=int(input(f"Indica la posición y: "))
-                nombre=input("Indica el nombre del jugador: ").lower()
-                personaje=Jugador(x, y, nombre, mapa.lado)
+                x=int(input(f"Indica la posición x (0-{mapa.lado-1}): "))
+                y=int(input(f"Indica la posición y (0-{mapa.lado-1}): "))
+                if 0 <= x < mapa.lado and 0 <= y < mapa.lado:
+                    nombre=input("Indica el nombre del jugador: ").lower()
+                    personaje=Jugador(x, y, nombre, mapa.lado)
+                    print(f"Jugador {nombre} creado.")
+                else:
+                    print("Coordenadas fuera del mapa.")
         case "W":
             if mapa and personaje:
                     personaje.moverIzquierda()
@@ -262,19 +268,19 @@ while not salir:
                     print("Aquí no hay nada.")
 
                 else:
-                    print(f"¡Has encontrado un {pokemon_actual.get_nombre()}! (PS: {pokemon_actual.get_ps()})")
+                    print(f"¡Has encontrado un {pokemon_actual.get_nombre()}! | PS: {pokemon_actual.get_ps()})")
                     print("1. Atacar (Bajar vida)")
                     print("2. Lanzar Pokéball")
                     accion = int(input("Elige (1 o 2): "))
                     
                     match accion:
                         case 1:
-                            dano = random.randint(20, 40)
+                            dano = random.randint(20, 50)
                             pokemon_actual.recibir_dano(dano)
                             print(f"¡Golpeado! Vida restante: {pokemon_actual.get_ps()}")
                         
                         case 2:
-                            capturado = personaje.intentar_captura(pokemon_actual, mapa)
+                            capturado = personaje.capturar_pokemon(pokemon_actual, mapa)
                             if capturado:
                                 print("¡CAPTURADO CON ÉXITO!")
                             else:
