@@ -160,25 +160,25 @@ class Personaje():
         if self.posX > 0:
             self.posX -= 1
         else:
-            print("¡Muro!")
+            print("¡Muro a la izquierda!")
             
     def moverDerecha(self):
-        if self.posX <= self.limite-1:
+        if self.posX < self.limite - 1:
             self.posX += 1
         else:
-            print("¡Muro!")
+            print("¡Muro a la derecha!")
 
     def moverAbajo(self):
+        if self.posY < self.limite - 1:
+            self.posY += 1
+        else:
+            print("¡Muro abajo!")
+            
+    def moverArriba(self):
         if self.posY > 0:
             self.posY -= 1
         else:
-            print("¡Muro!")
-            
-    def moverArriba(self):
-        if self.posY <= self.limite-1:
-            self.posY += 1
-        else:
-            print("¡Muro!")
+            print("¡Muro arriba!")
 
 class Jugador(Personaje):
     def __init__(self, x, y, nombre, limite):
@@ -208,7 +208,7 @@ class Jugador(Personaje):
             mapa.tablero[self.posY][self.posX] = pokemon
             return False
 
-print(importarDatos("pokemons.txt"))
+print(importarDatos("listado_pokemons.txt"))
   
 
 opciones_menu={"M":"CREAR MAPA", "J":"CREAR JUGADOR", "W":"IZQUIERDA", "D": "DERECHA", "S":"ABAJO", "A":"ARRIBA", "C":"CAPTURAR POKEMON", "E":"SALIR"}
