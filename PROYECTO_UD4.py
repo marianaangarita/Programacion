@@ -1,4 +1,5 @@
 import random
+
 almacen_pokemons=[]
 salir=False
 
@@ -121,7 +122,11 @@ class Mapa():
         
     def coordenada(self,y, x):
         # y=fila x=columna
-        return (f"({y},{x}):{self.tablero[y][x].get_nombre()}")
+        p = self.tablero[y][x]
+        if p is None: 
+            return "Vacío"
+        else:
+            return (f"({y},{x}):{p.get_nombre()}")
 
                
     def mostrarMapa(self):
@@ -138,10 +143,10 @@ class Mapa():
         
 
 class Personaje():
-    def __init__(self, x, y):
+    def __init__(self, x, y, limite):
         self.posX=x
         self.posY=y
-        self.limite=mapa.lado
+        self.limite=limite
 
     def moverIzquierda(self):
         if self.posX > 0:
@@ -168,11 +173,11 @@ class Personaje():
             print("¡Muro!")
 
 class Jugador(Personaje):
-    def __init__(self, x, y, nombre):
-        super().__init__(x, y)
+    def __init__(self, nombre):
+        super().__init__(x,y,limite)
         self.nombre=nombre
         self.inventario = []
-        
+
     def capturar_pokemon(self, pokemon):
         probabilidad = (100 - pokemon.ps) + 10 
         dado = random.randint(0, 100)
@@ -222,7 +227,7 @@ while not salir:
                 x=int(input("Indica la posición x: "))
                 y=int(input("Indica la posición y: "))
                 nombre=input("Indica el nombre del jugador: ").lower()
-                personaje=Jugador(x, y, nombre)
+                personaje=Jugador(x, y, nombre, mapa.lado)
         case "W":
             if mapa and personaje:
                     personaje.moverIzquierda()
