@@ -206,7 +206,6 @@ class Jugador(Personaje):
             return True
         else:
             print(f"{pokemon.get_nombre()} se escapó...")
-            # si falla, vuelve al mapa
             mapa.colocar_pokemon(self.posX, self.posY, pokemon)
             return False
 
