@@ -1,5 +1,4 @@
 import random
-
 almacen_pokemons=[]
 salir=False
 
