@@ -1,7 +1,4 @@
 import random
-
-min_cas=0
-max_cas=5
 almacen_pokemons=[]
 salir=False
 
@@ -24,6 +21,10 @@ class Pokemon():
         return self.ps
     def set_ps(self, p):
         self.ps=p
+    def recibir_dano(self, cantidad):
+        self.ps -= cantidad
+        if self.ps < 0:
+            self.ps = 0
     def mostrar_info(self):
         return(f" Nombre: {self.get_nombre()} | Tipo: {self.get_tipo()} | Ataque: {self.get_ataque()} | Defensa: {self.get_defensa()} | Puntos salud: {self.get_ps()}")
 
@@ -115,14 +116,29 @@ def comprobacion_datos():
 class Mapa():
     def __init__(self, lado):
         self.lado=lado
-        self.tablero=[[random.choice(almacen_pokemons) for x in range(min_cas, self.lado)] for y in range(min_cas, self.lado)]
+        self.tablero=[[random.choice(almacen_pokemons) for x in range(0, self.lado)] for y in range(0, self.lado)]
         
         
     def coordenada(self,y, x):
         # y=fila x=columna
-        return (f"({y},{x}):{self.tablero[y][x].get_nombre()}")
+        p = self.tablero[y][x]
+        if p is None: 
+            return "Vacío"
+        else:
+            return (f"({y},{x}):{p.get_nombre()}")
+    
+    def ver_pokemon(self, x, y):
+        return self.tablero[y][x]
+        
+    def obtener_pokemon(self, x, y):
+        #Devuelve el pokemon en la posición y lo elimina del mapa
+        p = self.tablero[y][x]
+        if p is not None:
+            self.tablero[y][x] = None
+        return p
+    def colocar_pokemon(self, x, y, pokemon):
+        self.tablero[y][x] = pokemon
 
-               
     def mostrarMapa(self):
         for y in range(0, self.lado):
             for x in range(0, self.lado):
@@ -137,53 +153,66 @@ class Mapa():
         
 
 class Personaje():
-    def __init__(self, x, y):
+    def __init__(self, x, y, limite):
         self.posX=x
         self.posY=y
+        self.limite=limite
 
     def moverIzquierda(self):
-        if self.posX>=min_cas and self.posX<=max_cas:
-            posX=posX-1
-            return posX
+        if self.posX > 0:
+            self.posX -= 1
         else:
-            return(f"No pudes salirte del tablero")
-        
+            print("¡Muro a la izquierda!")
+            
     def moverDerecha(self):
-        if self.posX>=min_cas and self.posX<=max_cas:
-            posX=posX+1
-            return posX
+        if self.posX < self.limite - 1:
+            self.posX += 1
         else:
-            return("No puedes salirte del tablero")
+            print("¡Muro a la derecha!")
 
-    def moverArriba(self):
-        if self.posY>=min_cas and self.posY<=max_cas:
-            posY=posY+1
-            return posY
-        else:
-            return("No puedes salirte del tablero")
-        
     def moverAbajo(self):
-        if self.posY>=min_cas and self.posY<=max_cas:
-            posY=posY-1
-            return posY
+        if self.posY < self.limite - 1:
+            self.posY += 1
         else:
-            return("No puedes salirte del tablero")
+            print("¡Muro abajo!")
+            
+    def moverArriba(self):
+        if self.posY > 0:
+            self.posY -= 1
+        else:
+            print("¡Muro arriba!")
 
 class Jugador(Personaje):
-    def __init__(self, x, y, nombre):
-        super().__init__(x, y)
+    def __init__(self, x, y, nombre, limite):
+        super().__init__(x,y,limite)
         self.nombre=nombre
-    
-    def capturar_pokemon(self, pokemon):
-        pokemon_capturado=[]
-        mapa.tablero.remove(pokemon)
-        pokemon_capturado.append(pokemon)
-        #los pokemons en el mapa, los saco de la lista y los meto en la nueva lista pokemon_capturado
+        self.inventario = []
 
-        return(f"Has capturado al pokemon: {pokemon.get_nombre()}")
-    
+    def capturar_pokemon(self, mapa):
+        pokemon = mapa.obtener_pokemon(self.posX, self.posY)
 
-opciones_menu={"M":"CREAR MAPA", "J":"CREAR JUGADOR", "W":"IZQUIERDA", "D": "DERECHA", "S":"ABAJO", "A":"ARRIBA", "C":"CAPTURAR POKEMON", "S":"SALIR"}
+        if pokemon is None:
+            print("Aquí no hay ningún Pokémon.")
+            return False
+
+        probabilidad = (100 - pokemon.get_ps()) + 10
+        dado = random.randint(1, 100)
+
+        print(f"Probabilidad: {probabilidad}% | Dado: {dado}")
+
+        if dado <= probabilidad:
+            self.inventario.append(pokemon)
+            print(f"¡Has capturado a {pokemon.get_nombre()}!")
+            return True
+        else:
+            print(f"{pokemon.get_nombre()} se escapó...")
+            mapa.colocar_pokemon(self.posX, self.posY, pokemon)
+            return False
+
+print(importarDatos("listado_pokemons.txt"))
+  
+
+opciones_menu={"M":"CREAR MAPA", "J":"CREAR JUGADOR", "W":"IZQUIERDA", "D": "DERECHA", "S":"ABAJO", "A":"ARRIBA", "C":"CAPTURAR POKEMON", "E":"SALIR"}
 
 def menu():
     print("********************************")
@@ -195,7 +224,11 @@ def menu():
 personaje=None
 mapa=None
 
+
+
 while not salir:
+    print("¡Bienvenido al simulador de entrenador Pokemon!")
+
     menu()
     opcion=input("Escoge una opción: ").upper()
 
@@ -206,27 +239,80 @@ while not salir:
             else:
                 lado=int(input("¿Cuántos lados tiene el mapa?: "))
                 mapa=Mapa(lado)
-                print(mapa.mostrarMapaDetallado())
+                print("Se ha generado un mapa con pokemons aleatorios.")
+                print("¡Prepárate para explorarlo!")
+                mapa.mostrarMapaDetallado()
         case "J":
             if personaje:
                 print("Solo puedes crear un personaje.")
+            elif not mapa:
+                print("¡Primero crea el mapa (M)!")
             else:
-                x=int(input("Indica la posición x: "))
-                y=int(input("Indica la posición y: "))
-                nombre=input("Indica el nombre del jugador: ").lower()
-                personaje=Jugador(x, y, nombre)
+                x=int(input(f"Indica la posición x (0-{mapa.lado-1}): "))
+                y=int(input(f"Indica la posición y (0-{mapa.lado-1}): "))
+                if 0 <= x < mapa.lado and 0 <= y < mapa.lado:
+                    nombre=input("Indica el nombre del jugador: ").lower()
+                    personaje=Jugador(x, y, nombre, mapa.lado)
+                    print(f"Jugador {nombre} creado.")
+                    print(f"Posición: ({personaje.posY}, {personaje.posX})")
+                else:
+                    print("Coordenadas fuera del mapa.")
         case "W":
-            personaje.moverIzquierda()
+            if mapa and personaje:
+                    personaje.moverIzquierda()
+                    print(f"Posición: ({personaje.posY}, {personaje.posX})")
+            else:
+                print("Debes crear el mapa y personaje primero")
+            
         case "D":
-            personaje.moverDerecha()
+            if mapa and personaje:
+                    personaje.moverDerecha()
+                    print(f"Posición: ({personaje.posY}, {personaje.posX})")
+            else:
+                print("Debes crear el mapa y personaje primero")
         case "S":
-            personaje.moverAbajo()
+            if mapa and personaje:
+                    personaje.moverAbajo()
+                    print(f"Posición: ({personaje.posY}, {personaje.posX})") 
+            else:
+               print("Debes crear el mapa y persoanje primero") 
         case "A":
-            personaje.moverArriba()
+            if mapa and personaje:
+                    personaje.moverArriba()
+                    print(f"Posición: ({personaje.posY}, {personaje.posX})") 
+            else:
+                print("Debes crear el mapa y persoanje primero") 
         case "C":
-            pokemon=input("¿Cuál es el pokemon que vas a capturar?: ").capitalize()
-            personaje.capturar_pokemon(pokemon)
-        case "S":
+            if mapa and personaje:
+                pokemon_actual = mapa.ver_pokemon(personaje.posX, personaje.posY)
+
+                if pokemon_actual is None:
+                    print("Aquí no hay ningún Pokémon.")
+
+                else:
+                    print(f"¡Has encontrado un {pokemon_actual.get_nombre()}! | PS: {pokemon_actual.get_ps()})")
+                    print("1. Atacar (Bajar vida)")
+                    print("2. Lanzar Pokéball")
+                    accion = input("Elige (1 o 2): ")
+                    
+                    match accion:
+                        case "1":
+                            dano = random.randint(20, 50)
+                            pokemon_actual.recibir_dano(dano)
+                            print(f"¡Golpeado! Vida restante: {pokemon_actual.get_ps()}")
+                        
+                        case "2":
+                            exito = personaje.capturar_pokemon(mapa)
+                            if exito:
+                                print("¡Enhorabuena!")
+                            else:
+                                print("¡Sigue intentándolo!")
+                        case __:
+                            print("Opción incorrecta.")
+            else:
+                print("Debes crear el mapa y personaje primero")
+            
+        case "E":
             salir=True
             print("Has salido del programa")
         case __:
