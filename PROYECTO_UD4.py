@@ -155,7 +155,7 @@ class Personaje():
             print("¡Muro!")
             
     def moverDerecha(self):
-        if self.posX <= self.limite:
+        if self.posX <= self.limite-1:
             self.posX += 1
         else:
             print("¡Muro!")
@@ -167,13 +167,13 @@ class Personaje():
             print("¡Muro!")
             
     def moverArriba(self):
-        if self.posY <= self.limite:
+        if self.posY <= self.limite-1:
             self.posY += 1
         else:
             print("¡Muro!")
 
 class Jugador(Personaje):
-    def __init__(self, nombre):
+    def __init__(self, x, y, nombre, limite):
         super().__init__(x,y,limite)
         self.nombre=nombre
         self.inventario = []
@@ -207,6 +207,10 @@ while not salir:
     print("¡Bienvenido al simulador de entrenador Pokemon!")
     if personaje:
         print(f"Posición: ({personaje.posY}, {personaje.posX})")
+
+    contenido = mapa.tablero[personaje.posY][personaje.posX]
+    if contenido:
+        print(f"¡CUIDADO! Hay un {contenido.get_nombre()} aquí.")
     menu()
     opcion=input("Escoge una opción: ").upper()
 
@@ -224,8 +228,8 @@ while not salir:
             if personaje:
                 print("Solo puedes crear un personaje.")
             else:
-                x=int(input("Indica la posición x: "))
-                y=int(input("Indica la posición y: "))
+                x=int(input(f"Indica la posición x: "))
+                y=int(input(f"Indica la posición y: "))
                 nombre=input("Indica el nombre del jugador: ").lower()
                 personaje=Jugador(x, y, nombre, mapa.lado)
         case "W":
