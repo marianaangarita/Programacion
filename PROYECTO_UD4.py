@@ -136,7 +136,9 @@ class Mapa():
         if p is not None:
             self.tablero[y][x] = None
         return p
-               
+    def colocar_pokemon(self, x, y, pokemon):
+        self.tablero[y][x] = pokemon
+
     def mostrarMapa(self):
         for y in range(0, self.lado):
             for x in range(0, self.lado):
@@ -205,7 +207,7 @@ class Jugador(Personaje):
         else:
             print(f"{pokemon.get_nombre()} se escapó...")
             # si falla, vuelve al mapa
-            mapa.tablero[self.posY][self.posX] = pokemon
+            mapa.colocar_pokemon(self.posX, self.posY, pokemon)
             return False
 
 print(importarDatos("listado_pokemons.txt"))
@@ -292,15 +294,15 @@ while not salir:
                     print(f"¡Has encontrado un {pokemon_actual.get_nombre()}! | PS: {pokemon_actual.get_ps()})")
                     print("1. Atacar (Bajar vida)")
                     print("2. Lanzar Pokéball")
-                    accion = int(input("Elige (1 o 2): "))
+                    accion = input("Elige (1 o 2): ")
                     
                     match accion:
-                        case 1:
+                        case "1":
                             dano = random.randint(20, 50)
                             pokemon_actual.recibir_dano(dano)
                             print(f"¡Golpeado! Vida restante: {pokemon_actual.get_ps()}")
                         
-                        case 2:
+                        case "2":
                             exito = personaje.capturar_pokemon(mapa)
                             if exito:
                                 print("¡Enhorabuena!")
