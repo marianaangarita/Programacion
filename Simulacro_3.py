@@ -49,6 +49,7 @@ lista_menu=["AÑADIR CURSO", "MOSTRAR CURSOS", "CALCULAR PRECIO FINAL", ""]
 def menu():
     print("*************************")
     print("MENÚ PRINCIPAL")
+    print("*************************")
     
 
 
