@@ -88,15 +88,23 @@ class HabitacionSuite(Habitacion):
         super().__init__(num, huesped, dias, precio)
         self.jacuzzi=jacuzzi
 
+    def get_jacuzzi(self):
+        return self.jacuzzi
+    def set_jacuzzi(self, j):
+        self.jacuzzi=j
+
     def mostrar_info(self):
-        if self.jacuzzi==True:
+        if self.get_jacuzzi()==True:
             hay_jacuzzi="Si"
         else:
             hay_jacuzzi="No"
         return (f"{super().mostrar_info()} | Jacuzzi: {hay_jacuzzi}")
     
     def calcular_total(self):
-        return (super().calcular_total()) + 50
+        if self.get_jacuzzi()==True:
+            return (super().calcular_total()) + 50
+        else:
+            return (super().calcular_total())
 
 class HabitacionLargaEstancia(Habitacion):
     def __init__(self, num, huesped, dias, precio, descuento):
@@ -113,7 +121,7 @@ class HabitacionLargaEstancia(Habitacion):
         return (f"{super().mostrar_info()} | Descuento: {self.get_descuento()}%")
     
     def calcular_total(self):
-        if self.dias>7:
+        if self.get_dia()>7:
             descuento=(self.get_dia()*self.get_precio())*(self.get_descuento()/100)
             precio_final=(self.get_dia()*self.get_precio())-descuento
             return precio_final
@@ -141,7 +149,7 @@ def registrar_habitacion(numero,objeto):
 
 def mostrar_habitaciones():
     for clave, valor in hotel.items():
-        print(f"Número {clave}:{valor}")
+        print(f"Número {clave}:{valor.motrar_info()}")
 
 def calcular_precio_final(numero):
     if numero in hotel:
@@ -166,7 +174,7 @@ while not salir:
                     hab=Habitacion(numero, huesped, dias, precio)
                     print(registrar_habitacion(hab.get_numero(),hab))
                 case "S":
-                    jacuzzi=input("¿Tiene jacuzzi? (True/False): ").capitalize()
+                    jacuzzi=bool(input("¿Tiene jacuzzi? (True/False): "))
                     hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
                     print(registrar_habitacion(hab.get_numero(),hab))
                 case "L":
