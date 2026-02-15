@@ -78,10 +78,10 @@ class Habitacion():
         self.precio_noche=p
     
     def mostrar_info(self):
-        return(f" Número: {self.get_numero()} | Huésped: {self.get_huesped()} | Días: {self.get_dia()} | Precio Noche: {self.get_precio()}")
+        return(f" Huésped: {self.get_huesped()} | Días: {self.get_dia()} | Precio Noche: {self.get_precio()}")
     
-    def calcular_total(self, dias, precio):
-        return dias*precio
+    def calcular_total(self):
+        return self.get_dia()*self.get_precio()
 
 class HabitacionSuite(Habitacion):
     def __init__(self, num, huesped, dias, precio, jacuzzi):
@@ -95,8 +95,8 @@ class HabitacionSuite(Habitacion):
             hay_jacuzzi="No"
         return (f"{super().mostrar_info()} | Jacuzzi: {hay_jacuzzi}")
     
-    def calcular_total(self, dias, precio):
-        return (super().calcular_total(dias, precio)) + 50
+    def calcular_total(self):
+        return (super().calcular_total()) + 50
 
 class HabitacionLargaEstancia(Habitacion):
     def __init__(self, num, huesped, dias, precio, descuento):
@@ -112,14 +112,14 @@ class HabitacionLargaEstancia(Habitacion):
     def mostrar_info(self):
         return (f"{super().mostrar_info()} | Descuento: {self.get_descuento()}%")
     
-    def calcular_total(self, dias, precio):
+    def calcular_total(self):
         if self.dias>7:
-            descuento=(dias*precio)*(self.get_descuento()/100)
-            precio_final=(dias*precio)-descuento
+            descuento=(self.get_dia()*self.get_precio())*(self.get_descuento()/100)
+            precio_final=(self.get_dia()*self.get_precio())-descuento
             return precio_final
 
         else:
-            return super().calcular_total(dias, precio)
+            return super().calcular_total()
     
 hotel={}
 salir=False
@@ -137,7 +137,17 @@ def registrar_habitacion(numero,objeto):
         return(f"La habitación con código: {numero} ya estaba en la base de datos.")
     else:
         hotel[numero]=objeto
-        return(f"Has agregado la habitación {objeto.get_numero()} a la BBDD.")
+        return(f"Has agregado la habitación {numero} a la BBDD.")
+
+def mostrar_habitaciones():
+    for clave, valor in hotel.items():
+        print(f"Número {clave}:{valor}")
+
+def calcular_precio_final(numero):
+    if numero in hotel:
+        return hotel[numero].calcular_total()
+    else:
+        return(f"La habitación con código: {numero}, no está en la BBDD.")
    
 while not salir:
     menu()
@@ -154,18 +164,24 @@ while not salir:
             match tipo:
                 case "N":
                     hab=Habitacion(numero, huesped, dias, precio)
+                    print(registrar_habitacion(hab.get_numero(),hab))
                 case "S":
                     jacuzzi=input("¿Tiene jacuzzi? (True/False): ").capitalize()
                     hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
+                    print(registrar_habitacion(hab.get_numero(),hab))
                 case "L":
                     descuento=int(input("Indica la cantidad de descuento: "))
                     hab=HabitacionLargaEstancia(numero, huesped, dias, precio, descuento)
+                    print(registrar_habitacion(hab.get_numero(),hab))
                 case __:
                     print("Opción incorrecta")
         case 2:
             print(f"Has escogido: {opcion_menu[opcion-1]}")
+            mostrar_habitaciones()
         case 3:
             print(f"Has escogido: {opcion_menu[opcion-1]}")
+            num=int(input("Indica el número de la habitación: "))
+            print(calcular_precio_final(num))
         case 4:
             print(f"Has escogido: {opcion_menu[opcion-1]}")
             salir=True
