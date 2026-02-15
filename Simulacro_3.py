@@ -6,10 +6,10 @@ class Curso():
         self.precio=p
     
     def mostrar_info(self):
-        return(f"Código: {self.codigo} | Nombre: {self.nombre} | Hora: {self.hora}h | Precio {self.precio}€")
+        return(f"Código: {self.codigo} | Nombre: {self.nombre} | Horas: {self.hora}h | Precio {self.precio}€")
     
     def calcular_precio(self):
-        return(f"{self.precio} €")
+        return self.precio
 
 class CursoOnline(Curso):
     def __init__(self, c, n, h, p, plataforma):
@@ -17,7 +17,7 @@ class CursoOnline(Curso):
         self.plataforma=plataforma
     
     def mostrar_info(self):
-        return (f"{super().mostrar_info()}| Plataforma: {self.plataforma}")
+        return (f"{super().mostrar_info()} | Plataforma: {self.plataforma}")
 
 class CursoPresencial(Curso):
     def __init__(self, c, n, h, p, aula):
@@ -26,8 +26,8 @@ class CursoPresencial(Curso):
     def calcular_precio(self):
         if self.hora>40:
             descuento=self.precio*0.15
-            self.precio=self.precio+descuento
-            return (f"{self.precio} €")
+            precio_final=self.precio+descuento
+            return precio_final
         else:
             return super().calcular_precio()
     def mostrar_info(self):
@@ -36,24 +36,21 @@ class CursoPresencial(Curso):
 cursos={}
 
 def agregar_curso(codigo,objeto):
-    if codigo==cursos[codigo]:
-        return(f"El curso con código {codigo} ya está en la BBDD")
+    if codigo in cursos:
+        return(f"El código: {codigo}, ya está en la BBDD, no puede repetirse.")
     else:
         cursos[codigo]=objeto
         return (f"Se ha añadido {objeto.nombre} a la BBDD.")
 
 def mostrar_cursos():
     for clave, valor in cursos.items():
-        print(f"Código curso {clave}: {valor.mostrar_info()}")
+        print(f"{clave}: {valor.mostrar_info()}")
 
 def calcular_precio_final(codigo):
-    existe=False
-    for clave, valor in cursos.items():
-        if clave==codigo:
-            existe=True
-            return (f"El precio final es: {valor.calcular_precio()}€")
-        if existe==False:
-            return(f"El curso con código {codigo} no está en la BBDD.")
+    if codigo in cursos:
+        return (f"El precio final es: {cursos[codigo].calcular_precio()}€")
+    else:
+        return(f"El curso con código {codigo} no está en la BBDD.")
 
         
 salir=False
@@ -95,7 +92,8 @@ while not salir:
                 print("BBDD vacía, primero añade cursos y despues usa esta opción.")
         case 3:
             print(f"Has escogido: {lista_menu[opcion-1]}")
-            print(calcular_precio_final(curso.codigo))
+            codigo_curso=int(input("Indica el código del curso: "))
+            print(calcular_precio_final(codigo_curso))
         case 4:
             print(f"Has escogido: {lista_menu[opcion-1]}")
             salir=True
