@@ -178,14 +178,15 @@ while not salir:
                     match hay_jacuzzi:
                         case "N":
                             jacuzzi=False
+                            hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
+                            print(registrar_habitacion(hab.get_numero(),hab))
                         case "S":
                             jacuzzi=True
+                            hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
+                            print(registrar_habitacion(hab.get_numero(),hab))
                         case __:
                             print("Opción incorrecta, selecciona S o N")
-                            jacuzzi=None
-
-                    hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
-                    print(registrar_habitacion(hab.get_numero(),hab))
+                    
                 case "L":
                     descuento=int(input("Indica la cantidad de descuento: "))
                     hab=HabitacionLargaEstancia(numero, huesped, dias, precio, descuento)
