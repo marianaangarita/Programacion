@@ -95,7 +95,8 @@ while not salir:
                 print("BBDD vacía, primero añade cursos y despues usa esta opción.")
         case 3:
             print(f"Has escogido: {lista_menu[opcion-1]}")
-            print(calcular_precio_final(curso.codigo))
+            codigo_curso=int(input("Indica el código del curso: "))
+            print(calcular_precio_final(codigo_curso))
         case 4:
             print(f"Has escogido: {lista_menu[opcion-1]}")
             salir=True
