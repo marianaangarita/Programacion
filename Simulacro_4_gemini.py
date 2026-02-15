@@ -182,6 +182,7 @@ while not salir:
                             jacuzzi=True
                         case __:
                             print("Opción incorrecta, selecciona S o N")
+                            jacuzzi=None
 
                     hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
                     print(registrar_habitacion(hab.get_numero(),hab))
