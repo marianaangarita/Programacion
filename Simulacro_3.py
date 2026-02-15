@@ -30,27 +30,77 @@ class CursoPresencial(Curso):
             return (f"{self.precio} €")
         else:
             return super().calcular_precio()
+    def mostrar_info(self):
+        return (f"{super().mostrar_info()} | Aula: {self.aula}")
 
 cursos={}
 
 def agregar_curso(codigo,objeto):
-    cursos[codigo]=objeto
+    if codigo==cursos[codigo]:
+        return(f"El curso con código {codigo} ya está en la BBDD")
+    else:
+        cursos[codigo]=objeto
+        return (f"Se ha añadido {objeto.nombre} a la BBDD.")
 
 def mostrar_cursos():
     for clave, valor in cursos.items():
-        print(f"Código {clave}: {valor.mostrar_info()}")
+        print(f"Código curso {clave}: {valor.mostrar_info()}")
 
 def calcular_precio_final(codigo):
+    existe=False
     for clave, valor in cursos.items():
         if clave==codigo:
-            return valor.calcular_precio()
+            existe=True
+            return (f"El precio final es: {valor.calcular_precio()}€")
+        if existe==False:
+            return(f"El curso con código {codigo} no está en la BBDD.")
+
         
-lista_menu=["AÑADIR CURSO", "MOSTRAR CURSOS", "CALCULAR PRECIO FINAL", ""]
+salir=False
+lista_menu=["AÑADIR CURSO", "MOSTRAR CURSOS", "CALCULAR PRECIO FINAL", "SALIR"]
 def menu():
     print("*************************")
     print("MENÚ PRINCIPAL")
+    for clave, valor in enumerate(lista_menu,1):
+        print(f"Pulsa {clave}:{valor}")
     print("*************************")
     
-
+while not salir:
+    menu()
+    opcion=int(input("Escoge una opción: "))
+    match opcion:
+        case 1:
+            print(f"Has escogido: {lista_menu[opcion-1]}")
+            codigo=int(input("Indica el código del curso: "))
+            nombre=input("Indica el nombre del curso: ").lower()
+            hora=int(input("Indica cuantas horas tiene el curso: "))
+            precio=float(input("Indica el precio del curso: "))
+            modalidad=input("Es un curso Online(O) o presencial(P) pulsa (O/P):").upper()
+            match modalidad:
+                case "O":
+                    plataforma=input("indica en que plataforma se imparte: ").lower()
+                    curso=CursoOnline(codigo, nombre, hora, precio, plataforma)
+                    print(agregar_curso(curso.codigo, curso))
+                case "P":
+                    aula=int(input("Indica el número del aula donde se imparte: "))
+                    curso=CursoPresencial(codigo, nombre, hora, precio, aula)
+                    print(agregar_curso(curso.codigo, curso))
+                case __:
+                    print("Opción incorrecta, pulsa O o P")             
+        case 2:
+            print(f"Has escogido: {lista_menu[opcion-1]}")
+            if cursos:
+                mostrar_cursos()
+            else:
+                print("BBDD vacía, primero añade cursos y despues usa esta opción.")
+        case 3:
+            print(f"Has escogido: {lista_menu[opcion-1]}")
+            print(calcular_precio_final(curso.codigo))
+        case 4:
+            print(f"Has escogido: {lista_menu[opcion-1]}")
+            salir=True
+            print("Has salido del programa.")
+        case __:
+            print("Opción incorrecta, pulsa del 1 al 4.")
 
 
