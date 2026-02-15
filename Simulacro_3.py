@@ -36,11 +36,8 @@ class CursoPresencial(Curso):
 cursos={}
 
 def agregar_curso(codigo,objeto):
-    if codigo==cursos[codigo]:
-        return(f"El curso con código {codigo} ya está en la BBDD")
-    else:
-        cursos[codigo]=objeto
-        return (f"Se ha añadido {objeto.nombre} a la BBDD.")
+    cursos[codigo]=objeto
+    return (f"Se ha añadido {objeto.nombre} a la BBDD.")
 
 def mostrar_cursos():
     for clave, valor in cursos.items():
@@ -52,8 +49,8 @@ def calcular_precio_final(codigo):
         if clave==codigo:
             existe=True
             return (f"El precio final es: {valor.calcular_precio()}€")
-        if existe==False:
-            return(f"El curso con código {codigo} no está en la BBDD.")
+    if existe==False:
+        return(f"El curso con código {codigo} no está en la BBDD.")
 
         
 salir=False
