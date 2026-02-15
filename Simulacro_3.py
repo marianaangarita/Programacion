@@ -26,8 +26,8 @@ class CursoPresencial(Curso):
     def calcular_precio(self):
         if self.hora>40:
             descuento=self.precio*0.15
-            self.precio=self.precio+descuento
-            return (f"{self.precio} €")
+            precio_final=self.precio+descuento
+            return (f"{precio_final} €")
         else:
             return super().calcular_precio()
     def mostrar_info(self):
