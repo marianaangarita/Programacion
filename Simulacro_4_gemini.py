@@ -149,7 +149,7 @@ def registrar_habitacion(numero,objeto):
 
 def mostrar_habitaciones():
     for clave, valor in hotel.items():
-        print(f"Número {clave}:{valor.motrar_info()}")
+        print(f"Número {clave}:{valor.mostrar_info()}")
 
 def calcular_precio_final(numero):
     if numero in hotel:
@@ -174,7 +174,15 @@ while not salir:
                     hab=Habitacion(numero, huesped, dias, precio)
                     print(registrar_habitacion(hab.get_numero(),hab))
                 case "S":
-                    jacuzzi=bool(input("¿Tiene jacuzzi? (True/False): "))
+                    hay_jacuzzi=input("¿Tiene jacuzzi? (S/N): ").upper()
+                    match hay_jacuzzi:
+                        case "N":
+                            jacuzzi=False
+                        case "S":
+                            jacuzzi=True
+                        case __:
+                            print("Opción incorrecta, selecciona S o N")
+
                     hab=HabitacionSuite(numero, huesped, dias, precio, jacuzzi)
                     print(registrar_habitacion(hab.get_numero(),hab))
                 case "L":
