@@ -20,7 +20,7 @@ def menu():
     print("MENÚ PRINCIPAL")
     print("**********************************")
     for clave, valor in enumerate(opciones_menu,1):
-        print(f"Pulsa {clave}:{valor}")
+        print(f"Pulsa {clave}: {valor}")
     print("**********************************")
 
 def usuarios(archivo):
