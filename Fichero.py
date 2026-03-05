@@ -12,10 +12,35 @@ from datetime import datetime
 now = datetime.now()
 formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
 
-opciones_menu=[]
+salir=False
+opciones_menu=["VER USUARIOS", "VECES QUE A ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
+def menu():
+    print("MENÚ PRINCIPAL")
+    print("**********************************")
+    for clave, valor in enumerate(1,opciones_menu):
+        print(f"Pulsa {clave}:{valor}")
+    print("**********************************")
 
+while not salir:
+    nombre=input("Indica tu nombre: ").capitalize()
 
-nombre=input("Indica tu nombre: ").capitalize()
+    with open("accesos.log", "a") as archivo:
+        archivo.write(f"{formatted} Usuario: {nombre}\n")
+        archivo.close()
+    menu()
 
-with open("accesos.log", "a") as archivo:
-    archivo.write(f"{formatted} Usuario: {nombre}\n")
+    opcion=int(input("Escoge una opción: "))
+    match opcion:
+        case 1:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+        case 2:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+        case 3:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+        case 4:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+            salir=True
+            print("Has salido del programa")
+        case __:
+            print("Opción Incorrecta")
+
