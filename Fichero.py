@@ -21,18 +21,26 @@ def menu():
         print(f"Pulsa {clave}:{valor}")
     print("**********************************")
 
+def usuarios(archivo):
+    archivo.split("\n")
+    for linea in archivo:
+        linea.split(":")
+    print(f"{linea[len(linea)-1]}")
+
 while not salir:
     nombre=input("Indica tu nombre: ").capitalize()
 
     with open("accesos.log", "a") as archivo:
         archivo.write(f"{formatted} Usuario: {nombre}\n")
-        archivo.close()
+        
+
     menu()
 
     opcion=int(input("Escoge una opción: "))
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
+            usuarios(archivo)
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
         case 3:
@@ -44,3 +52,5 @@ while not salir:
         case __:
             print("Opción Incorrecta")
 
+
+    archivo.close()
