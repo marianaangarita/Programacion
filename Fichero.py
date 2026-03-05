@@ -8,6 +8,8 @@ Implementa una opción para listar todos los accesos registrados (Mejora: solo m
 Implementa una opción para mostrar cuántas veces ha accedido cada usuario.
 Implementa una opción para copiar el fichero de acceso.log en otro cuyo nombre escriba el usuario.
 '''
+import shutil
+import os
 from datetime import datetime
 now = datetime.now()
 formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
@@ -25,7 +27,19 @@ def usuarios(archivo):
     archivo.split("\n")
     for linea in archivo:
         linea.split(":")
-    print(f"{linea[len(linea)-1]}")
+        print(f"{linea[len(linea)-1]}")
+
+def registros(archivo):
+    conteo_archivo={}
+    archivo.split("\n")
+    for linea in archivo:
+        linea.split(":")
+    for usuario in linea:
+        if usuario in conteo_archivo:
+            conteo_archivo[usuario]+=1
+        if not usuario in conteo_archivo:
+            conteo_archivo[usuario]=1
+    return conteo_archivo
 
 while not salir:
     nombre=input("Indica tu nombre: ").capitalize()
@@ -43,8 +57,11 @@ while not salir:
             usuarios(archivo)
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
+            registros(archivo)
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
+            nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
+            shutil.copy(f"{nombre_archivo}.log","")
         case 4:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             salir=True
