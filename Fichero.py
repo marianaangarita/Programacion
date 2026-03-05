@@ -61,7 +61,9 @@ while not salir:
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
-            shutil.copy(f"{nombre_archivo}.log","")
+            if not os.path.exists("proyecto"):
+                os.mkdir("proyecto")
+            shutil.copy(f"{nombre_archivo}.log","proyecto")
         case 4:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             salir=True
