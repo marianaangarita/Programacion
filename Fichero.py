@@ -57,13 +57,13 @@ while not salir:
             usuarios(archivo)
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            registros(archivo)
+            print(registros(archivo))
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
             if not os.path.exists("proyecto"):
                 os.mkdir("proyecto")
-            shutil.copy(f"{nombre_archivo}.log","proyecto")
+            shutil.copy("accesos.log",f"proyecto/{nombre_archivo}.log")
         case 4:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             salir=True
