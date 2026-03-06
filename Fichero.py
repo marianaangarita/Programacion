@@ -26,9 +26,8 @@ def menu():
 def usuarios():
     lista_usuarios=[]
     with open ("accesos.log", "r") as archivo:
-        linea=archivo.readline()
-        while linea:
-            lista_usuarios.append(linea.split(":"))
+        for linea in archivo:
+            lista_usuarios.append(linea.split("\n"))
             print(f"{lista_usuarios[len(lista_usuarios)-1]}")
 
 def registros():
