@@ -23,30 +23,30 @@ def menu():
         print(f"Pulsa {clave}: {valor}")
     print("**********************************")
 
-def usuarios(archivo):
-    archivo.split("\n")
-    for linea in archivo:
-        linea.split(":")
-        print(f"{linea[len(linea)-1]}")
+def usuarios():
+    lista_usuarios=[]
+    with open ("accesos.log", "r") as archivo:
+        linea=archivo.readline()
+        while linea:
+            lista_usuarios.append(linea.split(":"))
+            print(f"{lista_usuarios[len(lista_usuarios)-1]}")
 
-def registros(archivo):
+def registros():
     conteo_archivo={}
-    archivo.split("\n")
-    for linea in archivo:
-        linea.split(":")
-    for usuario in linea:
-        if usuario in conteo_archivo:
-            conteo_archivo[usuario]+=1
-        if not usuario in conteo_archivo:
-            conteo_archivo[usuario]=1
-    return conteo_archivo
+    with open ("accesos.log", "r") as archivo:
+        for linea in archivo:
+            linea.split(":")
+            if  linea[len(linea)-1] in conteo_archivo:
+                    conteo_archivo[linea[len(linea)-1]]+=1
+            if not linea[len(linea)-1] in conteo_archivo:
+                    conteo_archivo[linea[len(linea)-1]]=1
+        return conteo_archivo
 
 while not salir:
     nombre=input("Indica tu nombre: ").capitalize()
 
     with open("accesos.log", "a") as archivo:
         archivo.write(f"{formatted} Usuario: {nombre}\n")
-        
 
     menu()
 
@@ -54,10 +54,10 @@ while not salir:
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            usuarios(archivo)
+            usuarios()
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            print(registros(archivo))
+            print(registros())
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
@@ -72,4 +72,4 @@ while not salir:
             print("Opción Incorrecta")
 
 
-    archivo.close()
+    
