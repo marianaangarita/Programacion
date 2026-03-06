@@ -24,11 +24,11 @@ def menu():
     print("**********************************")
 
 def usuarios():
-    lista_usuarios=[]
+    lista=[]
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
-            lista_usuarios.append(linea.split("\n"))
-            print(f"{lista_usuarios[len(lista_usuarios)-1]}")
+            lista.append(linea.split("\n"))
+            print(f"{lista[len(lista)-1]}")
 
 def registros():
     conteo_archivo={}
