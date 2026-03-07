@@ -24,21 +24,20 @@ def menu():
     print("**********************************")
 
 def usuarios():
-    lista=[]
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
-            lista.append(linea.split("\n"))
-            print(f"{lista[len(lista)-1]}")
+            partes=linea.split("Usuario: ")
+            print(f"{partes[1].strip()}")
 
 def registros():
     conteo_archivo={}
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
-            linea.split(":")
-            if  linea[len(linea)-1] in conteo_archivo:
-                    conteo_archivo[linea[len(linea)-1]]+=1
-            if not linea[len(linea)-1] in conteo_archivo:
-                    conteo_archivo[linea[len(linea)-1]]=1
+            partes=linea.split("Usuario: ")
+            if not partes[1] in conteo_archivo:
+                    conteo_archivo[partes[1].strip()]=1
+            elif partes[1] in conteo_archivo:
+                    conteo_archivo[partes[1].strip()]+=1
         return conteo_archivo
 
 while not salir:
