@@ -11,8 +11,6 @@ Implementa una opción para copiar el fichero de acceso.log en otro cuyo nombre 
 import shutil
 import os
 from datetime import datetime
-now = datetime.now()
-formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
 
 salir=False
 opciones_menu=["VER USUARIOS", "VECES QUE A ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
@@ -34,16 +32,19 @@ def registros():
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
             partes=linea.split("Usuario: ")
-            if not partes[1].strip() in conteo_archivo:
-                    conteo_archivo[partes[1].strip()]=1
-            elif partes[1].strip() in conteo_archivo:
-                    conteo_archivo[partes[1].strip()]+=1
+            usuario=partes[1].strip()
+            if not usuario in conteo_archivo:
+                    conteo_archivo[usuario]=1
+            else:
+                    conteo_archivo[usuario]+=1
         return conteo_archivo
 
 while not salir:
     nombre=input("Indica tu nombre: ").capitalize()
 
     with open("accesos.log", "a") as archivo:
+        now = datetime.now()
+        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
         archivo.write(f"{formatted} Usuario: {nombre}\n")
 
     menu()
