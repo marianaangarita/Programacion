@@ -34,9 +34,9 @@ def registros():
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
             partes=linea.split("Usuario: ")
-            if not partes[1] in conteo_archivo:
+            if not partes[1].strip() in conteo_archivo:
                     conteo_archivo[partes[1].strip()]=1
-            elif partes[1] in conteo_archivo:
+            elif partes[1].strip() in conteo_archivo:
                     conteo_archivo[partes[1].strip()]+=1
         return conteo_archivo
 
