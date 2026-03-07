@@ -25,8 +25,8 @@ def usuarios():
     with open ("accesos.log", "r") as archivo:
         for linea in archivo:
             partes=linea.split("Usuario: ")
-            print(f"{partes[1].strip()}")
-
+            print(partes[1].strip()) 
+        
 def registros():
     conteo_archivo={}
     with open ("accesos.log", "r") as archivo:
