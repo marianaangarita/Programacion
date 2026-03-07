@@ -11,8 +11,6 @@ Implementa una opción para copiar el fichero de acceso.log en otro cuyo nombre 
 import shutil
 import os
 from datetime import datetime
-now = datetime.now()
-formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
 
 salir=False
 opciones_menu=["VER USUARIOS", "VECES QUE A ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
@@ -23,30 +21,31 @@ def menu():
         print(f"Pulsa {clave}: {valor}")
     print("**********************************")
 
-def usuarios(archivo):
-    archivo.split("\n")
-    for linea in archivo:
-        linea.split(":")
-        print(f"{linea[len(linea)-1]}")
-
-def registros(archivo):
+def usuarios():
+    with open ("accesos.log", "r") as archivo:
+        for linea in archivo:
+            partes=linea.split("Usuario: ")
+            print(partes[1].strip()) 
+        
+def registros():
     conteo_archivo={}
-    archivo.split("\n")
-    for linea in archivo:
-        linea.split(":")
-    for usuario in linea:
-        if usuario in conteo_archivo:
-            conteo_archivo[usuario]+=1
-        if not usuario in conteo_archivo:
-            conteo_archivo[usuario]=1
-    return conteo_archivo
+    with open ("accesos.log", "r") as archivo:
+        for linea in archivo:
+            partes=linea.split("Usuario: ")
+            usuario=partes[1].strip()
+            if not usuario in conteo_archivo:
+                    conteo_archivo[usuario]=1
+            else:
+                    conteo_archivo[usuario]+=1
+        return conteo_archivo
 
 while not salir:
     nombre=input("Indica tu nombre: ").capitalize()
 
     with open("accesos.log", "a") as archivo:
+        now = datetime.now()
+        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
         archivo.write(f"{formatted} Usuario: {nombre}\n")
-        
 
     menu()
 
@@ -54,10 +53,10 @@ while not salir:
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            usuarios(archivo)
+            usuarios()
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            print(registros(archivo))
+            print(registros())
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
@@ -72,4 +71,4 @@ while not salir:
             print("Opción Incorrecta")
 
 
-    archivo.close()
+    
