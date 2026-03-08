@@ -22,25 +22,35 @@ def menu():
     print("**********************************")
 
 def usuarios():
-    with open ("accesos.log", "r") as archivo:
-        for linea in archivo:
-            partes=linea.split("Usuario: ")
-            print(partes[1].strip()) 
+    try:
+        with open ("accesos.log", "r") as archivo:
+            for linea in archivo:
+                partes=linea.split("Usuario: ")
+                print(partes[len(partes)-1].strip())
+    except FileNotFoundError:
+        print("Debes crear el archivo primero") 
         
 def registros():
     conteo_archivo={}
-    with open ("accesos.log", "r") as archivo:
-        for linea in archivo:
-            partes=linea.split("Usuario: ")
-            usuario=partes[1].strip()
-            if not usuario in conteo_archivo:
+    try:
+        with open ("accesos.log", "r") as archivo:
+            for linea in archivo:
+                partes=linea.split("Usuario: ")
+                usuario=partes[len(partes)-1].strip()
+                if not usuario in conteo_archivo:
                     conteo_archivo[usuario]=1
-            else:
+                else:
                     conteo_archivo[usuario]+=1
-        return conteo_archivo
+            return conteo_archivo
+    except FileNotFoundError:
+        print("Debes crear el archivo primero")
 
 while not salir:
-    nombre=input("Indica tu nombre: ").capitalize()
+    try:
+        nombre=input("Indica tu nombre: ").capitalize()
+
+    except ValueError:
+        print("Por favor, escribe solo nombres")
 
     with open("accesos.log", "a") as archivo:
         now = datetime.now()
