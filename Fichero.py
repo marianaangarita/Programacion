@@ -13,7 +13,7 @@ import os
 from datetime import datetime
 
 salir=False
-opciones_menu=["VER USUARIOS", "VECES QUE A ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
+opciones_menu=["VER USUARIOS", "VECES QUE HA ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
 def menu():
     print("MENÚ PRINCIPAL")
     print("**********************************")
@@ -54,6 +54,7 @@ while not salir:
 
     except ValueError:
         print("Por favor, escribe solo nombres")
+    
 
     with open("accesos.log", "a") as archivo:
         now = datetime.now()
