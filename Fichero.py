@@ -66,6 +66,7 @@ while not salir:
         opcion=int(input("Escoge una opción: "))
     except ValueError:
         print("Entrada inválida, pulsa del 1 al 4")
+        continue
 
     match opcion:
         case 1:
