@@ -22,11 +22,14 @@ def menu():
     print("**********************************")
 
 def usuarios():
+    usuario={}
     try:
         with open ("accesos.log", "r") as archivo:
             for linea in archivo:
                 partes=linea.split("Usuario: ")
-                print(partes[len(partes)-1].strip())
+                usuario[partes[len(partes)-1].strip()]=1
+            for usuarios in usuario:
+                print(usuarios)
     except FileNotFoundError:
         print("Debes crear el archivo primero") 
         
