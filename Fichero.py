@@ -50,7 +50,7 @@ def registros():
         print("Debes crear el archivo primero")
 
 try:
-    nombre=input("Indica tu nombre: ").capitalize()
+    nombre=input("Indica tu nombre: ").title()
 
 except ValueError:
     print("Por favor, escribe solo nombres")
