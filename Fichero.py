@@ -22,14 +22,14 @@ def menu():
     print("**********************************")
 
 def usuarios():
-    usuario={}
+    dic_usuario={}
     try:
         with open ("accesos.log", "r") as archivo:
             for linea in archivo:
                 partes=linea.split("Usuario: ")
-                usuario[partes[len(partes)-1].strip()]=1
-            for usuarios in usuario:
-                print(usuarios)
+                dic_usuario[partes[len(partes)-1].strip()]=1
+            for persona in dic_usuario:
+                print(persona)
     except FileNotFoundError:
         print("Debes crear el archivo primero") 
         
@@ -66,7 +66,7 @@ while not salir:
         opcion=int(input("Escoge una opción: "))
     except ValueError:
         print("Entrada inválida, pulsa del 1 al 4")
-        
+
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
