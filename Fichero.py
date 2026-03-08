@@ -13,7 +13,7 @@ import os
 from datetime import datetime
 
 salir=False
-opciones_menu=["VER USUARIOS", "VECES QUE A ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
+opciones_menu=["VER USUARIOS", "VECES QUE HA ACCEDIDO EL USUARIO", "COPIAR FICHERO", "SALIR"]
 def menu():
     print("MENÚ PRINCIPAL")
     print("**********************************")
@@ -22,41 +22,61 @@ def menu():
     print("**********************************")
 
 def usuarios():
-    with open ("accesos.log", "r") as archivo:
-        for linea in archivo:
-            partes=linea.split("Usuario: ")
-            print(partes[1].strip()) 
+    dic_usuario={}
+    try:
+        with open ("accesos.log", "r") as archivo:
+            for linea in archivo:
+                partes=linea.split("Usuario: ")
+                dic_usuario[partes[len(partes)-1].strip()]=1
+            for persona in dic_usuario:
+                print(persona)
+    except FileNotFoundError:
+        print("Debes crear el archivo primero") 
         
 def registros():
     conteo_archivo={}
-    with open ("accesos.log", "r") as archivo:
-        for linea in archivo:
-            partes=linea.split("Usuario: ")
-            usuario=partes[1].strip()
-            if not usuario in conteo_archivo:
+    try:
+        with open ("accesos.log", "r") as archivo:
+            for linea in archivo:
+                partes=linea.split("Usuario: ")
+                usuario=partes[len(partes)-1].strip()
+                if not usuario in conteo_archivo:
                     conteo_archivo[usuario]=1
-            else:
+                else:
                     conteo_archivo[usuario]+=1
-        return conteo_archivo
+            for clave, valor in conteo_archivo.items():
+                print(f"{clave} ha accedido {valor} veces.")
+    except FileNotFoundError:
+        print("Debes crear el archivo primero")
+
+try:
+    nombre=input("Indica tu nombre: ").title()
+
+except ValueError:
+    print("Por favor, escribe solo nombres")
+    
+
+with open("accesos.log", "a") as archivo:
+    now = datetime.now()
+    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+    archivo.write(f"{formatted} Usuario: {nombre}\n")
 
 while not salir:
-    nombre=input("Indica tu nombre: ").capitalize()
-
-    with open("accesos.log", "a") as archivo:
-        now = datetime.now()
-        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-        archivo.write(f"{formatted} Usuario: {nombre}\n")
-
+    
     menu()
+    try:
+        opcion=int(input("Escoge una opción: "))
+    except ValueError:
+        print("Entrada inválida, pulsa del 1 al 4")
+        continue
 
-    opcion=int(input("Escoge una opción: "))
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             usuarios()
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            print(registros())
+            registros()
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
