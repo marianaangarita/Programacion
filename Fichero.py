@@ -44,7 +44,8 @@ def registros():
                     conteo_archivo[usuario]=1
                 else:
                     conteo_archivo[usuario]+=1
-            return conteo_archivo
+            for clave, valor in conteo_archivo.items():
+                print(f"{clave} ha accedido {valor} veces.")
     except FileNotFoundError:
         print("Debes crear el archivo primero")
 
@@ -75,7 +76,7 @@ while not salir:
             usuarios()
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            print(registros())
+            registros()
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             nombre_archivo=input("Indica el nuevo nombre del archivo: ").lower()
