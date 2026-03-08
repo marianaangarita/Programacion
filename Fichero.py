@@ -62,8 +62,11 @@ while not salir:
         archivo.write(f"{formatted} Usuario: {nombre}\n")
 
     menu()
-
-    opcion=int(input("Escoge una opción: "))
+    try:
+        opcion=int(input("Escoge una opción: "))
+    except ValueError:
+        print("Entrada inválida, pulsa del 1 al 4")
+        
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
