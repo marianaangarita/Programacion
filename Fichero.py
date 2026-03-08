@@ -48,19 +48,20 @@ def registros():
     except FileNotFoundError:
         print("Debes crear el archivo primero")
 
-while not salir:
-    try:
-        nombre=input("Indica tu nombre: ").capitalize()
+try:
+    nombre=input("Indica tu nombre: ").capitalize()
 
-    except ValueError:
-        print("Por favor, escribe solo nombres")
+except ValueError:
+    print("Por favor, escribe solo nombres")
     
 
-    with open("accesos.log", "a") as archivo:
-        now = datetime.now()
-        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-        archivo.write(f"{formatted} Usuario: {nombre}\n")
+with open("accesos.log", "a") as archivo:
+    now = datetime.now()
+    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+    archivo.write(f"{formatted} Usuario: {nombre}\n")
 
+while not salir:
+    
     menu()
     try:
         opcion=int(input("Escoge una opción: "))
