@@ -29,11 +29,11 @@ def media():
     notas=0
     total_notas=0
     with open("notas.csv", "r") as archivo:
+        next(archivo)
         for linea in archivo:
             partes=linea.split(",")
-            notas=notas+partes[len(partes)-1].strip()
+            notas=notas+float(partes[len(partes)-1])
             total_notas=total_notas+1
-
         media=notas/total_notas
         archivo.close()
         return(f"La media total es: {media}")
