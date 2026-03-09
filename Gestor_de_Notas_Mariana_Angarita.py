@@ -28,45 +28,61 @@ def agregar_notas(nombre, asignatura, nota):
 def media():
     notas=0
     total_notas=0
-    with open("notas.csv", "r") as archivo:
-        next(archivo)
-        for linea in archivo:
-            partes=linea.split(",")
-            notas=notas+float(partes[len(partes)-1])
-            total_notas=total_notas+1
-        media=notas/total_notas
-        archivo.close()
-        return(f"La media total es: {media}")
+    try:
+        with open("notas.csv", "r") as archivo:
+            next(archivo)
+            for linea in archivo:
+                partes=linea.split(",")
+                notas=notas+float(partes[len(partes)-1])
+                total_notas=total_notas+1
+            media=notas/total_notas
+            print(f"La media total es: {media}")
+            archivo.close()
+    except FileNotFoundError:
+        print("El archivo no se ha encontrado, o no existe")
         
 
 def notas_alumno(nombre):
     existe=False
-    with open("notas.csv", "r") as archivo:
-        for linea in archivo:
-            nombre_alumno=linea.split(",")
-            if nombre_alumno[0]==nombre:
-                existe=True
-                print(f"{nombre_alumno[len(nombre_alumno)-2]}:{nombre_alumno[len(nombre_alumno)-1]}")
-        if existe == False:
-            print(f"El alumno: {nombre}, no existe en el fichero.")
+    try:
+        with open("notas.csv", "r") as archivo:
+            for linea in archivo:
+                nombre_alumno=linea.split(",")
+                if nombre_alumno[0]==nombre:
+                    existe=True
+                    print(f"{nombre_alumno[len(nombre_alumno)-2]}:{nombre_alumno[len(nombre_alumno)-1]}")
+            if existe == False:
+                print(f"El alumno: {nombre}, no existe en el fichero.")
             archivo.close()
+    except FileNotFoundError:
+        print("El archivo no se ha encontrado, o no existe")
+
 
 while not salir:
     menu()
-    opcion=int(input("Escoge una opción: "))
+    try:
+        opcion=int(input("Escoge una opción: "))
+    except ValueError:
+        print("Opción no válida, Pulsa del 1 al 4.")
     match opcion:
         case 1:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            nombre=input("Indica el nombre: ").capitalize()
-            asignatura=input("Indica la asignatura: ").capitalize()
-            nota=float(input("Indica la nota: "))
+            try:
+                nombre=input("Indica el nombre: ").capitalize()
+                asignatura=input("Indica la asignatura: ").capitalize()
+                nota=float(input("Indica la nota: "))
+            except ValueError:
+                print("Opción no válida")
             agregar_notas(nombre, asignatura, nota)
         case 2:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
             media()
         case 3:
             print(f"Has elegido: {opciones_menu[opcion-1]}")
-            nombre=input("Indica el nombre: ").capitalize()
+            try:
+                nombre=input("Indica el nombre: ").capitalize()
+            except ValueError:
+                print("Opción no válida")
             notas_alumno(nombre)
         case 4:
             salir=True
