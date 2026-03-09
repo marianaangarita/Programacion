@@ -9,6 +9,7 @@ Maneja errores si un archivo ya existe en la carpeta destino o si ocurre un prob
 '''
 import os
 import shutil
+salir=False
 
 def mostrar_archivos():
     print("Archivos en el directorio actual:")
@@ -22,7 +23,31 @@ def organizar_archivos():
                 if not os.path.exists(carpeta):
                     os.mkdir(carpeta)
                 shutil.move(archivo,carpeta)
-                with open("log.txt", "a") as log:
-                    log.write(f"Movido {archivo} a {carpeta}\n")
-                    
+                with open("log.txt", "a") as archivoLog:
+                    archivoLog.write(f"Movido {archivo} a {carpeta}\n")
 
+opciones_menu=["MOSTRAR ARCHIVOS", "ORGANIZAR ARCHIVOS", "SALIR"]
+
+def menu():
+    print("MENÚ PRINCIPAL")
+    print("********************************")
+    for clave, valor in enumerate(opciones_menu,1):
+        print(f"Pulsa {clave}:{valor}")
+    print("********************************")
+
+while not salir:
+    menu()
+    opciones=int(input("Indica una opción: "))
+    match opciones:
+        case 1:
+            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            mostrar_archivos()
+        case 2:
+            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            organizar_archivos()
+        case 3:
+            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            salir=True
+            print("Has salido del programa.")
+        case __:
+            print("Opción incorrecta, pulsa del 1 al 3.")
