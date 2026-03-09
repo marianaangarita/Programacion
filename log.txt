@@ -1,0 +1,3 @@
+Movido datos.csv a Datos
+Movido imagen.jpg a Imágenes
+Movido texto.txt a Textos

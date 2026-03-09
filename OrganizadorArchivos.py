@@ -1,0 +1,53 @@
+'''
+Objetivo: Desarrollar un script que organice los archivos en subdirectorios según su tipo. Utiliza las librerías OS, shutil y json.
+Pasos:
+El programa debe listar los archivos en el directorio actual.
+Debe mover los archivos a carpetas específicas según su extensión (.txt → Textos, .jpg → Imágenes, .csv → Datos).
+Si la carpeta correspondiente no existe, debe crearla antes de mover los archivos
+Debe generar un fichero log.txt registrando cada archivo movido.
+Maneja errores si un archivo ya existe en la carpeta destino o si ocurre un problema de permisos.
+'''
+import os
+import shutil
+salir=False
+
+def mostrar_archivos():
+    print("Archivos en el directorio actual:")
+    print(os.listdir("."))
+
+def organizar_archivos():
+    extensiones={".txt":"Textos", ".jpg":"Imágenes", ".csv":"Datos"}
+    for archivo in os.listdir("."):
+        for ext, carpeta in extensiones.items():
+            if archivo.endswith(ext):
+                if not os.path.exists(carpeta):
+                    os.mkdir(carpeta)
+                shutil.move(archivo,carpeta)
+                with open("log.txt", "a") as archivoLog:
+                    archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+
+opciones_menu=["MOSTRAR ARCHIVOS", "ORGANIZAR ARCHIVOS", "SALIR"]
+
+def menu():
+    print("MENÚ PRINCIPAL")
+    print("********************************")
+    for clave, valor in enumerate(opciones_menu,1):
+        print(f"Pulsa {clave}: {valor}")
+    print("********************************")
+
+while not salir:
+    menu()
+    opciones=int(input("Indica una opción: "))
+    match opciones:
+        case 1:
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
+            mostrar_archivos()
+        case 2:
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
+            organizar_archivos()
+        case 3:
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
+            salir=True
+            print("Has salido del programa.")
+        case __:
+            print("Opción incorrecta, pulsa del 1 al 3.")
