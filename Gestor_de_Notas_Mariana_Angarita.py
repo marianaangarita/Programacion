@@ -23,6 +23,7 @@ def menu():
 def agregar_notas(nombre, asignatura, nota):
     with open("notas.csv", "a") as archivo:
         archivo.write(f"{nombre},{asignatura},{nota}\n")
+        archivo.close()
 
 def media():
     notas=0
@@ -30,14 +31,51 @@ def media():
     with open("notas.csv", "r") as archivo:
         for linea in archivo:
             partes=linea.split(",")
-            notas=notas+partes[len(partes)-1]
+            notas=notas+partes[len(partes)-1].strip()
             total_notas=total_notas+1
 
         media=notas/total_notas
+        archivo.close()
         return(f"La media total es: {media}")
+        
 
 def notas_alumno(nombre):
-    with open("")
+    existe=False
+    with open("notas.csv", "r") as archivo:
+        for linea in archivo:
+            nombre_alumno=linea.split(",")
+            if nombre_alumno[0]==nombre:
+                existe=True
+                print(f"{nombre_alumno[len(nombre_alumno)-2]}:{nombre_alumno[len(nombre_alumno)-1]}")
+        if existe == False:
+            print(f"El alumno: {nombre}, no existe en el fichero.")
+            archivo.close()
+
+while not salir:
+    menu()
+    opcion=int(input("Escoge una opción: "))
+    match opcion:
+        case 1:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+            nombre=input("Indica el nombre: ").capitalize()
+            asignatura=input("Indica la asignatura: ").capitalize()
+            nota=float(input("Indica la nota: "))
+            agregar_notas(nombre, asignatura, nota)
+        case 2:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+            media()
+        case 3:
+            print(f"Has elegido: {opciones_menu[opcion-1]}")
+            nombre=input("Indica el nombre: ").capitalize()
+            notas_alumno(nombre)
+        case 4:
+            salir=True
+            print("Has salido del programa")
+        case __:
+            print("opción incorrecta.")
+
+
+            
 
         
 
