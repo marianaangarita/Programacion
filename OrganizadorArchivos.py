@@ -9,22 +9,33 @@ Maneja errores si un archivo ya existe en la carpeta destino o si ocurre un prob
 '''
 import os
 import shutil
+import json
 salir=False
 
 def mostrar_archivos():
     print("Archivos en el directorio actual:")
     print(os.listdir("."))
 
+configJson={".txt":"Textos", ".jpg":"Imágenes", ".csv":"Datos"}
+with open("config.json", "w") as archivo:
+    json.dump(configJson, archivo)
+
+with open("config.json", "r") as archivoJson:
+    config=json.load(archivoJson)
+
 def organizar_archivos():
-    extensiones={".txt":"Textos", ".jpg":"Imágenes", ".csv":"Datos"}
+    
     for archivo in os.listdir("."):
-        for ext, carpeta in extensiones.items():
+        for ext, carpeta in config.items():
             if archivo.endswith(ext):
                 if not os.path.exists(carpeta):
                     os.mkdir(carpeta)
-                shutil.move(archivo,carpeta)
-                with open("log.txt", "a") as archivoLog:
-                    archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+                try:
+                    shutil.move(archivo,carpeta)
+                    with open("log.txt", "a") as archivoLog:
+                        archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+                except FileExistsError:
+                    print("El nombre del archivo ya existe en la carpeta")
 
 opciones_menu=["MOSTRAR ARCHIVOS", "ORGANIZAR ARCHIVOS", "SALIR"]
 
