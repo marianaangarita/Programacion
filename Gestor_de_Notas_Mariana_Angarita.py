@@ -35,7 +35,10 @@ def media():
                 partes=linea.split(",")
                 notas=notas+float(partes[len(partes)-1])
                 total_notas=total_notas+1
-            media=notas/total_notas
+            try:
+                media=notas/total_notas
+            except ZeroDivisionError:
+                print("No se puede dividir por cero, primero añade datos al fichero.")
             print(f"La media total es: {media}")
             archivo.close()
     except FileNotFoundError:
