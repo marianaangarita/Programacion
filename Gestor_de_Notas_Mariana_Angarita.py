@@ -37,9 +37,9 @@ def media():
                 total_notas=total_notas+1
             try:
                 media=notas/total_notas
+                print(f"La media total es: {media}")
             except ZeroDivisionError:
                 print("No se puede dividir por cero, primero añade datos al fichero.")
-            print(f"La media total es: {media}")
             archivo.close()
     except FileNotFoundError:
         print("El archivo no se ha encontrado, o no existe")
