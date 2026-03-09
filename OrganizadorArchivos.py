@@ -32,7 +32,7 @@ def menu():
     print("MENÚ PRINCIPAL")
     print("********************************")
     for clave, valor in enumerate(opciones_menu,1):
-        print(f"Pulsa {clave}:{valor}")
+        print(f"Pulsa {clave}: {valor}")
     print("********************************")
 
 while not salir:
@@ -40,13 +40,13 @@ while not salir:
     opciones=int(input("Indica una opción: "))
     match opciones:
         case 1:
-            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
             mostrar_archivos()
         case 2:
-            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
             organizar_archivos()
         case 3:
-            print(f"Has elegido: {opciones_menu[opciones]-1}")
+            print(f"Has elegido: {opciones_menu[opciones-1]}")
             salir=True
             print("Has salido del programa.")
         case __:
