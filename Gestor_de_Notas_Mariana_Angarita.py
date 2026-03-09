@@ -73,9 +73,10 @@ while not salir:
                     nombre=input("Indica el nombre: ").capitalize()
                     asignatura=input("Indica la asignatura: ").capitalize()
                     nota=float(input("Indica la nota: "))
+                    agregar_notas(nombre, asignatura, nota)
+
                 except ValueError:
                     print("Opción no válida")
-                agregar_notas(nombre, asignatura, nota)
             case 2:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 media()
@@ -83,9 +84,9 @@ while not salir:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 try:
                     nombre=input("Indica el nombre: ").capitalize()
+                    notas_alumno(nombre)
                 except ValueError:
                     print("Opción no válida")
-                notas_alumno(nombre)
             case 4:
                 salir=True
                 print("Has salido del programa")
