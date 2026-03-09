@@ -65,35 +65,35 @@ while not salir:
     menu()
     try:
         opcion=int(input("Escoge una opción: "))
+    
+        match opcion:
+            case 1:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                try:
+                    nombre=input("Indica el nombre: ").capitalize()
+                    asignatura=input("Indica la asignatura: ").capitalize()
+                    nota=float(input("Indica la nota: "))
+                except ValueError:
+                    print("Opción no válida")
+                agregar_notas(nombre, asignatura, nota)
+            case 2:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                media()
+            case 3:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                try:
+                    nombre=input("Indica el nombre: ").capitalize()
+                except ValueError:
+                    print("Opción no válida")
+                notas_alumno(nombre)
+            case 4:
+                salir=True
+                print("Has salido del programa")
+            case __:
+                print("opción incorrecta.")
+
     except ValueError:
         print("Opción no válida, Pulsa del 1 al 4.")
-    match opcion:
-        case 1:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            try:
-                nombre=input("Indica el nombre: ").capitalize()
-                asignatura=input("Indica la asignatura: ").capitalize()
-                nota=float(input("Indica la nota: "))
-            except ValueError:
-                print("Opción no válida")
-            agregar_notas(nombre, asignatura, nota)
-        case 2:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            media()
-        case 3:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            try:
-                nombre=input("Indica el nombre: ").capitalize()
-            except ValueError:
-                print("Opción no válida")
-            notas_alumno(nombre)
-        case 4:
-            salir=True
-            print("Has salido del programa")
-        case __:
-            print("opción incorrecta.")
-
-
             
 
         
