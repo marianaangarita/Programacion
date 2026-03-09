@@ -30,7 +30,16 @@ def media():
     with open("notas.csv", "r") as archivo:
         for linea in archivo:
             partes=linea.split(",")
-        for partes[len(partes)-1] in archivo:
-            
+            notas=notas+partes[len(partes)-1]
+            total_notas=total_notas+1
+
+        media=notas/total_notas
+        return(f"La media total es: {media}")
+
+def notas_alumno(nombre):
+    with open("")
+
+        
+
 
 
