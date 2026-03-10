@@ -28,7 +28,7 @@ def organizar_archivos():
     for archivo in os.listdir("."):
         if os.path.isfile(archivo) and archivo != "log.txt" and archivo != "config.json":
             for ext, carpeta in config.items():
-                if archivo.endswith(ext):
+                if archivo.lower().endswith(ext):
                     if not os.path.exists(carpeta):
                         os.mkdir(carpeta)
                     try:
