@@ -24,7 +24,6 @@ with open("config.json", "r") as archivoJson:
     config=json.load(archivoJson)
 
 def organizar_archivos():
-    
     for archivo in os.listdir("."):
         if os.path.isfile(archivo) and archivo != "log.txt" and archivo != "config.json":
             for ext, carpeta in config.items():
