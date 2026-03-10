@@ -33,11 +33,13 @@ def organizar_archivos():
                     try:
                         destino = os.path.join(carpeta, archivo)
                         if os.path.exists(destino):
-                            print("Este archivo ya existe.")
+                            print("El archivo ya existe en la carpeta destino")
+                            break
                         else:
                             shutil.move(archivo,carpeta)
                             with open("log.txt", "a") as archivoLog:
                                 archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+                            break
                     except FileExistsError:
                         print("El nombre del archivo ya existe en la carpeta")
                     except PermissionError:
