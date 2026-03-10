@@ -16,7 +16,7 @@ def mostrar_archivos():
     print("Archivos en el directorio actual:")
     print(os.listdir("."))
 
-configJson={".txt":"Textos", ".jpg":"Imágenes", ".csv":"Datos"}
+configJson={".txt":"Textos", ".jpg":"Imagenes", ".csv":"Datos"}
 with open("config.json", "w") as archivo:
     json.dump(configJson, archivo)
 
@@ -31,9 +31,13 @@ def organizar_archivos():
                     if not os.path.exists(carpeta):
                         os.mkdir(carpeta)
                     try:
-                        shutil.move(archivo,carpeta)
-                        with open("log.txt", "a") as archivoLog:
-                            archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+                        destino = os.path.join(carpeta, archivo)
+                        if os.path.exists(destino):
+                            print("Este archivo ya existe.")
+                        else:
+                            shutil.move(archivo,carpeta)
+                            with open("log.txt", "a") as archivoLog:
+                                archivoLog.write(f"Movido {archivo} a {carpeta}\n")
                     except FileExistsError:
                         print("El nombre del archivo ya existe en la carpeta")
                     except PermissionError:
