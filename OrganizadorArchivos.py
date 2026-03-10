@@ -51,17 +51,21 @@ def menu():
 
 while not salir:
     menu()
-    opciones=int(input("Indica una opción: "))
-    match opciones:
-        case 1:
-            print(f"Has elegido: {opciones_menu[opciones-1]}")
-            mostrar_archivos()
-        case 2:
-            print(f"Has elegido: {opciones_menu[opciones-1]}")
-            organizar_archivos()
-        case 3:
-            print(f"Has elegido: {opciones_menu[opciones-1]}")
-            salir=True
-            print("Has salido del programa.")
-        case __:
-            print("Opción incorrecta, pulsa del 1 al 3.")
+    try:
+        opciones=int(input("Indica una opción: "))
+        match opciones:
+            case 1:
+                print(f"Has elegido: {opciones_menu[opciones-1]}")
+                mostrar_archivos()
+            case 2:
+                print(f"Has elegido: {opciones_menu[opciones-1]}")
+                organizar_archivos()
+            case 3:
+                print(f"Has elegido: {opciones_menu[opciones-1]}")
+                salir=True
+                print("Has salido del programa.")
+            case __:
+                print("Opción incorrecta, pulsa del 1 al 3.")
+    except ValueError:
+        print("Valor no válido, pulsa del 1 al 3.")
+        
