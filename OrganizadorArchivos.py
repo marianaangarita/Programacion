@@ -26,20 +26,19 @@ with open("config.json", "r") as archivoJson:
 def organizar_archivos():
     
     for archivo in os.listdir("."):
-        if os.path.isfile(archivo):
+        if os.path.isfile(archivo) and archivo != "log.txt" and archivo != "config.json":
             for ext, carpeta in config.items():
                 if archivo.endswith(ext):
-                    if archivo != "log.txt" and archivo != "config.json":
-                        if not os.path.exists(carpeta):
-                            os.mkdir(carpeta)
-                        try:
-                            shutil.move(archivo,carpeta)
-                            with open("log.txt", "a") as archivoLog:
-                                archivoLog.write(f"Movido {archivo} a {carpeta}\n")
-                        except FileExistsError:
-                            print("El nombre del archivo ya existe en la carpeta")
-                        except PermissionError:
-                            print("El archivo está en uso o falta privilegios del administrador.")
+                    if not os.path.exists(carpeta):
+                        os.mkdir(carpeta)
+                    try:
+                        shutil.move(archivo,carpeta)
+                        with open("log.txt", "a") as archivoLog:
+                            archivoLog.write(f"Movido {archivo} a {carpeta}\n")
+                    except FileExistsError:
+                        print("El nombre del archivo ya existe en la carpeta")
+                    except PermissionError:
+                        print("El archivo está en uso o falta privilegios del administrador.")
       
 
 opciones_menu=["MOSTRAR ARCHIVOS", "ORGANIZAR ARCHIVOS", "SALIR"]
