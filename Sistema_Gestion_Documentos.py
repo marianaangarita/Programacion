@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 salir=False
-opciones_menu=["ORGANIZAR DOCUMENTOS", "BÚSQUEDA AVANZADA DE ARCHIVOS", "GESTIÖN COPIAS SEGURIDAD"]
+opciones_menu=["ORGANIZAR DOCUMENTOS", "BÚSQUEDA AVANZADA DE ARCHIVOS", "GESTIÓN COPIAS SEGURIDAD", "SALIR"]
 def menu():
     print("MENÚ PRINCIPAL")
     print("********************************")
@@ -48,7 +48,16 @@ def organizar_archivos():
             
 def busqueda_avanzada():
 
-def copia_seguridad():
+
+def copia_seguridad(archivo):
+    if archivo != "log.txt" and archivo != "datos.json":
+        shutil.copy(f"{archivo}",f"backup/{archivo}")
+        print("Se ha hecho una copia de seguridad")
+        with open("log.txt", "a") as archivoLog:
+            now = datetime.now()
+            formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+            archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
+
 
 def gestion_permisos():
     usuario=input("Indica tu usuario: ").lower()
@@ -63,7 +72,30 @@ def gestion_permisos():
             else:
                 print("Usuario o contraseña no válidos, vuelve a intentarlo")
                 continue
-            
 
 
 
+while not salir:
+    if gestion_permisos():
+        menu()
+        opcion=int(input("Escoge una opción: "))
+
+        match opcion:
+            case 1:
+                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                organizar_archivos()
+            case 2:
+                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                busqueda_avanzada()
+            case 3:
+                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
+                copia_seguridad(archivo)
+            case 4:
+                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                salir=True
+                print("Has salido del programa")
+            case __:
+                print("Opción incorrecta")
+
+    
