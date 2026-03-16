@@ -12,7 +12,7 @@ def menu():
         print(f"Pulsa {clave}: {valor}")
     print("********************************")
 
-extension_archivo={".xls":"Facturas",".docx":"Contratos", ".pdf":"Informes", ".txt":"Backups"}
+extension_archivo={"xls":"Facturas","docx":"Contratos", "pdf":"Informes", "txt":"Backups"}
 
 with open("datos.json", "w") as archivo:
     json.dump(extension_archivo, archivo)
@@ -68,7 +68,7 @@ def gestion_permisos():
             comprobacion=linea.split(",")
             if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1]==contrasena:
                 print("Acceso concedido, tienes permisos de administrador")
-            return True
+                return True
            
 
 
