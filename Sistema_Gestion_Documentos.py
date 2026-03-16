@@ -68,11 +68,8 @@ def gestion_permisos():
             comprobacion=linea.split(",")
             if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1]==contrasena:
                 print("Acceso concedido, tienes permisos de administrador")
-                break
-            else:
-                print("Usuario o contraseña no válidos, vuelve a intentarlo")
-                continue
-
+            return True
+           
 
 
 while not salir:
@@ -97,5 +94,8 @@ while not salir:
                 print("Has salido del programa")
             case __:
                 print("Opción incorrecta")
+    else:
+        print("Usuario o contraseña no válidos, vuelve a intentarlo")
+        continue
 
     
