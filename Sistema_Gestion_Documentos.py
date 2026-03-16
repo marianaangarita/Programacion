@@ -15,7 +15,7 @@ def menu():
 extension_archivo={".xls":"Facturas",".docx":"Contratos", ".pdf":"Informes", ".txt":"Backups"}
 
 with open("datos.json", "w") as archivo:
-    json.dump("extension_archivo","archivo")
+    json.dump(extension_archivo, archivo)
 
 with open("datos.json", "r") as archivo:
     datos=json.load(archivo)
@@ -47,7 +47,7 @@ def organizar_archivos():
 
             
 def busqueda_avanzada():
-
+    pass
 
 def copia_seguridad(archivo):
     if archivo != "log.txt" and archivo != "datos.json":
