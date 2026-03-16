@@ -46,7 +46,7 @@ def organizar_archivos():
                         print("El archivo está en uso o falta privilegios del administrador.")
 
             
-def busqueda_avanzada():
+def busqueda_avanzada(nombre_archivo):
     pass
 
 def copia_seguridad(archivo):
@@ -62,13 +62,14 @@ def copia_seguridad(archivo):
 def gestion_permisos():
     usuario=input("Indica tu usuario: ").lower()
     contrasena=input("Indica tu contraseña: ")
-    with open("base_deDatos.csv", "r") as archivo:
+    with open("base_de_datos.csv", "r") as archivo:
         next(archivo)
         for linea in archivo:
             comprobacion=linea.split(",")
-            if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1]==contrasena:
+            if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
                 print("Acceso concedido, tienes permisos de administrador")
                 return True
+        return False
            
 
 
@@ -79,17 +80,18 @@ while not salir:
 
         match opcion:
             case 1:
-                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
                 organizar_archivos()
             case 2:
-                print(f"Has elegido: {opciones_menu[opcion]-1}")
-                busqueda_avanzada()
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                nombre_archivo=input("Indica el nombre del archivo: ")
+                busqueda_avanzada(nombre_archivo)
             case 3:
-                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
                 archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
                 copia_seguridad(archivo)
             case 4:
-                print(f"Has elegido: {opciones_menu[opcion]-1}")
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
                 salir=True
                 print("Has salido del programa")
             case __:
