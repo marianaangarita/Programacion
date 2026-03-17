@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 salir=False
-opciones_menu=["ORGANIZAR DOCUMENTOS", "BÚSQUEDA AVANZADA DE ARCHIVOS", "GESTIÓN COPIAS SEGURIDAD", "SALIR"]
+opciones_menu=["ORGANIZAR DOCUMENTOS", "BÚSQUEDA AVANZADA DE ARCHIVOS", "COPIA DE SEGURIDAD", "RESTAURAR COPIA DE SEGURIDAD","ELIMINAR ARCHIVO", "SALIR"]
 def menu():
     print("MENÚ PRINCIPAL")
     print("********************************")
@@ -45,12 +45,27 @@ def organizar_archivos():
                     except PermissionError:
                         print("El archivo está en uso o falta privilegios del administrador.")
 
+def eliminar_archivo(archivo):
+    if archivo != "log.txt" and archivo != "datos.json":
+
+    
             
 def busqueda_avanzada(nombre_archivo):
-    pass
+    existe=False
+    for ruta_actual, subcarpetas, archivos in os.walk("."):
+        for listado in archivos:
+            if listado==nombre_archivo:
+                existe=True
+                print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
+    if existe==False:
+        print("No hay un archivo con ese nombre")
+
+
 
 def copia_seguridad(archivo):
     if archivo != "log.txt" and archivo != "datos.json":
+        if not os.path.exists("backup"):
+            os.mkdir("backup")
         shutil.copy(f"{archivo}",f"backup/{archivo}")
         print("Se ha hecho una copia de seguridad")
         with open("log.txt", "a") as archivoLog:
@@ -58,8 +73,11 @@ def copia_seguridad(archivo):
             formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
             archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
 
+def restaurar_copia_seguridad():
+    pass
 
 def gestion_permisos():
+    identificado=False
     usuario=input("Indica tu usuario: ").lower()
     contrasena=input("Indica tu contraseña: ")
     with open("base_de_datos.csv", "r") as archivo:
@@ -67,14 +85,16 @@ def gestion_permisos():
         for linea in archivo:
             comprobacion=linea.split(",")
             if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
+                identificado=True
                 print("Acceso concedido, tienes permisos de administrador")
                 return True
-        return False
+        if identificado==False:
+            print("Usuario o contraseña no válidos, vuelve a intentarlo")
+            return False
            
 
-
-while not salir:
-    if gestion_permisos():
+if gestion_permisos():
+    while not salir:
         menu()
         opcion=int(input("Escoge una opción: "))
 
@@ -92,12 +112,20 @@ while not salir:
                 copia_seguridad(archivo)
             case 4:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
+            case 5:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                archivo_nombre=input("Indica un nombre de archivo: ")
+                eliminar_archivo(archivo_nombre)
+            case 6:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
                 salir=True
                 print("Has salido del programa")
             case __:
                 print("Opción incorrecta")
-    else:
-        print("Usuario o contraseña no válidos, vuelve a intentarlo")
-        continue
+else:
+    print("Usuario o contraseña no válidos, vuelve a intentarlo")
+
+        
+        
 
     
