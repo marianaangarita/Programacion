@@ -45,8 +45,10 @@ def organizar_archivos():
                     except PermissionError:
                         print("El archivo está en uso o falta privilegios del administrador.")
 
-def eliminar_archivo():
-    pass
+def eliminar_archivo(archivo):
+    if archivo != "log.txt" and archivo != "datos.json":
+
+    
             
 def busqueda_avanzada(nombre_archivo):
     existe=False
@@ -71,6 +73,8 @@ def copia_seguridad(archivo):
             formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
             archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
 
+def restaurar_copia_seguridad():
+    pass
 
 def gestion_permisos():
     identificado=False
@@ -110,6 +114,8 @@ if gestion_permisos():
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
             case 5:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
+                archivo_nombre=input("Indica un nombre de archivo: ")
+                eliminar_archivo(archivo_nombre)
             case 6:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 salir=True
