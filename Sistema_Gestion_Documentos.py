@@ -46,8 +46,9 @@ def organizar_archivos():
                         print("El archivo está en uso o falta privilegios del administrador.")
 
 def eliminar_archivo(archivo):
+    existe=False
     if archivo != "log.txt" and archivo != "datos.json":
-
+        for ruta_actual, subcarpetas, archivos in os.walk("."):
     
             
 def busqueda_avanzada(nombre_archivo):
