@@ -85,8 +85,25 @@ def copia_seguridad(archivo):
             formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
             archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
 
-def restaurar_copia_seguridad():
-    pass
+def restaurar_copia_seguridad(nombre_archivo):
+    existe=False
+    if os.path.isfile(nombre_archivo):
+        for archivo in os.listdir("./backup"):
+            if archivo==nombre_archivo:
+                existe=True
+                shutil.move(f"{nombre_archivo}",".")
+                print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
+                with open("log.txt", "a") as archivoLog:
+                    now = datetime.now()
+                    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                    archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
+
+                break
+        if existe==False:
+            print("No hay un archivo con ese nombre")
+    else:
+        print(f"{nombre_archivo} no es un archivo.")
+    
 
 def gestion_permisos():
     identificado=False
