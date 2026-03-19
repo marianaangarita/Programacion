@@ -86,23 +86,15 @@ def copia_seguridad(archivo):
             archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
 
 def restaurar_copia_seguridad(nombre_archivo):
-    existe=False
-    if os.path.isfile(nombre_archivo):
-        for archivo in os.listdir("./backup"):
-            if archivo==nombre_archivo:
-                existe=True
-                shutil.move(f"{nombre_archivo}",".")
-                print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
-                with open("log.txt", "a") as archivoLog:
-                    now = datetime.now()
-                    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                    archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
-
-                break
-        if existe==False:
-            print("No hay un archivo con ese nombre")
+    if os.path.isfile(f"backup/{nombre_archivo}"):
+        shutil.move(f"backup/{nombre_archivo}",".")
+        print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
+        with open("log.txt", "a") as archivoLog:
+            now = datetime.now()
+            formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+            archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
     else:
-        print(f"{nombre_archivo} no es un archivo.")
+        print(f"{nombre_archivo} no está en la carpeta backup")
     
 
 def gestion_permisos():
@@ -141,6 +133,8 @@ if gestion_permisos():
                 copia_seguridad(archivo)
             case 4:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
+                nombreArchivo=input("Indica el nombre de archivo: ")
+                restaurar_copia_seguridad(nombreArchivo)
             case 5:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 archivo_nombre=input("Indica un nombre de archivo: ")
