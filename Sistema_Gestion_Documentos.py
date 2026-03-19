@@ -60,8 +60,7 @@ def eliminar_archivo(nombre_archivo):
                     break
         if existe==False:
             print("No hay un archivo con ese nombre")
-    
-            
+              
 def busqueda_avanzada(nombre_archivo):
     existe=False
     if os.path.isfile(nombre_archivo):
@@ -87,12 +86,21 @@ def copia_seguridad(archivo):
 
 def restaurar_copia_seguridad(nombre_archivo):
     if os.path.isfile(f"backup/{nombre_archivo}"):
-        shutil.move(f"backup/{nombre_archivo}",".")
-        print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
-        with open("log.txt", "a") as archivoLog:
-            now = datetime.now()
-            formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-            archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
+        destino= os.path.join(".",nombre_archivo)
+        if os.path.exists(destino):
+            shutil.move(f"backup/{nombre_archivo}",f"./{nombre_archivo}_restaurado")
+            print(f"Se ha restaurado el archivo: {nombre_archivo}_restaurado, en el directorio actual")
+            with open("log.txt", "a") as archivoLog:
+                now = datetime.now()
+                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.\n")
+        else:
+            shutil.move(f"backup/{nombre_archivo}",".")
+            print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
+            with open("log.txt", "a") as archivoLog:
+                now = datetime.now()
+                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
     else:
         print(f"{nombre_archivo} no está en la carpeta backup")
     
