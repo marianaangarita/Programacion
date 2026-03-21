@@ -131,6 +131,16 @@ def restaurar_copia_seguridad(nombre_archivo):
     
 
 def gestion_permisos():
+    try:
+        with open("base_de_datos.csv", "r") as archivo:
+            next(archivo)
+    except FileNotFoundError:
+        usuario="admin" 
+        contrasena="admin"      
+        with open("base_de_datos.csv", "w") as archivo:
+            archivo.write("usuario,password\n")
+            archivo.write(f"{usuario},{contrasena}")
+            
     while True:
         usuario=input("Indica tu usuario: ").lower()
         contrasena=input("Indica tu contraseña: ")
@@ -143,41 +153,52 @@ def gestion_permisos():
                     print("Acceso concedido, tienes permisos de administrador")
                     return True
             print("Usuario o contraseña no válidos, vuelve a intentarlo")
-                
+    
 
 gestion_permisos()     
 while not salir:
     menu()
     try:
         opcion=int(input("Escoge una opción: "))
-
         match opcion:
             case 1:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 organizar_archivos()
             case 2:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                nombre_archivo=input("Indica el nombre del archivo: ")
-                busqueda_avanzada(nombre_archivo)
+                try:
+                    nombre_archivo=input("Indica el nombre del archivo: ").strip()
+                    busqueda_avanzada(nombre_archivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 3:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
-                copia_seguridad(archivo)
+                try:
+                    archivo=input("indica el archivo que deseas hacer copia de seguridad: ").strip()
+                    copia_seguridad(archivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 4:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                nombreArchivo=input("Indica el nombre de archivo: ")
-                restaurar_copia_seguridad(nombreArchivo)
+                try:
+                    nombreArchivo=input("Indica el nombre de archivo: ").strip()
+                    restaurar_copia_seguridad(nombreArchivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 5:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                archivo_nombre=input("Indica un nombre de archivo: ")
-                eliminar_archivo(archivo_nombre)
+                try:
+                    archivo_nombre=input("Indica un nombre de archivo: ").strip()
+                    eliminar_archivo(archivo_nombre)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 6:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 salir=True
                 print("Has salido del programa")
             case __:
-                print("Opción incorrecta")
-                
+                print("Opción incorrecta, escoge del 1 al 6")
+
     except ValueError:
         print("Opción no válida, escoge un número")
 
