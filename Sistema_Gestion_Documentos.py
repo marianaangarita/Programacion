@@ -122,26 +122,21 @@ def restaurar_copia_seguridad(nombre_archivo):
     
 
 def gestion_permisos():
-    identificado=False
-    usuario=input("Indica tu usuario: ").lower()
-    contrasena=input("Indica tu contraseña: ")
-    with open("base_de_datos.csv", "r") as archivo:
-        next(archivo)
-        for linea in archivo:
-            comprobacion=linea.split(",")
-            if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
-                identificado=True
-                print("Acceso concedido, tienes permisos de administrador")
-                return True
-        if identificado==False:
+    while True:
+        usuario=input("Indica tu usuario: ").lower()
+        contrasena=input("Indica tu contraseña: ")
+        with open("base_de_datos.csv", "r") as archivo:
+            next(archivo)
+            for linea in archivo:
+                comprobacion=linea.split(",")
+                if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
+    
+                    print("Acceso concedido, tienes permisos de administrador")
+                    return True
             print("Usuario o contraseña no válidos, vuelve a intentarlo")
-            return False
+                
 
-identificado= False 
-      
-
-while not identificado: 
-    identificado=gestion_permisos()     
+gestion_permisos()     
 while not salir:
     menu()
     opcion=int(input("Escoge una opción: "))
