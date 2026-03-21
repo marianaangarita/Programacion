@@ -86,13 +86,24 @@ def copia_seguridad(archivo):
             if listado==archivo:
                 existe=True
                 copiaSeguridad=os.path.join(ruta_actual,listado)
-                shutil.copy(f"{copiaSeguridad}",f"backup/{archivo}")
-                print("Se ha hecho una copia de seguridad")
-                with open("log.txt", "a") as archivoLog:
-                    now = datetime.now()
-                    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                    archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
-                break
+                archivoDuplicado= os.path.join("backup", archivo)
+                if os.path.exists(archivoDuplicado):
+                    nombre, extension=os.path.splitext(archivo)
+                    shutil.copy(f"{copiaSeguridad}",f"backup/{nombre}_copia{extension}")
+                    print(f"Se ha hecho una copia de seguridad a {nombre}_copia{extension}")
+                    with open("log.txt", "a") as archivoLog:
+                        now = datetime.now()
+                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                        archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {nombre}_copia{extension} a backup\n")
+                    break
+                else:
+                    shutil.copy(f"{copiaSeguridad}",f"backup/{archivo}")
+                    print(f"Se ha hecho una copia de seguridad a {archivo}")
+                    with open("log.txt", "a") as archivoLog:
+                        now = datetime.now()
+                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                        archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
+                    break
         if existe==True:
             break
     if existe==False:
