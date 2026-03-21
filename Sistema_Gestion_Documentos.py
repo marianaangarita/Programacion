@@ -89,7 +89,9 @@ def copia_seguridad(archivo):
                 copiaSeguridad=os.path.join(ruta_actual,listado)
                 nombre, extension=os.path.splitext(archivo)
                 archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
-                while not os.path.exists(archivoDuplicado):
+
+                while os.path.exists(archivoDuplicado):
+                    archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
                     shutil.copy(f"{copiaSeguridad}",f"backup/{nombre}_copia{contador}{extension}")
                     print(f"Se ha hecho una copia de seguridad a {nombre}_copia{contador}{extension}")
                     with open("log.txt", "a") as archivoLog:
@@ -97,6 +99,7 @@ def copia_seguridad(archivo):
                         formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
                         archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {nombre}_copia{contador}{extension} a backup\n")
                     contador+=1
+
                 shutil.copy(f"{copiaSeguridad}",f"backup/{archivo}")
                 print(f"Se ha hecho una copia de seguridad a {archivo}")
                 with open("log.txt", "a") as archivoLog:
