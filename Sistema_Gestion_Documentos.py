@@ -93,9 +93,9 @@ def restaurar_copia_seguridad(nombre_archivo):
     if os.path.isfile(copiaSeguridad):
         destino= os.path.join(".",nombre_archivo)
         if os.path.exists(destino):
-            extension= nombre_archivo.split(".")
-            shutil.move(copiaSeguridad,f"./{extension[0]}_restaurado.{extension[len(extension)-1]}")
-            print(f"Se ha restaurado el archivo: {nombre_archivo}_restaurado, en el directorio actual")
+            nombre, extension =os.path.splitext(nombre_archivo)
+            shutil.move(copiaSeguridad,f"./{nombre}_restaurado{extension}")
+            print(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual")
             with open("log.txt", "a") as archivoLog:
                 now = datetime.now()
                 formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
