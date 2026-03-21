@@ -1,0 +1,7 @@
+[2026-03-21 22:34:47] Movido contrato_juanito.docx a Contratos
+[2026-03-21 22:34:47] Movido gastos.xls a Facturas
+[2026-03-21 22:34:47] Movido informacion_importante.txt a Backups
+[2026-03-21 22:34:47] Movido informe_semana_46.pdf a Informes
+[2026-03-21 22:37:02] Se ha creado una copia de seguridad de gastos_copia0.xls a backup
+[2026-03-21 22:38:12] Se ha restaurado el archivo gastos_copia0.xls en el directorio actual.
+[2026-03-21 22:38:23] Movido gastos_copia0.xls a Facturas

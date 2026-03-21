@@ -45,11 +45,25 @@ def organizar_archivos():
                     except PermissionError:
                         print("El archivo está en uso o falta privilegios del administrador.")
 
-def eliminar_archivo(archivo):
-    if archivo != "log.txt" and archivo != "datos.json":
-
-    
-            
+def eliminar_archivo(nombre_archivo):
+    existe=False
+    if nombre_archivo != "log.txt" and nombre_archivo != "datos.json":
+        for ruta_actual, subcarpetas, archivos in os.walk("."):
+            for listado in archivos:
+                if listado==nombre_archivo:
+                    existe=True
+                    archivoEliminado=os.path.join(ruta_actual,listado)
+                    os.remove(archivoEliminado)
+                    with open("log.txt", "a") as archivoLog:
+                        now = datetime.now()
+                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                        archivoLog.write(f"{formatted} Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}\n")
+                    break
+            if existe==True:
+                break
+        if existe==False:
+            print("No hay un archivo con ese nombre")
+              
 def busqueda_avanzada(nombre_archivo):
     existe=False
     for ruta_actual, subcarpetas, archivos in os.walk("."):
@@ -57,73 +71,137 @@ def busqueda_avanzada(nombre_archivo):
             if listado==nombre_archivo:
                 existe=True
                 print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
+        if existe==True:
+            break
     if existe==False:
         print("No hay un archivo con ese nombre")
 
 
-
 def copia_seguridad(archivo):
-    if archivo != "log.txt" and archivo != "datos.json":
-        if not os.path.exists("backup"):
+    existe=False
+    contador=0
+    if not os.path.exists("backup"):
             os.mkdir("backup")
-        shutil.copy(f"{archivo}",f"backup/{archivo}")
-        print("Se ha hecho una copia de seguridad")
-        with open("log.txt", "a") as archivoLog:
-            now = datetime.now()
-            formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-            archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
+    for ruta_actual, subcarpetas, archivos in os.walk("."):
+        if not ruta_actual.startswith("./backup"):
+            for listado in archivos:
+                if listado==archivo:
+                    existe=True
+                    copiaSeguridad=os.path.join(ruta_actual,listado)
+                    nombre, extension=os.path.splitext(archivo)
+                    archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
 
-def restaurar_copia_seguridad():
-    pass
+                    while os.path.exists(archivoDuplicado):
+                        contador+=1
+                        archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
+                    
+                    shutil.copy(f"{copiaSeguridad}",f"backup/{nombre}_copia{contador}{extension}")
+                    print(f"Se ha hecho una copia de seguridad a {nombre}_copia{contador}{extension}")
+                    with open("log.txt", "a") as archivoLog:
+                        now = datetime.now()
+                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                        archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {nombre}_copia{contador}{extension} a backup\n")
+                    break
+            if existe==True:
+                break
+    if existe==False:
+        print("No hay un archivo con ese nombre")   
+
+def restaurar_copia_seguridad(nombre_archivo):
+    copiaSeguridad= os.path.join("backup", nombre_archivo)
+    if os.path.isfile(copiaSeguridad):
+        destino= os.path.join(".",nombre_archivo)
+        if os.path.exists(destino):
+            nombre, extension =os.path.splitext(nombre_archivo)
+            shutil.move(copiaSeguridad,f"./{nombre}_restaurado{extension}")
+            print(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual")
+            with open("log.txt", "a") as archivoLog:
+                now = datetime.now()
+                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.\n")
+        else:
+            shutil.move(copiaSeguridad,".")
+            print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
+            with open("log.txt", "a") as archivoLog:
+                now = datetime.now()
+                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
+    else:
+        print(f"{nombre_archivo} no está en la carpeta backup")
+    
 
 def gestion_permisos():
-    identificado=False
-    usuario=input("Indica tu usuario: ").lower()
-    contrasena=input("Indica tu contraseña: ")
-    with open("base_de_datos.csv", "r") as archivo:
-        next(archivo)
-        for linea in archivo:
-            comprobacion=linea.split(",")
-            if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
-                identificado=True
-                print("Acceso concedido, tienes permisos de administrador")
-                return True
-        if identificado==False:
+    try:
+        with open("base_de_datos.csv", "r") as archivo:
+            next(archivo)
+    except FileNotFoundError:
+        usuario="admin" 
+        contrasena="admin"      
+        with open("base_de_datos.csv", "w") as archivo:
+            archivo.write("usuario,password\n")
+            archivo.write(f"{usuario},{contrasena}")
+            
+    while True:
+        usuario=input("Indica tu usuario: ").lower()
+        contrasena=input("Indica tu contraseña: ")
+        with open("base_de_datos.csv", "r") as archivo:
+            next(archivo)
+            for linea in archivo:
+                comprobacion=linea.split(",")
+                if comprobacion[0]==usuario and comprobacion[len(comprobacion)-1].strip()==contrasena:
+    
+                    print("Acceso concedido, tienes permisos de administrador")
+                    return True
             print("Usuario o contraseña no válidos, vuelve a intentarlo")
-            return False
-           
+    
 
-if gestion_permisos():
-    while not salir:
-        menu()
+gestion_permisos()     
+while not salir:
+    menu()
+    try:
         opcion=int(input("Escoge una opción: "))
-
         match opcion:
             case 1:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 organizar_archivos()
             case 2:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                nombre_archivo=input("Indica el nombre del archivo: ")
-                busqueda_avanzada(nombre_archivo)
+                try:
+                    nombre_archivo=input("Indica el nombre del archivo: ").strip()
+                    busqueda_avanzada(nombre_archivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 3:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
-                copia_seguridad(archivo)
+                try:
+                    archivo=input("indica el archivo que deseas hacer copia de seguridad: ").strip()
+                    copia_seguridad(archivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 4:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
+                try:
+                    nombreArchivo=input("Indica el nombre de archivo: ").strip()
+                    restaurar_copia_seguridad(nombreArchivo)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 5:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
-                archivo_nombre=input("Indica un nombre de archivo: ")
-                eliminar_archivo(archivo_nombre)
+                try:
+                    archivo_nombre=input("Indica un nombre de archivo: ").strip()
+                    eliminar_archivo(archivo_nombre)
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
             case 6:
                 print(f"Has elegido: {opciones_menu[opcion-1]}")
                 salir=True
                 print("Has salido del programa")
             case __:
-                print("Opción incorrecta")
-else:
-    print("Usuario o contraseña no válidos, vuelve a intentarlo")
+                print("Opción incorrecta, escoge del 1 al 6")
+
+    except ValueError:
+        print("Opción no válida, escoge un número")
+
 
         
         
