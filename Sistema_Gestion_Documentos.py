@@ -47,30 +47,34 @@ def organizar_archivos():
 
 def eliminar_archivo(nombre_archivo):
     existe=False
-    if os.path.isfile(nombre_archivo) and nombre_archivo != "log.txt" and nombre_archivo != "datos.json":
+    if nombre_archivo != "log.txt" and nombre_archivo != "datos.json":
         for ruta_actual, subcarpetas, archivos in os.walk("."):
             for listado in archivos:
                 if listado==nombre_archivo:
                     existe=True
-                    os.remove(ruta_actual/listado)
+                    archivoEliminado=os.path.join(ruta_actual,listado)
+                    os.remove(archivoEliminado)
                     with open("log.txt", "a") as archivoLog:
                         now = datetime.now()
                         formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
                         archivoLog.write(f"{formatted} Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}\n")
                     break
+            if existe==True:
+                break
         if existe==False:
             print("No hay un archivo con ese nombre")
               
 def busqueda_avanzada(nombre_archivo):
     existe=False
-    if os.path.isfile(nombre_archivo):
-        for ruta_actual, subcarpetas, archivos in os.walk("."):
-            for listado in archivos:
-                if listado==nombre_archivo:
-                    existe=True
-                    print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
-        if existe==False:
-            print("No hay un archivo con ese nombre")
+    for ruta_actual, subcarpetas, archivos in os.walk("."):
+        for listado in archivos:
+            if listado==nombre_archivo:
+                existe=True
+                print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
+        if existe==True:
+            break
+    if existe==False:
+        print("No hay un archivo con ese nombre")
 
 
 def copia_seguridad(archivo):
@@ -85,17 +89,19 @@ def copia_seguridad(archivo):
             archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
 
 def restaurar_copia_seguridad(nombre_archivo):
-    if os.path.isfile(f"backup/{nombre_archivo}"):
+    copiaSeguridad= os.path.join("backup", nombre_archivo)
+    if os.path.isfile(copiaSeguridad):
         destino= os.path.join(".",nombre_archivo)
         if os.path.exists(destino):
-            shutil.move(f"backup/{nombre_archivo}",f"./{nombre_archivo}_restaurado")
+            extension= nombre_archivo.split(".")
+            shutil.move(copiaSeguridad,f"./{extension[0]}_restaurado.{extension[len(extension)-1]}")
             print(f"Se ha restaurado el archivo: {nombre_archivo}_restaurado, en el directorio actual")
             with open("log.txt", "a") as archivoLog:
                 now = datetime.now()
                 formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
                 archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.\n")
         else:
-            shutil.move(f"backup/{nombre_archivo}",".")
+            shutil.move(copiaSeguridad,".")
             print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
             with open("log.txt", "a") as archivoLog:
                 now = datetime.now()
