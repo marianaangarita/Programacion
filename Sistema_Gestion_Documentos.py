@@ -83,32 +83,27 @@ def copia_seguridad(archivo):
     if not os.path.exists("backup"):
             os.mkdir("backup")
     for ruta_actual, subcarpetas, archivos in os.walk("."):
-        for listado in archivos:
-            if listado==archivo:
-                existe=True
-                copiaSeguridad=os.path.join(ruta_actual,listado)
-                nombre, extension=os.path.splitext(archivo)
-                archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
-
-                while os.path.exists(archivoDuplicado):
+        if "backup" not in ruta_actual:
+            for listado in archivos:
+                if listado==archivo:
+                    existe=True
+                    copiaSeguridad=os.path.join(ruta_actual,listado)
+                    nombre, extension=os.path.splitext(archivo)
                     archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
+
+                    while os.path.exists(archivoDuplicado):
+                        contador+=1
+                        archivoDuplicado= os.path.join("backup", f"{nombre}_copia{contador}{extension}")
+                    
                     shutil.copy(f"{copiaSeguridad}",f"backup/{nombre}_copia{contador}{extension}")
                     print(f"Se ha hecho una copia de seguridad a {nombre}_copia{contador}{extension}")
                     with open("log.txt", "a") as archivoLog:
                         now = datetime.now()
                         formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
                         archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {nombre}_copia{contador}{extension} a backup\n")
-                    contador+=1
-
-                shutil.copy(f"{copiaSeguridad}",f"backup/{archivo}")
-                print(f"Se ha hecho una copia de seguridad a {archivo}")
-                with open("log.txt", "a") as archivoLog:
-                    now = datetime.now()
-                    formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                    archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {archivo} a backup\n")
+                    break
+            if existe==True:
                 break
-        if existe==True:
-            break
     if existe==False:
         print("No hay un archivo con ese nombre")   
 
