@@ -83,7 +83,7 @@ def copia_seguridad(archivo):
     if not os.path.exists("backup"):
             os.mkdir("backup")
     for ruta_actual, subcarpetas, archivos in os.walk("."):
-        if "backup" not in ruta_actual:
+        if not ruta_actual.startswith("./backup"):
             for listado in archivos:
                 if listado==archivo:
                     existe=True
@@ -148,34 +148,38 @@ def gestion_permisos():
 gestion_permisos()     
 while not salir:
     menu()
-    opcion=int(input("Escoge una opción: "))
+    try:
+        opcion=int(input("Escoge una opción: "))
 
-    match opcion:
-        case 1:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            organizar_archivos()
-        case 2:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            nombre_archivo=input("Indica el nombre del archivo: ")
-            busqueda_avanzada(nombre_archivo)
-        case 3:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
-            copia_seguridad(archivo)
-        case 4:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            nombreArchivo=input("Indica el nombre de archivo: ")
-            restaurar_copia_seguridad(nombreArchivo)
-        case 5:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            archivo_nombre=input("Indica un nombre de archivo: ")
-            eliminar_archivo(archivo_nombre)
-        case 6:
-            print(f"Has elegido: {opciones_menu[opcion-1]}")
-            salir=True
-            print("Has salido del programa")
-        case __:
-            print("Opción incorrecta")
+        match opcion:
+            case 1:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                organizar_archivos()
+            case 2:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                nombre_archivo=input("Indica el nombre del archivo: ")
+                busqueda_avanzada(nombre_archivo)
+            case 3:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                archivo=input("indica el archivo que deseas hacer copia de seguridad: ")
+                copia_seguridad(archivo)
+            case 4:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                nombreArchivo=input("Indica el nombre de archivo: ")
+                restaurar_copia_seguridad(nombreArchivo)
+            case 5:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                archivo_nombre=input("Indica un nombre de archivo: ")
+                eliminar_archivo(archivo_nombre)
+            case 6:
+                print(f"Has elegido: {opciones_menu[opcion-1]}")
+                salir=True
+                print("Has salido del programa")
+            case __:
+                print("Opción incorrecta")
+                
+    except ValueError:
+        print("Opción no válida, escoge un número")
 
 
         
