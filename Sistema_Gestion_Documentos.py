@@ -114,12 +114,12 @@ def restaurar_copia_seguridad(nombre_archivo):
             shutil.move(copiaSeguridad,f"./{nombre}_restaurado{extension}")
             print(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual")
 
-            escribir_log(f"Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.") 
+            escribir_log(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual") 
             
         else:
             shutil.move(copiaSeguridad,".")
             print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
-            escribir_log(f"Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.")
+            escribir_log(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
     else:
         print(f"{nombre_archivo} no está en la carpeta backup")
     
