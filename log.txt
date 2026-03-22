@@ -5,3 +5,8 @@
 [2026-03-21 22:37:02] Se ha creado una copia de seguridad de gastos_copia0.xls a backup
 [2026-03-21 22:38:12] Se ha restaurado el archivo gastos_copia0.xls en el directorio actual.
 [2026-03-21 22:38:23] Movido gastos_copia0.xls a Facturas
+[2026-03-22 16:40:46] Movido datosSuperImportantes.pdf a Informes
+[2026-03-22 16:41:50] Se ha creado una copia de seguridad de informe_semana_46_copia0.pdf a backup
+[2026-03-22 16:42:13] Se ha restaurado el archivo informe_semana_46_copia0.pdf_restaurado en el directorio actual.
+[2026-03-22 16:42:44] Se ha borrado informe_semana_46_copia0.pdf, se encontraba en: .
+[2026-03-22 16:43:10] Se ha borrado datosSuperImportantes.pdf, se encontraba en: .\Informes
