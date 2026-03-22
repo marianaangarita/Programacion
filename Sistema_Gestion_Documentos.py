@@ -68,11 +68,9 @@ def busqueda_avanzada(nombre_archivo):
     existe=False
     for ruta_actual, subcarpetas, archivos in os.walk("."):
         for listado in archivos:
-            if listado==nombre_archivo:
+            if nombre_archivo.lower() in listado.lower():
                 existe=True
-                print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
-        if existe==True:
-            break
+                print(f"{listado}, se encuentra en: {ruta_actual}")
     if existe==False:
         print("No hay un archivo con ese nombre")
 
