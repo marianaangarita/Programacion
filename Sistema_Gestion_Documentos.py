@@ -14,12 +14,18 @@ def menu():
 
 extension_archivo={"xls":"Facturas","docx":"Contratos", "pdf":"Informes", "txt":"Backups"}
 
-with open("datos.json", "w") as archivo:
-    json.dump(extension_archivo, archivo)
-
+if not os.path.exists("datos.json"):
+    with open("datos.json", "w") as archivo:
+        json.dump(extension_archivo, archivo)
+   
 with open("datos.json", "r") as archivo:
     datos=json.load(archivo)
 
+def escribir_log(mensaje):
+    with open("log.txt", "a") as archivoLog:
+        now = datetime.now()
+        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+        archivoLog.write(f"{formatted} {mensaje}\n")
 def organizar_archivos():
     for archivo in os.listdir("."):
         if os.path.isfile(archivo) and archivo != "log.txt" and archivo != "datos.json":
@@ -35,10 +41,7 @@ def organizar_archivos():
                             break
                         else:
                             shutil.move(archivo,carpeta)
-                            with open("log.txt", "a") as archivoLog:
-                                now = datetime.now()
-                                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                                archivoLog.write(f"{formatted} Movido {archivo} a {carpeta}\n")
+                            escribir_log(f"Movido {archivo} a {carpeta}")
                             break
                     except FileExistsError:
                         print("El nombre del archivo ya existe en la carpeta")
@@ -50,15 +53,15 @@ def eliminar_archivo(nombre_archivo):
     if nombre_archivo != "log.txt" and nombre_archivo != "datos.json":
         for ruta_actual, subcarpetas, archivos in os.walk("."):
             for listado in archivos:
-                if listado==nombre_archivo:
+                if listado.lower()==nombre_archivo.lower():
                     existe=True
                     archivoEliminado=os.path.join(ruta_actual,listado)
-                    os.remove(archivoEliminado)
-                    with open("log.txt", "a") as archivoLog:
-                        now = datetime.now()
-                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                        archivoLog.write(f"{formatted} Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}\n")
-                    break
+                    try:
+                        os.remove(archivoEliminado)
+                        escribir_log(f"Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}")
+                        break
+                    except PermissionError:
+                        print("El archivo está en uso o falta privilegios del administrador.")
             if existe==True:
                 break
         if existe==False:
@@ -68,11 +71,9 @@ def busqueda_avanzada(nombre_archivo):
     existe=False
     for ruta_actual, subcarpetas, archivos in os.walk("."):
         for listado in archivos:
-            if listado==nombre_archivo:
+            if nombre_archivo.lower() in listado.lower():
                 existe=True
-                print(f"{nombre_archivo}, se encuentra en: {ruta_actual}")
-        if existe==True:
-            break
+                print(f"{listado}, se encuentra en: {ruta_actual}")         
     if existe==False:
         print("No hay un archivo con ese nombre")
 
@@ -85,7 +86,7 @@ def copia_seguridad(archivo):
     for ruta_actual, subcarpetas, archivos in os.walk("."):
         if not ruta_actual.startswith("./backup"):
             for listado in archivos:
-                if listado==archivo:
+                if listado.lower()==archivo.lower():
                     existe=True
                     copiaSeguridad=os.path.join(ruta_actual,listado)
                     nombre, extension=os.path.splitext(archivo)
@@ -97,10 +98,7 @@ def copia_seguridad(archivo):
                     
                     shutil.copy(f"{copiaSeguridad}",f"backup/{nombre}_copia{contador}{extension}")
                     print(f"Se ha hecho una copia de seguridad a {nombre}_copia{contador}{extension}")
-                    with open("log.txt", "a") as archivoLog:
-                        now = datetime.now()
-                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                        archivoLog.write(f"{formatted} Se ha creado una copia de seguridad de {nombre}_copia{contador}{extension} a backup\n")
+                    escribir_log(f"Se ha creado una copia de seguridad de {nombre}_copia{contador}{extension} a backup") 
                     break
             if existe==True:
                 break
@@ -115,17 +113,13 @@ def restaurar_copia_seguridad(nombre_archivo):
             nombre, extension =os.path.splitext(nombre_archivo)
             shutil.move(copiaSeguridad,f"./{nombre}_restaurado{extension}")
             print(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual")
-            with open("log.txt", "a") as archivoLog:
-                now = datetime.now()
-                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo}_restaurado en el directorio actual.\n")
+
+            escribir_log(f"Se ha restaurado el archivo: {nombre}_restaurado{extension}, en el directorio actual") 
+            
         else:
             shutil.move(copiaSeguridad,".")
             print(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
-            with open("log.txt", "a") as archivoLog:
-                now = datetime.now()
-                formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                archivoLog.write(f"{formatted} Se ha restaurado el archivo {nombre_archivo} en el directorio actual.\n")
+            escribir_log(f"Se ha restaurado el archivo: {nombre_archivo}, en el directorio actual")
     else:
         print(f"{nombre_archivo} no está en la carpeta backup")
     
