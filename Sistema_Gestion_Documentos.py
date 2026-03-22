@@ -50,15 +50,18 @@ def eliminar_archivo(nombre_archivo):
     if nombre_archivo != "log.txt" and nombre_archivo != "datos.json":
         for ruta_actual, subcarpetas, archivos in os.walk("."):
             for listado in archivos:
-                if listado==nombre_archivo:
+                if listado.lower()==nombre_archivo.lower():
                     existe=True
                     archivoEliminado=os.path.join(ruta_actual,listado)
-                    os.remove(archivoEliminado)
-                    with open("log.txt", "a") as archivoLog:
-                        now = datetime.now()
-                        formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
-                        archivoLog.write(f"{formatted} Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}\n")
-                    break
+                    try:
+                        os.remove(archivoEliminado)
+                        with open("log.txt", "a") as archivoLog:
+                            now = datetime.now()
+                            formatted = now.strftime("[%Y-%m-%d %H:%M:%S]")
+                            archivoLog.write(f"{formatted} Se ha borrado {nombre_archivo}, se encontraba en: {ruta_actual}\n")
+                        break
+                    except PermissionError:
+                        print("El archivo está en uso o falta privilegios del administrador.")
             if existe==True:
                 break
         if existe==False:
@@ -66,11 +69,15 @@ def eliminar_archivo(nombre_archivo):
               
 def busqueda_avanzada(nombre_archivo):
     existe=False
+    dic={}
     for ruta_actual, subcarpetas, archivos in os.walk("."):
         for listado in archivos:
             if nombre_archivo.lower() in listado.lower():
                 existe=True
-                print(f"{listado}, se encuentra en: {ruta_actual}")
+                dic[listado]=ruta_actual
+    if existe==True:
+        for clave, valor in dic.items():
+            print(f"{clave}, se encuentra en: {valor}")
     if existe==False:
         print("No hay un archivo con ese nombre")
 
@@ -83,7 +90,7 @@ def copia_seguridad(archivo):
     for ruta_actual, subcarpetas, archivos in os.walk("."):
         if not ruta_actual.startswith("./backup"):
             for listado in archivos:
-                if listado==archivo:
+                if listado.lower()==archivo.lower():
                     existe=True
                     copiaSeguridad=os.path.join(ruta_actual,listado)
                     nombre, extension=os.path.splitext(archivo)
