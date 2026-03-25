@@ -25,7 +25,18 @@ def generar_ranking(diccionario_frecuencias):
     tuplas=[]
     for clave, valor in diccionario_frecuencias.items():
         tuplas.append((clave,valor))
-    tuplas_ordenadas=tuplas.sorted(reverse=True)
+    tuplas_ordenadas=sorted(tuplas, key=lambda x: x[1], reverse=True)
     return tuplas_ordenadas
         
 print(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))))
+
+def exportar_ranking_csv(ranking, nombre_fichero):
+    with open(nombre_fichero, "w") as archivo:
+        archivo.write("palabra,frecuencia\n")
+        for e in ranking:
+            archivo.write(f"{e[0]}, {e[1]}\n")
+
+exportar_ranking_csv(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))), "archivo.csv")
+   
+
+        
