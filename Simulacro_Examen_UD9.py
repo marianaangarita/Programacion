@@ -31,6 +31,12 @@ def generar_ranking(diccionario_frecuencias):
 print(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))))
 
 def exportar_ranking_csv(ranking, nombre_fichero):
-    with open(nombre_fichero, "a") as archivo:
+    with open(nombre_fichero, "w") as archivo:
         archivo.write("palabra,frecuencia\n")
+        for e in ranking:
+            archivo.write(f"{e[0]}, {e[1]}\n")
+
+exportar_ranking_csv(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))), "archivo.csv")
+   
+
         
