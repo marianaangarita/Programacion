@@ -6,7 +6,7 @@ def leer_texto(ruta_fichero):
         ArchivoEnMinusculas = ArchivoSinPuntos.lower()
         ListaArchivo = ArchivoEnMinusculas.split(" ")
         return ListaArchivo
-
+    
 print(leer_texto("./archivo.txt"))
 
 def calcular_frecuencias(lista_palabras):
@@ -38,7 +38,7 @@ def generar_ranking(diccionario_frecuencias):
 print(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))))
 
 def exportar_ranking_csv(ranking, nombre_fichero):
-    with open (nombre_fichero,"a") as archivo:
+    with open (nombre_fichero,"w") as archivo:
         contenido= archivo.write("palabra, frecuencia\n")
         for i in ranking:
             datos = archivo.write(f"{i[0]},{i[1]}\n")
