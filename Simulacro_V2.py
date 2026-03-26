@@ -21,7 +21,27 @@ def calcular_frecuencias(lista_palabras):
 print(calcular_frecuencias(leer_texto("./archivo.txt")))
 
 def generar_ranking(diccionario_frecuencias):
-    tuplas_ordenadas = sorted(diccionario_frecuencias.items(), key=lambda x: x[1], reverse=True)
+    tuplas_ordenadas =[]
+    lista=[]
+    for clave, valor in diccionario_frecuencias.items():
+        if valor not in lista:
+            lista.append(valor)
+    lista.sort()
+    lista.reverse()
+    for i in lista:
+        for clave, valor in diccionario_frecuencias.items():
+            if i==valor:
+                tuplas_ordenadas.append((clave,valor))
+    
     return(tuplas_ordenadas)
 
 print(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))))
+
+def exportar_ranking_csv(ranking, nombre_fichero):
+    with open (nombre_fichero,"a") as archivo:
+        contenido= archivo.write("palabra, frecuencia\n")
+        for i in ranking:
+            datos = archivo.write(f"{i[0]},{i[1]}\n")
+
+exportar_ranking_csv(generar_ranking(calcular_frecuencias(leer_texto("./archivo.txt"))),"./cositas.csv")
+
