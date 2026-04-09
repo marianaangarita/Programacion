@@ -67,28 +67,24 @@ while vidas > 0:
     if segunda_carta is None:
         print("¡Se han acabado las cartas del mazo! Juego terminado")
         break
+    
+    if segunda_carta>carta_actual and apuesta=="mayor":
+        acierto+=1
+        print(f"Has acertado, la segunda carta era {segunda_carta}, sigues jugando! Número de vidas: {vidas}")    
 
-    try:
-        if segunda_carta>carta_actual and apuesta=="mayor":
-            acierto+=1
-            print(f"Has acertado, la segunda carta era {segunda_carta}, sigues jugando! Número de vidas: {vidas}")    
-
-        elif segunda_carta<carta_actual and apuesta=="menor":
-            acierto+=1
-            print(f"Has acertado, la segunda carta era {segunda_carta}, sigues jugando! Número de vidas: {vidas}")
+    elif segunda_carta<carta_actual and apuesta=="menor":
+        acierto+=1
+        print(f"Has acertado, la segunda carta era {segunda_carta}, sigues jugando! Número de vidas: {vidas}")
            
-        elif segunda_carta == carta_actual:
-            print("¡Ha sido empate! no te suma aciertos ni fallos, toca probar la siguiente ronda!")
+    elif segunda_carta == carta_actual:
+        print("¡Ha sido empate! no te suma aciertos ni fallos, toca probar la siguiente ronda!")
 
-        else:
-            vidas -= 1
-            print(f"Fallaste... la segunda carta era: {segunda_carta}. Has acertado {acierto} veces. Número de vidas: {vidas}")
+    else:
+        vidas -= 1
+        print(f"Fallaste... la segunda carta era: {segunda_carta}. Has acertado {acierto} veces. Número de vidas: {vidas}")
         
-        carta_actual=segunda_carta
+    carta_actual=segunda_carta
 
-    except ValueError:
-        print("Opcion no válida vuelve a intentarlo")
-        continue
 
 print("--- FIN DEL JUEGO ---")
 print(f"Puntuación final: {acierto} aciertos.")
