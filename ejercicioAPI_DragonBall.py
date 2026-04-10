@@ -1,3 +1,11 @@
+'''
+Crea un torneo del poder de DragonBall. Para ello usa la api de dragonball-api.com para conseguir los datos de los personajes y crea un sistema de lucha entre dos personajes que devuelva el personaje que ganaría. 
+
+Haz peticiones que devuelvan un personaje aleatorio de la api. 
+
+Haz que se muestre el ganador final del toreno.
+'''
+
 import requests
 import random
 
